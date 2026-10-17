@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kohët e Namazit</title>
+
+<style>
+html,body{
+margin:0;
+padding:0;
+background:#0f1b24;
+font-family:Arial;
+color:white;
+overflow-x:hidden;
+}
+
+.wrapper{
+max-width:420px;
+margin:auto;
+padding:14px;
+}
+
+/* HEADER */
+.header{
+background:#142836;
+padding:16px;
+border-radius:14px;
+text-align:center;
+font-size:22px;
+box-shadow:0 0 12px #000;
+}
+
+.city{
+text-align:center;
+color:#aaa;
+margin-top:6px;
+}
+
+.countdown{
+text-align:center;
+color:#ffd369;
+margin:10px 0;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+/* BOX */
+.box{
+background:#1e2f3a;
+border-radius:14px;
+padding:16px;
+text-align:center;
+transition:0.3s;
+}
+
+.big{grid-column:1/3;}
+
+.active{
+background:#2f6b3a;
+box-shadow:0 0 18px #2f6b3a;
+animation:pulse 1.5s infinite;
+}
+
+.imsa{
+background:#7b1f1f;
+box-shadow:0 0 18px #7b1f1f;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 10px #2f6b3a;}
+50%{box-shadow:0 0 25px #2f6b3a;}
+100%{box-shadow:0 0 10px #2f6b3a;}
+}
+
+.time{
+font-size:32px;
+font-weight:bold;
+}
+
+.mini{
+margin-top:5px;
+color:#ffd369;
+}
+
+/* INFO */
+.info{
+margin-top:16px;
+background:#1e2f3a;
+padding:12px;
+border-radius:12px;
+text-align:center;
+color:#ffd369;
+}
+
+/* IFRAME */
+.iframebox{
+margin-top:10px;
+background:#1e2f3a;
+padding:8px;
+border-radius:12px;
+}
+
+iframe{
+width:100%;
+height:600px;
+border:0;
+border-radius:10px;
+}
+
+/* POPUP */
+#popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.8);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.popupbox{
+background:#0f5132;
+padding:22px;
+width:90%;
+max-width:340px;
+border-radius:18px;
+text-align:center;
+box-shadow:0 0 25px #00ff9c;
+}
+
+.popupbox h2{margin:0;}
+.popupbox p{margin:10px 0;}
+
+.pbtn{
+display:block;
+margin:8px auto;
+background:#ffd369;
+color:black;
+padding:10px;
+border-radius:10px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.closebtn{
+margin-top:12px;
+padding:10px 22px;
+border:none;
+border-radius:10px;
+background:#fff;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="header">🕋 Kohët e Namazit</div>
+<div class="city" id="city">Duke marrë vendndodhjen...</div>
+<div class="countdown" id="countdown"></div>
+
+<div class="grid" id="grid"></div>
+
+<div class="info">
+Nëse nuk u gjet vendndodhja juaj, ju lutem zgjidhni manualisht shtetin dhe qytetin tuaj.
+</div>
+
+<div class="iframebox">
+<iframe src="https://spiffy-froyo-4e2e8d.netlify.app/"></iframe>
+</div>
+
+</div>
+
+<!-- POPUP -->
+<div id="popup">
+ <div class="popupbox">
+   <h2 id="ptitle"></h2>
+   <p id="ptext"></p>
+   <div id="pbuttons"></div>
+   <button class="closebtn" onclick="closePopup()">Mbyll</button>
+ </div>
+</div>
+
+<audio id="ezan">
+<source src="https://cdn.islamic.network/audio/adhan/128/ar.alafasy.mp3">
+</audio>
+
+<script>
+
+const icons={
+IMSAKU:"🌙",
+SABAHU:"🌅",
+LINDJA:"🌄",
+DREKA:"☀️",
+IKINDIJA:"🌤️",
+AKSHAMI:"🌇",
+JACIA:"🌙"
+};
+
+const hadith={
+SABAHU:"Dy rekate sunet të sabahut janë më të mira se e gjithë bota.",
+DREKA:"Kush i fal sunetet e drekës, Allahu ia ndërton një shtëpi në Xhenet.",
+IKINDIJA:"Allahu e mëshiron atë që fal para ikindisë.",
+AKSHAMI:"Namazi i akshamit është dritë për besimtarin.",
+JACIA:"Kush fal jacinë me xhemat është sikur gjysmën e natës."
+};
+
+let prayers=[];
+let fired={};
+
+function toDate(t){
+let [h,m]=t.split(":");
+let d=new Date();
+d.setHours(h,m,0,0);
+return d;
+}
+
+navigator.geolocation.getCurrentPosition(p=>{
+loadTimes(p.coords.latitude,p.coords.longitude);
+getCity(p.coords.latitude,p.coords.longitude);
+},()=>{
+document.getElementById("city").innerText="Vendndodhja nuk u lejua";
+});
+
+async function loadTimes(lat,lon){
+
+let r=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=13`);
+let j=await r.json();
+let t=j.data.timings;
+
+prayers=[
+["IMSAKU",toDate(t.Fajr),"big"],
+["SABAHU",new Date(toDate(t.Fajr).getTime()+70*60000)],
+["LINDJA",toDate(t.Sunrise)],
+["DREKA",toDate(t.Dhuhr)],
+["IKINDIJA",toDate(t.Asr)],
+["AKSHAMI",toDate(t.Maghrib)],
+["JACIA",new Date(toDate(t.Isha).getTime()-7*60000)]
+];
+
+render();
+setInterval(update,1000);
+}
+
+function render(){
+let g=document.getElementById("grid");
+g.innerHTML="";
+prayers.forEach(p=>{
+g.innerHTML+=`
+<div class="box ${p[2]||""}" id="b_${p[0]}">
+<div>${icons[p[0]]} ${p[0]}</div>
+<div class="time">${p[1].toTimeString().slice(0,5)}</div>
+<div class="mini" id="m_${p[0]}"></div>
+</div>`;
+});
+}
+
+function update(){
+
+let now=new Date();
+let next=null;
+
+prayers.forEach(p=>{
+if(p[1]>now && !next) next=p;
+});
+
+if(next){
+let diff=Math.floor((next[1]-now)/1000);
+let h=Math.floor(diff/3600);
+let m=Math.floor((diff%3600)/60);
+let s=diff%60;
+document.getElementById("countdown").innerText=
+`⏳ Deri në ${next[0]}: ${h}h ${m}m ${s}s`;
+handlePopup(next[0],Math.floor((next[1]-now)/60000));
+}
+
+prayers.forEach(p=>{
+let box=document.getElementById("b_"+p[0]);
+let mini=document.getElementById("m_"+p[0]);
+box.classList.remove("active","imsa");
+
+let mins=Math.floor((p[1]-now)/60000);
+mini.innerText=mins>0?mins+" min":"";
+
+if(next && next[0]==p[0]){
+if(p[0]=="IMSAKU") box.classList.add("imsa");
+else box.classList.add("active");
+}
+});
+}
+
+function handlePopup(name,mins){
+
+if(mins==30 && !fired[name+"30"]){
+showPopup("30 minuta para Namazit",
+"Namazi në Xhami me Xhemat është 27 herë më i vlefshëm.",
+`<a class="pbtn" href="go:XHAMIA">Gjeje Xhaminë</a>
+<a class="pbtn" href="go:KIBLA">Gjeje Kiblen</a>`);
+fired[name+"30"]=true;
+}
+
+if(mins==5 && !fired[name+"5"]){
+showPopup("Namazi i radhës edhe 5 minuta",
+"Përgatitu, merr abdes për namaz.","");
+fired[name+"5"]=true;
+}
+
+if(mins<=0 && !fired[name]){
+showPopup("Koha e Namazit Hyri",
+"Allahu ta pranoft ibadetin.\n\n"+(hadith[name]||""),"");
+document.getElementById("ezan").play();
+fired[name]=true;
+}
+}
+
+function showPopup(t,m,b){
+document.getElementById("ptitle").innerText=t;
+document.getElementById("ptext").innerText=m;
+document.getElementById("pbuttons").innerHTML=b||"";
+document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
+
+async function getCity(lat,lon){
+try{
+let r=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+let j=await r.json();
+let c=j.address.city||j.address.town||j.address.village||"";
+let co=j.address.country||"";
+document.getElementById("city").innerText=c+", "+co;
+}catch{
+document.getElementById("city").innerText="Qyteti nuk u gjet";
+}
+}
+
+</script>
+
+<script>
+async function loadTimes(lat,lon){
+
+const urls = [
+`https://api.aladhan.com/v1/timingsByCoordinates?latitude=${lat}&longitude=${lon}&method=13`,
+`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=13`
+];
+
+for(let u of urls){
+try{
+
+let r = await fetch(u);
+let j = await r.json();
+
+if(j && j.data && j.data.timings){
+
+let t = j.data.timings;
+
+prayers=[
+["IMSAKU",toDate(t.Fajr),"big"],
+["SABAHU",new Date(toDate(t.Fajr).getTime()+70*60000)],
+["LINDJA",toDate(t.Sunrise)],
+["DREKA",toDate(t.Dhuhr)],
+["IKINDIJA",toDate(t.Asr)],
+["AKSHAMI",toDate(t.Maghrib)],
+["JACIA",toDate(t.Isha)]
+];
+
+render();
+setInterval(update,1000);
+return; // SUKSES → ndal loop-in
+
+}
+
+}catch(e){
+console.log("API deshtoi:",u);
+}
+
+}
+
+document.getElementById("countdown").innerText =
+"❌ Nuk u arrit të merren kohët e namazit";
+
+}
+</script>
+</body>
+</html>
