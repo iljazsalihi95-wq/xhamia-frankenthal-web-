@@ -4,3 +4,55 @@
 
 /* Reference-inspired real mosque homepage: no invented mosque photos */
 .hero-reference .hero-scene{display:grid;grid-template-columns:26% 45% 29%;align-items:stretch;gap:0;padding:0;min-height:480px;max-width:1440px}.hero-reference .hero-copy{position:relative;z-index:1;padding:55px 15px 30px 0;display:flex;flex-direction:column;justify-content:center}.hero-reference .hero-copy h1{font-size:clamp(31px,3.3vw,53px);line-height:1.08}.hero-reference .hero-copy .lead{font-size:16px}.hero-verse{font:italic 14px/1.5 Georgia,serif;color:#f1e8d6}.hero-reference .hero-copy .btn{align-self:flex-start;margin-top:16px}.hero-reference .hero-photo{border-radius:0;padding:0;border:0;box-shadow:none;min-height:480px}.hero-reference .hero-photo img{height:100%;min-height:480px;border-radius:0;object-fit:cover}.prayer-board{background:linear-gradient(155deg,#082d32,#021d23);border:1px solid #bfa06b;color:#fff;margin:18px 0 18px 14px;border-radius:12px;padding:19px;display:flex;flex-direction:column;box-shadow:0 10px 30px #0007}.prayer-heading{display:flex;gap:12px;align-items:center;border-bottom:1px solid #59706c;padding-bottom:13px}.prayer-heading>span{font-size:34px;color:var(--gold)}.prayer-heading strong{font:normal 23px Georgia,serif;display:block}.prayer-heading small{font-size:11px;color:#e0c995}.prayer-rows{flex:1}.prayer-row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #345057;padding:9px 4px;font-size:14px}.prayer-row strong{font-size:18px}.prayer-row.upcoming{background:#234b42;border-radius:7px;padding-inline:10px}.next-prayer{padding:12px 0;text-align:center;color:#e5c785;font-size:12px}.prayer-board .btn{width:100%}.prayer-source{display:block;color:#b4c6c7;font-size:10px;line-height:1.4;margin-top:12px}.prayer-detail{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.prayer-detail-item{background:#113943;border:1px solid #927b54;border-radius:10px;padding:18px;text-align:center}.prayer-detail-item span,.prayer-detail-item strong{display:block}.prayer-detail-item strong{font-size:27px;color:#e7c581}@media(max-width:1100px){.hero-reference .hero-scene{grid-template-columns:35% 65%;gap:0}.hero-reference .hero-photo{min-height:420px}.hero-reference .hero-photo img{min-height:420px}.prayer-board{grid-column:1/-1;margin:0 0 25px}.prayer-rows{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.prayer-row{padding:12px}.prayer-detail{grid-template-columns:repeat(3,1fr)}}@media(max-width:750px){.hero-reference .hero-scene{display:flex;flex-direction:column}.hero-reference .hero-copy{padding:32px 0}.hero-reference .hero-photo{min-height:260px}.hero-reference .hero-photo img{min-height:260px;height:290px}.prayer-board{margin:0 0 20px}.prayer-rows{grid-template-columns:repeat(2,1fr)}.prayer-detail{grid-template-columns:repeat(2,1fr)}}
+
+/* 2026-10-17: faithful compact portal layout based on supplied design */
+:root{--gold:#f2c776;--navy:#052b2d;--cream:#f8f7f3}
+.wrap{width:min(1490px,calc(100% - 40px))}
+.topline{background:#05272b}
+.top{background:linear-gradient(100deg,#052b2d,#06272a);border-bottom:1px solid #bda263}
+.head{max-width:1490px}
+.identity strong{font-family:Georgia,serif;font-size:clamp(16px,1.5vw,25px)}
+.identity .seal{width:67px;height:67px;border-radius:50%;background:#82dbe6;color:#07343b;font-size:32px;border:4px solid #c2f2f4}
+#nav{gap:0;flex-wrap:wrap}
+#nav a{font-size:12px;padding:13px 10px;border-radius:6px;white-space:nowrap}
+#nav a:first-child{background:#f2c776;color:#07292a;font-weight:800}
+.hero-reference{background:linear-gradient(100deg,#032a2c,#071f23)}
+.hero-reference .hero-scene{max-width:1490px;grid-template-columns:23% 47% 30%;min-height:405px}
+.hero-reference .hero-copy{padding:30px 14px 25px 10px}
+.hero-reference .hero-copy h1{font-size:clamp(32px,3vw,52px)}
+.hero-reference .hero-photo,.hero-reference .hero-photo img{min-height:405px}
+.hero-reference .hero-photo img{object-fit:cover;object-position:center}
+.prayer-board{margin:12px 0 12px 12px;padding:15px}
+.prayer-row{padding:7px 4px}
+.prayer-heading strong{font-size:20px}
+.verse{display:none}
+.quick-links{padding:13px 0 9px;background:#f7f7f5}
+.quick-links .rubrics{display:grid!important;grid-template-columns:repeat(12,minmax(0,1fr))!important;gap:10px!important}
+.quick-links .rubrics>a,.quick-links .rubrics>article,.quick-links .rubrics>div{min-width:0!important;min-height:78px!important;padding:10px 5px!important;background:linear-gradient(145deg,#064449,#00292c)!important;border:1px solid #235b58!important;border-radius:9px!important;color:white!important;text-align:center!important;box-shadow:0 3px 6px #0002!important}
+.quick-links .rubrics h3{font:700 12px/1.15 system-ui,sans-serif!important;color:#fff!important;margin:3px 0!important}
+.quick-links .rubrics p,.quick-links .rubrics small,.quick-links .rubrics .rubric-sub,.quick-links .rubrics .rubric-link{display:none!important}
+.quick-links .rubrics .rubric-icon,.quick-links .rubrics .icon{font-size:26px!important;color:#f4ce82!important;margin:0 auto 4px!important}
+.home-lower{display:grid;grid-template-columns:1.15fr 1fr 1fr 1fr 1.1fr;gap:12px;padding:0 0 18px;align-items:stretch}
+.home-notices,.home-khutbah,.feature-card{background:#fff;border:1px solid #e4e2da;border-radius:10px;overflow:hidden;box-shadow:0 2px 9px #0013}
+.home-box-head{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid #e5e7e4;gap:6px}
+.home-box-head h2{font:700 16px Georgia,serif;margin:0}
+.home-box-head a{font-size:10px;color:#07504a}
+.notice-item{display:flex;gap:9px;align-items:center;border-bottom:1px solid #e5e8e7;padding:10px}
+.notice-date{background:#e6f1f1;color:#123d40;border-radius:6px;padding:6px;font-weight:800;font-size:10px;min-width:43px;text-align:center}
+.notice-item strong,.khutbah-item strong{font-size:11px;display:block}
+.notice-item small,.khutbah-item small{font-size:10px;color:#777;display:block}
+.feature-card{display:flex;flex-direction:column}
+.feature-photo,.feature-graphic{height:130px;overflow:hidden;background:linear-gradient(125deg,#184b4d,#b08b54);display:grid;place-items:center}
+.feature-photo img{width:100%;height:100%;object-fit:cover}
+.feature-graphic{color:#ffe6a5;font:25px Georgia,serif;text-align:center;padding:12px}
+.graphic-mosque{font-size:80px}
+.feature-content{padding:12px;flex:1;display:flex;flex-direction:column}
+.feature-content h2{font:700 19px Georgia,serif;margin:0 0 6px}
+.feature-content p{font-size:11px;line-height:1.5;color:#555;margin:0 0 12px}
+.feature-content a{display:inline-block;margin-top:auto;align-self:flex-start;background:#073d3a;color:#fff;padding:7px 14px;border-radius:5px;font-size:11px}
+.khutbah-item{display:flex;gap:10px;padding:12px 10px;border-bottom:1px solid #e5e8e7;align-items:center}
+.khutbah-thumb{display:grid;place-items:center;width:74px;height:53px;flex:none;background:linear-gradient(130deg,#164646,#c2a36c);border-radius:6px;color:white}
+#kohet{padding:35px 0}
+#sistemet,#biblioteka,#aktualitet{scroll-margin-top:100px}
+@media(max-width:1150px){.quick-links .rubrics{grid-template-columns:repeat(12,minmax(86px,1fr))!important;overflow-x:auto;padding-bottom:7px;scroll-snap-type:x proximity}.quick-links .rubrics>*{scroll-snap-align:start}.home-lower{grid-template-columns:repeat(3,minmax(0,1fr))}.home-notices,.home-khutbah{grid-column:span 1}.hero-reference .hero-scene{grid-template-columns:30% 70%}.prayer-board{grid-column:1/-1;margin:8px 0 15px}.head{flex-wrap:wrap}}
+@media(max-width:750px){.top{position:relative}.identity .seal{width:47px;height:47px;font-size:24px}.hero-reference .hero-scene{display:grid;grid-template-columns:1fr 1fr}.hero-reference .hero-copy{padding:20px 8px 18px 0}.hero-reference .hero-copy h1{font-size:clamp(23px,5vw,35px)}.hero-reference .hero-copy .lead{font-size:12px}.hero-reference .hero-copy .hero-verse{font-size:11px}.hero-reference .hero-copy .btn{font-size:11px;padding:8px}.hero-reference .hero-photo,.hero-reference .hero-photo img{min-height:320px;height:100%}.prayer-board{grid-column:1/-1;margin:0 0 12px}.quick-links .rubrics{display:flex!important;overflow-x:auto;gap:8px!important}.quick-links .rubrics>*{flex:0 0 88px!important}.home-lower{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.home-notices,.home-khutbah{grid-column:span 2}.feature-graphic,.feature-photo{height:105px}.feature-content h2{font-size:16px}.feature-content p{font-size:10px}.home-lower .feature-card:last-of-type{grid-column:auto}.wrap{width:calc(100% - 24px)}}
