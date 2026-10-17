@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulo Zekatin / Zakat</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#063b2b,#0f6b4b);color:#102018}
+.wrap{max-width:980px;margin:auto;padding:18px}
+.card{background:#fff;border-radius:22px;padding:20px;margin:16px 0;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.hero{text-align:center;background:linear-gradient(135deg,#083d2d,#0f7956);color:white}
+.hero h1{margin:6px 0;font-size:30px}.hero p{margin:8px 0;font-size:16px;color:#e7fff3}
+h2{text-align:center;color:#09633f;margin:8px 0 18px}
+.nisab{border:3px solid #48b979;background:#f4fff8;text-align:center}
+.nisab-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.box{background:white;border-radius:18px;padding:15px;box-shadow:0 8px 18px rgba(0,0,0,.08)}
+.box b{display:block;color:#11643f;font-size:16px;margin-bottom:8px}
+.big{font-size:27px;font-weight:900;color:#071914}
+.status{font-size:14px;margin-top:12px;color:#555;line-height:1.5}
+.manual{margin-top:16px;background:#f7f7f7;border:1px solid #ddd;border-radius:18px;padding:14px}
+.manual input,.form input,.manual select{width:100%;padding:14px;border:1px solid #ccc;border-radius:14px;font-size:18px;margin-top:6px}
+.form{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+label{font-weight:bold;color:#11543a}.help{display:block;font-weight:normal;font-size:13px;color:#666;margin-top:4px;line-height:1.35}
+.result{text-align:center;background:#fff8e1;border:2px solid #e0bd4d}
+.result .amount{font-size:38px;font-weight:900;color:#8b0000}
+.btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+button.calc{border:none;border-radius:14px;padding:14px 22px;font-size:17px;font-weight:bold;background:#0d6b49;color:white;cursor:pointer}
+button.reset{background:#666}
+.details{margin-top:16px;background:white;border-radius:16px;padding:12px;border:1px solid #e5c867;text-align:left}
+.details div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed #ddd;font-size:15px}
+.details div:last-child{border-bottom:none}
+.warning{background:#fff0f0;border:1px solid #d77;border-radius:14px;padding:12px;color:#7a1111;margin-top:12px;line-height:1.5}
+.ok{background:#effcf5;border:1px solid #8bd3aa;color:#14532d;border-radius:14px;padding:12px;margin-top:12px}
+.footer{text-align:right;font-style:italic;font-size:15px}
+@media(max-width:760px){.nisab-grid,.form{grid-template-columns:1fr}.wrap{padding:10px}.hero h1{font-size:24px}.big{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="card hero">
+  <h1>📌 Kalkulo Zekatin / Zakat</h1>
+  <p>Kalkulator i Zekatit sipas shkollës juridike Hanefije</p>
+</section>
+
+<section class="card nisab">
+  <h2>📌 Nisabi aktual</h2>
+
+  <div class="nisab-grid">
+    <div class="box">
+      <b>Çmimi aktual i arit 24K / gram</b>
+      <div id="goldGram" class="big">Duke u marrë...</div>
+    </div>
+    <div class="box">
+      <b>Nisabi i arit — 87.48 g</b>
+      <div id="nisabGold" class="big">...</div>
+    </div>
+    <div class="box">
+      <b>Çmimi aktual i argjendit / gram</b>
+      <div id="silverGram" class="big">Duke u marrë...</div>
+    </div>
+    <div class="box">
+      <b>Nisabi i argjendit — 612.36 g</b>
+      <div id="nisabSilver" class="big">...</div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:12px">
+    <b>Përditësuar</b>
+    <div id="updatedAt" class="big" style="font-size:20px">...</div>
+  </div>
+
+  <div id="apiStatus" class="status">Po tentohet marrja automatike e çmimeve aktuale...</div>
+
+  <div class="manual">
+    <label>
+      Standardi i nisabit për llogaritje
+      <span class="help">Mund të zgjedhësh nisabin sipas arit ose argjendit.</span>
+    </label>
+    <select id="nisabMode" onchange="updateSelectedNisab()">
+      <option value="gold">Ari — 87.48 g</option>
+      <option value="silver">Argjendi — 612.36 g</option>
+    </select>
+
+    <label style="display:block;margin-top:14px">
+      Çmimi manual i arit €/g
+      <span class="help">Përdore vetëm nëse dëshiron ta korrigjosh manualisht.</span>
+    </label>
+    <input id="manualGold" type="number" step="0.01" placeholder="p.sh. 120.50" oninput="setManualGold()">
+
+    <label style="display:block;margin-top:14px">
+      Çmimi manual i argjendit €/g
+    </label>
+    <input id="manualSilver" type="number" step="0.001" placeholder="p.sh. 1.20" oninput="setManualSilver()">
+  </div>
+
+  <div class="ok">
+    <b>Nisabi që po përdoret:</b> <span id="selectedNisabText">Duke u llogaritur...</span>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Llogaritja e Zekatit</h2>
+
+  <div class="form">
+    <label>Para cash (€)<input id="cash" type="number" step="0.01" placeholder="0"></label>
+    <label>Para në bankë (€)<input id="bank" type="number" step="0.01" placeholder="0"></label>
+    <label>Ari që posedon (gram)<input id="goldGrams" type="number" step="0.01" placeholder="0"></label>
+    <label>Argjendi / vlera tjetër (€)<input id="silverValue" type="number" step="0.01" placeholder="0"></label>
+    <label>Mallra për tregti (€)<input id="trade" type="number" step="0.01" placeholder="0"></label>
+    <label>Borxhe që t'i kanë borxh ty (€)<input id="receivableDebts" type="number" step="0.01" placeholder="0"></label>
+    <label>Borxhe që ua ke borxh të tjerëve (€)<input id="payableDebts" type="number" step="0.01" placeholder="0"></label>
+  </div>
+
+  <br>
+  <div class="btns">
+    <button class="calc" onclick="calculateZakat()">Kalkulo Zekatin</button>
+    <button class="calc reset" onclick="resetForm()">Pastro</button>
+  </div>
+
+  <div class="warning">
+    “Borxhe që t'i kanë borxh ty” shtohen në pasuri. “Borxhe që ua ke borxh të tjerëve” zbriten.
+  </div>
+</section>
+
+<section class="card result">
+  <h2>Rezultati</h2>
+  <p>Pasuria që llogaritet për Zekat:</p>
+  <div id="totalWealth" class="amount">0,00 €</div>
+
+  <div class="details">
+    <div><span>Cash</span><strong id="dCash">0,00 €</strong></div>
+    <div><span>Bankë</span><strong id="dBank">0,00 €</strong></div>
+    <div><span>Ari</span><strong id="dGold">0,00 €</strong></div>
+    <div><span>Argjendi / vlera tjetër</span><strong id="dSilver">0,00 €</strong></div>
+    <div><span>Mallra tregtie</span><strong id="dTrade">0,00 €</strong></div>
+    <div><span>Borxhe që t'i kanë ty</span><strong id="dReceivable">0,00 €</strong></div>
+    <div><span>Borxhe që ua ke të tjerëve</span><strong id="dPayable">-0,00 €</strong></div>
+  </div>
+
+  <p id="nisabMessage">Plotëso vlerat dhe shtyp “Kalkulo Zekatin”.</p>
+  <p>Zekati 2.5%:</p>
+  <div id="zakatAmount" class="amount">0,00 €</div>
+</section>
+
+<section class="card">
+  <h2>Sqarim i shkurtër</h2>
+  <p>Nisabi i arit në këtë kalkulator është <b>87.48 g</b>, ndërsa nisabi i argjendit është <b>612.36 g</b>. Çmimet për gram merren nga tregu aktual nëpërmjet API-ve online.</p>
+  <p>Nëse API-të nuk përgjigjen, kalkulatori nuk vendos më një çmim fiks rezervë. Ai përdor vetëm çmimin e fundit të ruajtur në pajisje ose kërkon vendosje manuale.</p>
+  <p class="footer">Ideuar dhe ndërtuar nga: <strong>Hoxhë Ilaz ef. Salihi</strong></p>
+</section>
+
+</div>
+
+<script>
+let goldGramEUR = null;
+let silverGramEUR = null;
+let nisabGoldEUR = null;
+let nisabSilverEUR = null;
+let selectedNisabEUR = null;
+
+const GOLD_NISAB_GRAMS = 87.48;
+const SILVER_NISAB_GRAMS = 612.36;
+const TROY_OUNCE_GRAMS = 31.1034768;
+
+function eur(n){
+  return Number(n || 0).toLocaleString("de-DE",{style:"currency",currency:"EUR"});
+}
+function nowText(){ return new Date().toLocaleString("de-DE"); }
+
+async function fetchJson(url, timeoutMs=10000){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),timeoutMs);
+  try{
+    const res=await fetch(url,{signal:controller.signal,cache:"no-store"});
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function getUsdEurRate(){
+  const d=await fetchJson("https://api.frankfurter.dev/v2/rate/USD/EUR");
+  if(!d || !d.rate) throw new Error("USD/EUR rate unavailable");
+  return Number(d.rate);
+}
+
+async function getMetalUsdPerOz(symbol){
+  const d=await fetchJson("https://api.gold-api.com/price/"+symbol);
+  if(!d || !d.price) throw new Error(symbol+" price unavailable");
+  return {price:Number(d.price),updatedAt:d.updatedAt || null};
+}
+
+function updateViews(sourceText){
+  if(goldGramEUR){
+    nisabGoldEUR=goldGramEUR*GOLD_NISAB_GRAMS;
+    document.getElementById("goldGram").textContent=eur(goldGramEUR);
+    document.getElementById("nisabGold").textContent=eur(nisabGoldEUR);
+  } else {
+    document.getElementById("goldGram").textContent="Nuk u mor";
+    document.getElementById("nisabGold").textContent="—";
+  }
+
+  if(silverGramEUR){
+    nisabSilverEUR=silverGramEUR*SILVER_NISAB_GRAMS;
+    document.getElementById("silverGram").textContent=eur(silverGramEUR);
+    document.getElementById("nisabSilver").textContent=eur(nisabSilverEUR);
+  } else {
+    document.getElementById("silverGram").textContent="Nuk u mor";
+    document.getElementById("nisabSilver").textContent="—";
+  }
+
+  document.getElementById("updatedAt").textContent=nowText();
+  document.getElementById("apiStatus").textContent=sourceText;
+  updateSelectedNisab();
+}
+
+function updateSelectedNisab(){
+  const mode=document.getElementById("nisabMode").value;
+  selectedNisabEUR = mode==="silver" ? nisabSilverEUR : nisabGoldEUR;
+  const label = mode==="silver" ? "Argjendi 612.36 g" : "Ari 87.48 g";
+  document.getElementById("selectedNisabText").textContent =
+    selectedNisabEUR ? label+" = "+eur(selectedNisabEUR) : label+" — çmimi mungon";
+}
+
+async function loadPricesAutomatic(){
+  document.getElementById("apiStatus").textContent="Po merren çmimet aktuale nga Gold API dhe kursi USD/EUR nga Frankfurter...";
+
+  let gotGold=false, gotSilver=false;
+
+  try{
+    const fx=await getUsdEurRate();
+
+    try{
+      const gold=await getMetalUsdPerOz("XAU");
+      goldGramEUR=(gold.price/TROY_OUNCE_GRAMS)*fx;
+      gotGold=true;
+      localStorage.setItem("zakat_goldGramEUR",String(goldGramEUR));
+      localStorage.setItem("zakat_goldSavedAt",nowText());
+    }catch(e){}
+
+    try{
+      const silver=await getMetalUsdPerOz("XAG");
+      silverGramEUR=(silver.price/TROY_OUNCE_GRAMS)*fx;
+      gotSilver=true;
+      localStorage.setItem("zakat_silverGramEUR",String(silverGramEUR));
+      localStorage.setItem("zakat_silverSavedAt",nowText());
+    }catch(e){}
+
+    if(gotGold || gotSilver){
+      updateViews("✅ Çmimet u morën automatikisht nga Gold API; USD→EUR nga Frankfurter.");
+      return;
+    }
+  }catch(e){}
+
+  const savedGold=parseFloat(localStorage.getItem("zakat_goldGramEUR"));
+  const savedSilver=parseFloat(localStorage.getItem("zakat_silverGramEUR"));
+
+  if(savedGold>0) goldGramEUR=savedGold;
+  if(savedSilver>0) silverGramEUR=savedSilver;
+
+  if(goldGramEUR || silverGramEUR){
+    updateViews("⚠️ API aktualisht nuk u përgjigj. Po përdoret çmimi i fundit i ruajtur në këtë pajisje. Mund ta korrigjosh manualisht.");
+  }else{
+    updateViews("❌ Çmimi aktual nuk u mor. Nuk përdoret më asnjë vlerë fikse rezervë. Vendose çmimin manualisht ose provo 'refresh'.");
+  }
+}
+
+function setManualGold(){
+  const v=parseFloat(document.getElementById("manualGold").value);
+  if(v>0){
+    goldGramEUR=v;
+    localStorage.setItem("zakat_goldGramEUR",String(v));
+    localStorage.setItem("zakat_goldSavedAt",nowText());
+    updateViews("Çmimi i arit është vendosur manualisht.");
+  }
+}
+function setManualSilver(){
+  const v=parseFloat(document.getElementById("manualSilver").value);
+  if(v>0){
+    silverGramEUR=v;
+    localStorage.setItem("zakat_silverGramEUR",String(v));
+    localStorage.setItem("zakat_silverSavedAt",nowText());
+    updateViews("Çmimi i argjendit është vendosur manualisht.");
+  }
+}
+function val(id){ return parseFloat(document.getElementById(id).value)||0; }
+
+function calculateZakat(){
+  const cash=val("cash");
+  const bank=val("bank");
+  const goldValue=val("goldGrams")*(goldGramEUR||0);
+  const silverValue=val("silverValue");
+  const trade=val("trade");
+  const receivableDebts=val("receivableDebts");
+  const payableDebts=val("payableDebts");
+
+  const total=Math.max(0,cash+bank+goldValue+silverValue+trade+receivableDebts-payableDebts);
+
+  document.getElementById("dCash").textContent=eur(cash);
+  document.getElementById("dBank").textContent=eur(bank);
+  document.getElementById("dGold").textContent=eur(goldValue);
+  document.getElementById("dSilver").textContent=eur(silverValue);
+  document.getElementById("dTrade").textContent=eur(trade);
+  document.getElementById("dReceivable").textContent=eur(receivableDebts);
+  document.getElementById("dPayable").textContent="-"+eur(payableDebts);
+  document.getElementById("totalWealth").textContent=eur(total);
+
+  updateSelectedNisab();
+
+  if(!selectedNisabEUR){
+    document.getElementById("nisabMessage").textContent="Nuk ka çmim aktual për nisabin. Vendose çmimin manualisht ose provo përsëri.";
+    document.getElementById("zakatAmount").textContent=eur(0);
+    return;
+  }
+
+  if(total>=selectedNisabEUR){
+    document.getElementById("nisabMessage").textContent=
+      "Pasuria e arrin nisabin e zgjedhur: "+eur(selectedNisabEUR)+". Nëse plotësohen kushtet e tjera, Zekati është 2.5%.";
+    document.getElementById("zakatAmount").textContent=eur(total*0.025);
+  } else {
+    document.getElementById("nisabMessage").textContent=
+      "Pasuria nuk e arrin nisabin e zgjedhur: "+eur(selectedNisabEUR)+".";
+    document.getElementById("zakatAmount").textContent=eur(0);
+  }
+}
+
+function resetForm(){
+  ["cash","bank","goldGrams","silverValue","trade","receivableDebts","payableDebts"].forEach(id=>document.getElementById(id).value="");
+  ["dCash","dBank","dGold","dSilver","dTrade","dReceivable"].forEach(id=>document.getElementById(id).textContent=eur(0));
+  document.getElementById("dPayable").textContent="-"+eur(0);
+  document.getElementById("totalWealth").textContent=eur(0);
+  document.getElementById("zakatAmount").textContent=eur(0);
+  document.getElementById("nisabMessage").textContent="Plotëso vlerat dhe shtyp “Kalkulo Zekatin”.";
+}
+
+loadPricesAutomatic();
+</script>
+</body>
+</html>
