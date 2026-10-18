@@ -1,0 +1,1257 @@
+<!DOCTYPE html>  <html lang="sq">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Kohët e Namazit TV - Xhamia Frankenthal</title>  <style>  
+*{box-sizing:border-box}  
+html,body{  
+  margin:0;padding:0;width:100%;height:100%;  
+  overflow:hidden;font-family:Arial,sans-serif;color:#fff;background:#020b12;  
+}  
+body{  
+  background-image:  
+    linear-gradient(rgba(0,8,15,.10),rgba(0,8,15,.24)),  
+    url("https://archive.org/download/Jacia/Sabahu.png");  
+  background-size:cover;background-position:center;background-repeat:no-repeat;  
+}  
+.screen{  
+  width:100vw;height:100vh;padding:5px 18px;  
+  display:flex;flex-direction:column;gap:5px;position:relative;  
+}  
+.header{  
+  height:88px;display:grid;grid-template-columns:1.05fr 1fr 1.05fr;  
+  align-items:center;background:rgba(2,13,22,.54);  
+  border:1px solid rgba(100,220,255,.55);border-radius:16px;  
+  padding:4px 16px 5px;box-shadow:0 0 24px rgba(0,0,0,.45);  
+}  
+.mosque{display:flex;align-items:center;gap:9px}  
+.logo{  
+  width:55px;height:55px;border-radius:11px;background:#fff;  
+  display:flex;align-items:center;justify-content:center;overflow:hidden;  
+}  
+.logo img{width:100%;height:100%;object-fit:contain}  
+.mosque-title{  
+  font-size:21px;font-weight:900;color:#7eeaff;line-height:1.02;  
+  text-shadow:0 0 12px rgba(126,234,255,.55);  
+}  
+.mosque-sub{font-size:12px;color:#d7f7ff}  
+.clock{text-align:center;transform:translateY(-3px)}  
+#timeNow{  
+  font-size:45px;font-weight:900;color:#8eeaff;letter-spacing:2px;  
+  line-height:1;text-shadow:0 0 18px rgba(103,225,255,.9);  
+}  
+#dateNow{font-size:13px;color:#ffd36b;line-height:1.25;font-weight:900;margin-top:2px}  
+#hijriNow{  
+  display:block;width:max-content;max-width:100%;margin:2px auto 0;padding:3px 12px;  
+  background:rgba(0,0,0,.42);border:1px solid rgba(126,234,255,.58);border-radius:10px;  
+  font-size:12px;font-weight:900;color:#d7f7ff;line-height:1.1;  
+}  
+.next{text-align:right;font-size:16px;color:#ffd36b;font-weight:900;line-height:1.22}  
+.weather{font-size:14px;color:#bff6ff;margin-top:2px}  
+.ezan-btn,.lang-btn{  
+  margin-top:1px;padding:4px 10px;border-radius:9px;font-size:12px;font-weight:900;cursor:pointer;  
+}  
+.ezan-btn{border:1px solid #ffd36b;background:rgba(255,211,107,.16);color:#ffd36b}  
+.lang-btn{border:1px solid #7eeaff;background:rgba(126,234,255,.12);color:#7eeaff}  
+  
+.prayer-grid{  
+  flex:1 1 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:7px;  
+  min-height:0;align-items:stretch;  
+}  
+.card{  
+  position:relative;overflow:hidden;border-radius:20px;  
+  background:rgba(2,13,22,.20);  
+  border:2px solid rgba(126,234,255,.38);  
+  box-shadow:0 0 22px rgba(0,0,0,.52);  
+  display:flex;flex-direction:column;align-items:center;justify-content:center;  
+  text-align:center;min-height:150px;  
+  transition:border-color .35s ease,box-shadow .35s ease,background .35s ease,transform .35s ease;  
+  isolation:isolate;  
+}  
+.card::before{  
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;  
+  background:rgba(2,13,22,.10);transition:background .35s ease;  
+}  
+  
+/* NGJYROSJA NË KREJT FUSHËN - transparente që të shihet sfondi */  
+.card.past{  
+  border-color:rgba(255,92,92,.76);  
+  box-shadow:inset 0 0 34px rgba(175,22,22,.18),0 0 14px rgba(255,70,70,.22),0 0 22px rgba(0,0,0,.50);  
+}  
+.card.past::before{  
+  background:linear-gradient(145deg,rgba(140,18,18,.25),rgba(40,5,5,.12));  
+}  
+.card.active{  
+  border:3px solid rgba(255,211,107,.94);  
+  box-shadow:inset 0 0 40px rgba(255,180,40,.13),0 0 13px rgba(255,211,107,.55),0 0 30px rgba(255,211,107,.24),0 0 22px rgba(0,0,0,.50);  
+}  
+.card.active::before{  
+  background:linear-gradient(145deg,rgba(255,190,50,.20),rgba(65,45,5,.10));  
+}  
+.card.next-prayer{  
+  border:3px solid rgba(74,222,128,.94);  
+  box-shadow:inset 0 0 40px rgba(34,197,94,.14),0 0 12px rgba(74,222,128,.54),0 0 28px rgba(34,197,94,.24),0 0 22px rgba(0,0,0,.50);  
+}  
+.card.next-prayer::before{  
+  background:linear-gradient(145deg,rgba(16,130,74,.24),rgba(5,45,28,.10));  
+}  
+.card.calling{  
+  border:4px solid #ffdf67!important;  
+  box-shadow:inset 0 0 46px rgba(255,211,107,.18),0 0 28px rgba(255,211,107,.95),0 0 48px rgba(255,45,45,.45)!important;  
+  animation:adhanPulse 1.15s ease-in-out infinite;  
+}  
+.card.calling::before{  
+  background:linear-gradient(145deg,rgba(125,20,20,.52),rgba(8,70,48,.42))!important;  
+}  
+@keyframes adhanPulse{  
+  0%,100%{transform:scale(1);filter:brightness(1)}  
+  50%{transform:scale(1.012);filter:brightness(1.10)}  
+}  
+.statusBadge{  
+  margin-top:7px;min-height:22px;padding:4px 9px;border-radius:999px;  
+  font-size:11px;font-weight:950;letter-spacing:.15px;border:1px solid transparent;  
+  background:rgba(0,0,0,.28);text-shadow:0 1px 6px #000;  
+}  
+.card.past .statusBadge{color:#ffd2d2;border-color:rgba(255,100,100,.55);background:rgba(120,15,15,.28)}  
+.card.active .statusBadge{color:#ffe59a;border-color:rgba(255,211,107,.65);background:rgba(130,90,10,.26)}  
+.card.next-prayer .statusBadge{color:#baf7ce;border-color:rgba(74,222,128,.65);background:rgba(10,100,55,.27)}  
+.timeProgress{  
+  position:absolute;left:8px;right:8px;bottom:7px;height:5px;border-radius:999px;  
+  background:rgba(255,255,255,.13);overflow:hidden;opacity:0;transition:opacity .25s ease;  
+}  
+.card.active .timeProgress{opacity:1}  
+.timeProgressFill{  
+  height:100%;width:0;border-radius:999px;  
+  background:linear-gradient(90deg,#ffd36b,#fff0aa);  
+  box-shadow:0 0 10px rgba(255,211,107,.75);  
+}  
+.callingBadge{  
+  position:absolute;top:7px;left:50%;transform:translateX(-50%);z-index:5;white-space:nowrap;  
+  padding:5px 10px;border-radius:999px;background:#b91c1c;color:#fff7cc;  
+  border:2px solid #ffd36b;font-size:12px;font-weight:950;  
+}  
+.icon{font-size:35px;margin-bottom:1px;line-height:1}  
+.name{font-size:22px;font-weight:900;margin-bottom:1px;color:#eaffff;text-shadow:0 0 12px rgba(0,0,0,.9)}  
+.time{font-size:42px;font-weight:900;color:#9eefff;line-height:1.05;text-shadow:0 0 18px rgba(126,234,255,.85)}  
+  
+.premium-message{  
+  flex:0 0 58px;min-height:58px;max-height:58px;position:relative;  
+  display:grid;grid-template-columns:28% 72%;align-items:center;gap:7px;  
+  padding:3px 10px 5px;border-radius:14px;border:1px solid rgba(255,211,107,.58);  
+  background:linear-gradient(90deg,rgba(2,13,22,.70),rgba(2,13,22,.46),rgba(2,13,22,.70));  
+  overflow:hidden;  
+}  
+.premium-arabic{  
+  direction:rtl;text-align:center;font-family:"Amiri","Scheherazade New","Times New Roman",serif;  
+  font-size:14px;line-height:1.08;color:#fff8df;font-weight:800;max-height:46px;overflow:hidden;  
+}  
+.premium-side{position:relative;border-left:1px solid rgba(255,211,107,.34);padding-left:8px;padding-right:7px;height:47px;overflow:hidden}  
+.premium-label{display:inline-block;padding:1px 7px;border-radius:999px;background:rgba(255,211,107,.18);border:1px solid rgba(255,211,107,.48);color:#ffd36b;font-size:8px;font-weight:900}  
+.premium-sq{font-size:11.5px;line-height:1.08;font-weight:800;color:#fff;max-height:27px;overflow:hidden}  
+.premium-source{margin-top:1px;font-size:7.5px;color:#bff6ff;font-weight:bold}  
+.premium-count{position:absolute;right:6px;top:2px;font-size:7px;color:#ffd36b;font-weight:900}  
+.premium-progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.10);overflow:hidden}  
+.premium-progress-fill{height:100%;width:0;background:#ffd36b;box-shadow:0 0 8px rgba(255,211,107,.8)}  
+  
+.info-box{  
+  height:48px;background:rgba(2,12,20,.82);border:1px solid rgba(100,220,255,.65);  
+  border-radius:13px;display:grid;grid-template-columns:112px 1fr;overflow:hidden;  
+  box-shadow:0 0 16px rgba(0,0,0,.55);  
+}  
+.info-title{  
+  background:linear-gradient(145deg,#bff6ff,#64dcff,#147a99);color:#031018;  
+  font-size:10px;font-weight:950;display:flex;align-items:center;justify-content:center;  
+  text-align:center;padding:2px 5px;line-height:1.03;z-index:2;  
+}  
+.info-content{position:relative;overflow:hidden;display:flex;align-items:center}  
+.info-slide{  
+  position:absolute;white-space:nowrap;font-size:16px;font-weight:900;color:#bff6ff;  
+  text-shadow:0 0 10px rgba(126,234,255,.75);left:0;will-change:transform;  
+}  
+  
+/* POPUP */  
+#popup,#adhanDuaPopup{  
+  position:fixed;inset:0;background:rgba(0,0,0,.80);display:none;  
+  align-items:center;justify-content:center;z-index:9999;padding:14px;  
+}  
+.popupbox{  
+  width:90%;max-width:680px;background:linear-gradient(145deg,#062c1b,#0f6840);  
+  border:2px solid #ffd36b;border-radius:24px;padding:24px;text-align:center;  
+}  
+.popupbox h2{margin:0 0 12px;font-size:31px;color:#ffd36b}  
+.popupbox p{font-size:20px;line-height:1.38;font-weight:900}  
+.closebtn{  
+  padding:9px 25px;border:none;border-radius:12px;font-size:17px;font-weight:900;background:#fff;cursor:pointer;  
+}  
+  
+/* DUAJA - më e vogël */  
+.duaBox{  
+  position:relative;width:88%;max-width:760px;max-height:86vh;overflow:auto;  
+  background:linear-gradient(145deg,rgba(8,32,42,.96),rgba(11,77,58,.96));  
+  border:2px solid #ffd36b;border-radius:22px;padding:18px 22px;text-align:center;  
+  box-shadow:0 0 34px rgba(0,0,0,.55);  
+}  
+.duaClose{  
+  position:absolute;top:8px;right:10px;width:38px;height:38px;border:none;border-radius:50%;  
+  background:#ffd36b;color:#06131b;font-size:26px;font-weight:900;padding:0;cursor:pointer;  
+}  
+.duaTitle{font-size:25px;color:#ffd36b;font-weight:950;margin-bottom:10px;padding:0 35px}  
+.duaArabic{  
+  direction:rtl;font-family:"Amiri","Scheherazade New","Times New Roman",serif;  
+  font-size:28px;line-height:1.65;color:#fff7d6;padding:4px 8px;  
+}  
+.duaTrans{  
+  font-size:18px;line-height:1.38;font-weight:900;color:#bff6ff;  
+  background:rgba(0,0,0,.20);border-radius:13px;padding:9px 12px;margin-top:6px;  
+}  
+.duaTranslation{font-size:17px;line-height:1.42;color:#fff;font-weight:700;margin-top:7px}  
+.duaAudioBtn{  
+  border:1px solid #7eeaff;background:rgba(126,234,255,.14);color:#7eeaff;  
+  border-radius:12px;padding:8px 13px;font-size:14px;font-weight:900;cursor:pointer;margin-top:8px;  
+}  
+.duaSource{font-size:11px;color:#d7f7ff;margin-top:8px}  
+.duaReadLine.reading{outline:2px solid rgba(255,211,107,.7);background:rgba(255,211,107,.08);border-radius:10px}  
+  
+@media(max-width:900px){  
+  body{overflow:auto;background-attachment:fixed}  
+  .screen{height:auto;min-height:100vh;padding:6px 8px;gap:6px}  
+  .header{height:auto;grid-template-columns:1fr;text-align:center;gap:8px}  
+  .mosque{justify-content:center}.next{text-align:center}.clock{transform:none}  
+  #timeNow{font-size:42px}  
+  .prayer-grid{grid-template-columns:1fr 1fr;gap:6px;flex:none}  
+  .card{min-height:132px;border-radius:18px}  
+  .card:last-child{grid-column:1/3;min-height:138px}  
+  .icon{font-size:28px}.name{font-size:19px}.time{font-size:36px}  
+  .statusBadge{font-size:10px;margin-top:5px}  
+  .premium-message{min-height:72px;max-height:72px;flex-basis:72px}  
+  .info-box{height:52px;grid-template-columns:96px 1fr}  
+  .duaBox{width:96%;padding:16px 14px}  
+  .duaArabic{font-size:23px}.duaTrans{font-size:15px}.duaTranslation{font-size:15px}  
+}  
+  
+/* ===== SHTESA PREMIUM: DHIKR + LAJME + BILANC ===== */  
+.tvOverlay{position:fixed;inset:0;z-index:12000;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,7,13,.84);backdrop-filter:blur(7px)}  
+.tvOverlay.show{display:flex}  
+.tvPanel{width:min(96vw,1500px);max-height:92vh;overflow:hidden;border:2px solid rgba(255,211,107,.82);border-radius:26px;background:linear-gradient(145deg,rgba(3,23,34,.98),rgba(5,68,58,.97));box-shadow:0 24px 80px #000b,0 0 35px rgba(126,234,255,.18);padding:18px}  
+.tvHead{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:14px}  
+.tvHead h2{margin:0;color:#ffd36b;font-size:28px}.tvLive{font-size:13px;font-weight:900;color:#7eeaff}  
+.tvClose{border:1px solid #ffd36b;background:#ffd36b;color:#07131b;border-radius:12px;padding:8px 15px;font-weight:950;cursor:pointer}  
+.tv5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}  
+.tvCard{min-width:0;border:1px solid rgba(126,234,255,.42);border-radius:19px;background:linear-gradient(160deg,rgba(12,46,63,.92),rgba(4,24,35,.96));box-shadow:inset 0 0 25px rgba(126,234,255,.05),0 10px 25px #0005;padding:12px;overflow:hidden}  
+.newsCountry{text-align:center;color:#ffd36b;font-size:17px;font-weight:950;white-space:normal;min-height:22px}  
+.newsPhoto{width:100%;height:145px;object-fit:cover;border-radius:13px;margin:9px 0;border:1px solid rgba(255,255,255,.16);background:#06131b}  
+.newsTitle{font-size:16px;line-height:1.24;font-weight:900;color:#fff;white-space:normal;overflow:visible}  
+.finCard{text-align:center;min-height:205px;display:flex;flex-direction:column;justify-content:center}  
+.finLabel{color:#bff6ff;font-size:16px;font-weight:900}.finValue{color:#fff;font-size:31px;font-weight:950;margin-top:10px}.finSub{color:#ffd36b;font-size:12px;font-weight:850;margin-top:8px}  
+.dhikr3{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:13px}  
+.dhikrCard{border:1px solid rgba(255,211,107,.48);border-radius:20px;background:rgba(2,18,29,.82);padding:12px 14px;min-height:260px;max-height:68vh;overflow:auto;scrollbar-width:thin}  
+.dhikrTag{color:#ffd36b;font-size:12px;font-weight:950;margin-bottom:8px}.dhikrAr{direction:rtl;text-align:center;font-family:"Amiri","Scheherazade New","Times New Roman",serif;font-size:clamp(17px,1.65vw,27px);line-height:1.42;color:#fff8df;white-space:pre-wrap;overflow-wrap:anywhere}  
+.dhikrTr{font-size:clamp(13px,1.15vw,17px);line-height:1.32;color:#7eeaff;font-weight:850;white-space:pre-wrap;overflow-wrap:anywhere}.dhikrSq{font-size:clamp(13px,1.18vw,18px);line-height:1.34;color:#fff;font-weight:850;white-space:pre-wrap;overflow-wrap:anywhere}.dhikrCard.longText .dhikrAr{font-size:clamp(15px,1.35vw,22px);line-height:1.30}.dhikrCard.longText .dhikrTr,.dhikrCard.longText .dhikrSq{font-size:clamp(11px,1vw,15px);line-height:1.24}  
+.dhikrActive{outline:2px solid #ffd36b;box-shadow:0 0 25px rgba(255,211,107,.22)}  
+.dhikrFoot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:#bff6ff;font-weight:900}.dhikrBar{height:5px;background:#ffffff18;border-radius:999px;overflow:hidden;margin-top:9px}.dhikrBar>div{height:100%;width:0;background:#ffd36b}  
+@media(max-width:900px){.tvOverlay{padding:8px}.tvPanel{padding:10px}.tvHead h2{font-size:20px}.tv5{gap:5px}.tvCard{padding:6px;border-radius:12px}.newsCountry{font-size:11px}.newsPhoto{height:72px;margin:5px 0}.newsTitle{font-size:10px;line-height:1.15}.finCard{min-height:120px}.finLabel{font-size:11px}.finValue{font-size:19px}.dhikr3{gap:6px}.dhikrCard{padding:8px;min-height:180px}.dhikrAr{font-size:20px}.dhikrTr,.dhikrSq{font-size:12px}}  
+  
+  
+/* ===== POPUP PREMIUM V2: LAJME + BILANC ===== */  
+#newsPopup .tvPanel,#financePopup .tvPanel{background:radial-gradient(circle at 50% 0%,rgba(11,91,82,.98),rgba(2,18,30,.99) 62%);border:2px solid rgba(255,211,107,.9)}  
+#newsGrid .tvCard{padding:9px;display:flex;flex-direction:column;min-height:265px}  
+.newsCountry{display:flex;align-items:center;justify-content:center;gap:7px;font-size:16px!important;min-height:28px!important;background:rgba(255,211,107,.09);border-radius:10px;padding:4px}  
+.newsFlag{display:none!important}  
+.newsPhoto{height:128px!important;flex:none;background:linear-gradient(135deg,#092738,#06141d);display:block}  
+.newsPhotoFallback{height:128px;border-radius:13px;margin:9px 0;display:flex;align-items:center;justify-content:center;font-size:40px;background:linear-gradient(135deg,#0b3446,#08221e);border:1px solid rgba(255,255,255,.15)}  
+.newsTitle{font-size:14px!important;line-height:1.22!important;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}  
+#financeGrid .tvCard{position:relative;min-height:235px;padding:14px 10px;border-color:rgba(255,211,107,.34);background:linear-gradient(160deg,rgba(10,61,70,.94),rgba(3,26,40,.98))}  
+.finIcon{font-size:36px;margin-bottom:8px}.finLabel{font-size:15px!important;color:#ffd36b!important;text-transform:uppercase;letter-spacing:.3px}  
+.finValue{font-size:29px!important;line-height:1.05;text-shadow:0 0 18px rgba(126,234,255,.18);overflow-wrap:anywhere}  
+.finSub{font-size:12px!important;color:#bff6ff!important}  
+.finAccent{position:absolute;left:12px;right:12px;bottom:8px;height:4px;border-radius:99px;background:linear-gradient(90deg,#ffd36b,#7eeaff)}  
+@media(max-width:900px){  
+ #newsGrid .tvCard{min-height:190px}.newsFlag{font-size:17px}.newsPhoto,.newsPhotoFallback{height:78px!important;margin:5px 0}.newsTitle{font-size:10px!important;-webkit-line-clamp:5}  
+ #financeGrid .tvCard{min-height:155px;padding:8px 5px}.finIcon{font-size:24px;margin-bottom:3px}.finLabel{font-size:10px!important}.finValue{font-size:17px!important}.finSub{font-size:9px!important}  
+}  
+  
+  
+/* DRITA E DITES - FULL TEXT FIX */  
+.premium-message{  
+  flex:0 0 112px!important;  
+  min-height:112px!important;  
+  max-height:112px!important;  
+  grid-template-columns:30% 70%!important;  
+  padding:7px 12px 8px!important;  
+}  
+.premium-arabic{  
+  direction:ltr!important;text-align:center!important;font-family:Arial,sans-serif!important;  
+  font-size:18px!important;  
+  line-height:1.32!important;  
+  max-height:92px!important;  
+  overflow:auto!important;  
+}  
+.premium-side{  
+  height:94px!important;  
+  overflow:hidden!important;  
+  padding-left:12px!important;  
+  padding-right:28px!important;  
+}  
+.premium-label{font-size:10px!important}  
+.premium-sq{  
+  font-size:15px!important;  
+  line-height:1.23!important;  
+  max-height:61px!important;  
+  overflow:auto!important;  
+  white-space:pre-line!important;  
+}  
+.premium-source{  
+  font-size:9px!important;  
+  line-height:1.15!important;  
+  white-space:normal!important;  
+  overflow:visible!important;  
+}  
+.premium-count{font-size:9px!important;right:7px!important;top:3px!important}  
+@media(max-width:900px){  
+ .premium-message{min-height:128px!important;max-height:128px!important;flex-basis:128px!important;grid-template-columns:31% 69%!important}  
+ .premium-arabic{font-size:15px!important;line-height:1.25!important;max-height:105px!important}  
+ .premium-side{height:108px!important;padding-left:8px!important;padding-right:24px!important}  
+ .premium-sq{font-size:12px!important;line-height:1.18!important;max-height:78px!important}  
+ .premium-source{font-size:8px!important}  
+}  
+  
+/* FIX TV 16:9 / LG OLED: dhikri pa prerje */  
+@media (min-width:1200px) and (min-aspect-ratio:16/10){  
+ #dhikrPopup .tvPanel{width:min(97vw,1700px);max-height:95vh;padding:14px 16px}  
+ #dhikrPopup .tvHead{margin-bottom:8px}  
+ #dhikrPopup .tvHead h2{font-size:24px}  
+ #dhikrPopup .dhikr3{height:min(66vh,600px);align-items:stretch}  
+ #dhikrPopup .dhikrCard{height:100%;max-height:none;min-height:0}  
+}  
+  
+  
+/* V4: Dhikri TV fit - mos pritet teksti */  
+#dhikrPopup .dhikrPanel{max-height:96vh;overflow:auto}  
+#dhikrPopup .dhikrCards{align-items:stretch;min-height:0}  
+#dhikrPopup .dhikrCard{min-height:0;overflow:auto;padding:12px}  
+#dhikrPopup .dhikrAr{font-size:clamp(20px,2.15vw,36px)!important;line-height:1.45!important;white-space:pre-line}  
+#dhikrPopup .dhikrTr,#dhikrPopup .dhikrSq{font-size:clamp(16px,1.45vw,26px)!important;line-height:1.34!important;white-space:pre-line}  
+@media (max-height:800px){#dhikrPopup .dhikrAr{font-size:22px!important}#dhikrPopup .dhikrTr,#dhikrPopup .dhikrSq{font-size:17px!important}}  
+  
+/* V10: DRITA E DITES - majtas VETEM titulli, djathtas materiali */  
+.premium-arabic{direction:ltr!important;text-align:center!important;font-family:Arial,sans-serif!important;font-size:clamp(16px,1.55vw,25px)!important;line-height:1.15!important;font-weight:950!important;max-height:none!important;overflow:hidden!important;padding:4px 5px!important;margin:0!important;color:#ffd36b!important}  
+#premiumLabel{display:block!important;background:none!important;border:0!important;border-radius:0!important;padding:0 2px 3px!important;margin:0!important;color:#fff!important;font-family:Arial,sans-serif!important;font-size:clamp(15px,1.45vw,24px)!important;line-height:1.35!important;font-weight:800!important;direction:rtl!important;text-align:center!important;white-space:normal!important;max-height:49px!important;overflow:hidden!important}  
+.premium-sq{padding-top:2px!important;margin-top:0!important;font-size:clamp(14px,1.35vw,22px)!important;line-height:1.16!important;max-height:47px!important;overflow:hidden!important;white-space:pre-line!important}  
+.premium-source{font-size:clamp(8px,.72vw,12px)!important;line-height:1.1!important;white-space:normal!important;overflow:hidden!important;max-height:15px!important}  
+.premium-side{display:flex!important;flex-direction:column!important;justify-content:center!important}  
+#dhikrPopup .dhikrReadingLine{color:#ffe37c!important;background:rgba(255,220,75,.19);outline:1px solid rgba(255,220,75,.45);border-radius:4px;text-shadow:0 0 9px rgba(255,220,75,.35)}  
+
+/* Telefon: numërimi dhe kontrolli gjithmonë të dukshëm */
+#dhikrPopup .tvPanel{display:flex;flex-direction:column;max-height:96dvh;overflow:hidden}
+#dhikrPopup .tvHead{flex:none;flex-wrap:wrap;gap:7px;margin-bottom:8px}
+#dhikrPopup #dhikrTitle{font-size:clamp(17px,4.3vw,27px);flex:1 1 55%;min-width:0}
+#dhikrPopup #dhikrCount{font-size:clamp(12px,3.2vw,17px);flex:1 1 100%;order:3;white-space:normal}
+#dhikrPopup .dhikr3{flex:1 1 auto;min-height:0;overflow:hidden}
+#dhikrPopup .dhikrCard{min-height:0;max-height:none;overflow:auto}
+#dhikrPopup .dhikrFoot,#dhikrPopup .dhikrBar{flex:none}
+@media(max-width:900px){#dhikrPopup{padding:4px}#dhikrPopup .tvPanel{width:100%;padding:9px 7px;max-height:97dvh}#dhikrPopup .dhikr3{gap:4px}#dhikrPopup .dhikrCard{padding:6px 4px}#dhikrPopup .dhikrAr{font-size:clamp(15px,3.7vw,24px)!important}#dhikrPopup .dhikrTr,#dhikrPopup .dhikrSq{font-size:clamp(12px,3.3vw,18px)!important}#dhikrPopup .dhikrFoot{font-size:12px}}
+
+/* Dhikr TV: të tria kolonat lexohen plotësisht me scroll automatik, numërim pa përqindje */
+#dhikrPopup .tvPanel{max-height:96vh;display:flex;flex-direction:column;overflow:hidden}
+#dhikrPopup .dhikr3{flex:1 1 auto;min-height:0;overflow:hidden;grid-template-columns:repeat(3,minmax(0,1fr))}
+#dhikrPopup .dhikrCard{height:100%;max-height:none;min-height:0;overflow-y:auto;overflow-x:hidden;padding:9px 11px}
+#dhikrPopup .dhikrAr{font-size:clamp(16px,1.55vw,25px)!important;line-height:1.34!important}
+#dhikrPopup .dhikrTr,#dhikrPopup .dhikrSq{font-size:clamp(13px,1.18vw,19px)!important;line-height:1.25!important}
+#dhikrPopup .dhikrFoot{flex:none;font-size:15px}
+#dhikrPopup .dhikrBar{display:none!important}
+@media(max-width:900px){#dhikrPopup .dhikrAr{font-size:clamp(12px,3vw,19px)!important}#dhikrPopup .dhikrTr,#dhikrPopup .dhikrSq{font-size:clamp(11px,2.6vw,16px)!important}}
+/* Dhikri: tri kolonat me tekst të plotë, numërimi poshtë */
+#dhikrPopup .dhikr3{min-height:0;overflow:hidden}
+#dhikrPopup .dhikrCard{overflow-y:auto!important;overflow-x:hidden!important;scrollbar-width:thin}
+#dhikrPopup .dhikrAr,#dhikrPopup .dhikrTr,#dhikrPopup .dhikrSq{overflow-wrap:anywhere;white-space:pre-wrap!important}
+#dhikrPopup .dhikrFoot{font-size:clamp(13px,1.2vw,19px);color:#ffe28a}
+</style>  <script src="live-services.js"></script>
+</head>  <body>  
+<div class="screen">  
+  <div class="header">  
+    <div class="mosque">  
+      <div class="logo">  
+        <img src="https://archive.org/download/20260126-152726-0000/20260126_152726_0000.png" alt="Logo">  
+      </div>  
+      <div>  
+        <div class="mosque-title">Xhamia Shqiptare</div>  
+        <div class="mosque-title">Frankenthal</div>  
+        <div class="mosque-sub">Islamischer Verein Frankenthal - RLP</div>  
+      </div>  
+    </div>  <div class="clock">  
+  <div id="timeNow">--:--</div>  
+  <div id="dateNow">Duke u ngarkuar...</div>  
+  <div id="hijriNow">Data Hixhri...</div>  
+</div>  
+
+<div class="next">  
+  <div id="countdown">⏳ Duke marrë kohët...</div>  
+  <div class="weather" id="weatherNow">📍 Qyteti: Frankenthal • 🌡️ Temperatura: --°C</div>  
+  <button class="ezan-btn" id="adhanBtn" onclick="enableAdhan()">🔊 Ezani ON</button>  
+  <button class="lang-btn" id="langBtn" onclick="toggleLang()">🇩🇪 Deutsch</button>  
+</div>
+
+  </div>    <div class="prayer-grid" id="grid"></div>    <div class="premium-message" id="premiumMessage">  
+    <div class="premium-arabic" id="premiumArabic">AJETI I DITËS</div>  
+    <div class="premium-side">  
+      <div class="premium-label" id="premiumLabel">📖 Ajeti i Ditës</div>  
+      <div class="premium-sq" id="premiumSq">Duke marrë përmbajtjen e Dritës së Ditës...</div>  
+      <div class="premium-source" id="premiumSource"></div>  
+      <div class="premium-count" id="premiumCount"></div>  
+    </div>  
+    <div class="premium-progress"><div class="premium-progress-fill" id="premiumProgressFill"></div></div>  
+  </div>    <div class="info-box">  
+    <div class="info-title" id="infoTitle">📢 INFO XHAMIA</div>  
+    <div class="info-content">  
+      <div class="info-slide" id="infoSlide"></div>  
+    </div>  
+  </div>  
+</div>  <div id="popup">  
+  <div class="popupbox">  
+    <h2 id="ptitle"></h2>  
+    <p id="ptext"></p>  
+    <button class="closebtn" id="closeBtn" onclick="closePopup()">Mbyll</button>  
+  </div>  
+</div>  <div id="adhanDuaPopup">  
+  <div class="duaBox">  
+    <button class="duaClose" onclick="closeAdhanDua()">×</button>  
+    <div class="duaTitle" id="duaTitle">🤲 Duaja pas ezanit</div>  
+    <div class="duaArabic duaReadLine" id="duaArabic">اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ، وَالصَّلَاةِ الْقَائِمَةِ، آتِ مُحَمَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ، وَابْعَثْهُ مَقَامًا مَحْمُودًا الَّذِي وَعَدْتَهُ</div>  
+    <div class="duaTrans" id="duaTrans">Allahumme Rabbe hâdhihid-da'vetit-tâmmeh, ves-salâtil-kâimeh, âti Muhammedenil-vesîlete vel-fadîleh, veb'athhu mekâmen mahmûden el-ledhî ve'adteh.</div>  
+    <div class="duaTranslation duaReadLine" id="duaTranslation">O Allah, Zoti i kësaj thirrjeje të përsosur dhe i namazit që do të falet, jepi Muhammedit ﷺ Vesilen dhe gradën e lartë, dhe ngrije atë në pozitën e lavdëruar që ia ke premtuar.</div>  
+    <button class="duaAudioBtn" id="duaAudioBtn" onclick="speakAdhanDua()">🔊 Lexoje duanë me zë</button>  
+    <div class="duaSource">Hadithi: Sahih el-Buhari 614</div>  
+  </div>  
+</div>  <audio id="ezan" preload="auto" playsinline></audio>
+
+<!-- ===== POPUP DHIKRI 3 KARTA ===== -->  <div id="dhikrPopup" class="tvOverlay" aria-hidden="true"><div class="tvPanel">  
+ <div class="tvHead"><h2 id="dhikrTitle">🤲 Dhikri</h2><span class="tvLive" id="dhikrCount">MP3</span><button class="tvClose" id="dhikrPlayBtn" onclick="activateDhikrAudio()" style="background:#7eeaff;color:#031018">▶ Dëgjo</button><button class="tvClose" onclick="closeDhikrPopup()">Mbyll</button></div>  
+ <div class="dhikr3">  
+  <div class="dhikrCard" id="dhikrCardAr"><div class="dhikrTag">ARABISHT</div><div class="dhikrAr" id="dhikrAr"></div></div>  
+  <div class="dhikrCard" id="dhikrCardTr"><div class="dhikrTag">LEXIMI ME SHKRONJA SHQIP</div><div class="dhikrTr" id="dhikrTr"></div></div>  
+  <div class="dhikrCard" id="dhikrCardSq"><div class="dhikrTag">PËRKTHIMI SHQIP</div><div class="dhikrSq" id="dhikrSq"></div></div>  
+ </div>  
+ <div class="dhikrBar"><div id="dhikrProgress"></div></div><div class="dhikrFoot"><span id="dhikrRepeat"></span><span>🔊 MP3 • Auto</span></div>  
+</div></div>  
+<audio id="dhikrAudio" preload="auto" playsinline></audio>  <!-- ===== POPUP LAJMET 5 KARTA ===== -->  <div id="newsPopup" class="tvOverlay" aria-hidden="true"><div class="tvPanel">  
+ <div class="tvHead"><h2>📰 Lajmet e Ditës</h2><span class="tvLive" id="newsStamp">LIVE</span><button class="tvClose" onclick="closePremiumPopup('newsPopup')">Mbyll</button></div>  
+ <div class="tv5" id="newsGrid"></div>  
+</div></div>  <!-- ===== POPUP BILANCI 5 KARTA ===== -->  <div id="financePopup" class="tvOverlay" aria-hidden="true"><div class="tvPanel">  
+ <div class="tvHead"><h2>💶 Bilanci • Xhamia Frankenthal</h2><span class="tvLive">LIVE</span><button class="tvClose" onclick="closePremiumPopup('financePopup')">Mbyll</button></div>  
+ <div class="tv5" id="financeGrid"></div>  
+</div></div>  <script>  
+let prayers=[],fired={},intervalStarted=false,firstBoxIndex=0,currentLang="sq";  
+let popupTimer=null,hijriSQ="Data Hixhri...",hijriDE="Hidschri-Datum...";  
+let currentAdhanPrayer=null,adhanDuaTimer=null,weatherTemp="--°C",currentCity="Frankenthal",loadedForDate="";  
+let premiumIndex=0,premiumLastChange=0,liveDritaRaw=null,liveDritaItems=[];  
+  
+const XHAMIA_PRAYER_LAT=49.5341;  
+const XHAMIA_PRAYER_LON=8.3536;  
+const XHAMIA_AKSHAM_OFFSET_MIN=2;  
+const XHAMIA_JACIA_AFTER_AKSHAM_MIN=103;  
+  
+/* KËTO 4 KONSTANTA DUHET TË JENË IDENTIKE EDHE NË BALLINË */  
+const XHAMIA_METHOD=13;  
+const XHAMIA_SCHOOL=0;  
+  
+const HUB={  
+  DRITA:"https://script.google.com/macros/s/AKfycbw9M1i3sBBrIvlFoVfjRPQ9fjFgF425MXayYkDxd9GDb2Nt9k-Nc_uG24RUYsKIBfWn/exec",  
+  DRITA_SHEET_ID:"1Bnc1fZ9EKRId3PQ6F2_JlUFGkn7kOzMsMGl658ag1gI",  
+  NEWS:"https://script.google.com/macros/s/AKfycbxaLG8ciR8rAhT0lFFam7gy6djjepI6DeP9xL24Kz0zQuyetcrTqug1bb_hJLG-zu6c/exec",  
+  MEMBERS:"https://script.google.com/macros/s/AKfycby2labzDFRcZix7rdMYA5G2l2UF6vcN-c08YdYlyEaTESaTXQor-7tPZ7niVkd0MDa5/exec",  
+  FINANCE:"https://script.google.com/macros/s/AKfycbwyZrcuFVb7Qk5NcEvOBVgDVWdwoAbX8KRFjszN6slF4Xj0d_nVJ3Ecjq10rz_wCA/exec",  
+  FINANCE_SHEET:"https://docs.google.com/spreadsheets/d/1buwJ_DodIOcQCyrzckr1uO_lPXF3vEnYNUzZeA65Wao/gviz/tq?tqx=out:json&sheet=BILANCI%20MASTER&range=A1:N40",  
+  INFO:"https://script.google.com/macros/s/AKfycbzmnS8qQylaRrWqhBUsk0QamLZAjmpJn8Hsz1-jdkiExLqydIW0W6mzatov57OE2KBpVA/exec"  
+};  
+  
+const prayerNames={  
+  sq:{IMSAKU:"Imsaku",SABAHU:"Sabahu",LINDJA:"Lindja",DREKA:"Dreka",IKINDIJA:"Ikindija",AKSHAMI:"Akshami",JACIA:"Jacia"},  
+  de:{IMSAKU:"Imsak",SABAHU:"Fadschr",LINDJA:"Sonnenaufgang",DREKA:"Dhuhr",IKINDIJA:"Asr",AKSHAMI:"Maghrib",JACIA:"Ischa"}  
+};  
+const labels={  
+  sq:{  
+    loading:"⏳ Duke marrë kohët...",until:"⏳ Deri në",temp:"🌡️ Temperatura",city:"📍 Qyteti",  
+    adhanOn:"🔊 Ezani ON",close:"Mbyll",failed:"❌ Nuk u arrit të merren kohët",  
+    past:"Koha ka kaluar",current:"Koha aktuale",next:"Koha e ardhshme",later:"Më vonë"  
+  },  
+  de:{  
+    loading:"⏳ Gebetszeiten werden geladen...",until:"⏳ Bis",temp:"🌡️ Temperatur",city:"📍 Stadt",  
+    adhanOn:"🔊 Adhan EIN",close:"Schließen",failed:"❌ Gebetszeiten konnten nicht geladen werden",  
+    past:"Zeit ist vorbei",current:"Aktuelle Zeit",next:"Nächste Zeit",later:"Später"  
+  }  
+};  
+  
+const adhanLinks={  
+  SABAHU:"https://media.assabile.com/assabile/adhan_3435370/0bf83c80b583.mp3",  
+  DREKA:"https://media.assabile.com/assabile/adhan_3435370/f30b7631d625.mp3",  
+  IKINDIJA:"https://praytimes.org/audio/sunni/Abdul-Basit.mp3",  
+  AKSHAMI:"https://media.assabile.com/assabile/adhan_3435370/cbcd8d249dcc.mp3",  
+  JACIA:"https://media.assabile.com/assabile/adhan_3435370/08008b8fec6c.mp3"  
+};  
+  
+const prayerBackgrounds={  
+  SABAHU:"https://archive.org/download/Jacia/Sabahu.png",  
+  LINDJA:"https://archive.org/download/Jacia/Lindja.png",  
+  DREKA:"https://archive.org/download/Jacia/Dreka.png",  
+  IKINDIJA:"https://archive.org/download/Jacia/Ikindija.png",  
+  AKSHAMI:"https://archive.org/download/Jacia/Akshami.png",  
+  JACIA:"https://archive.org/download/Jacia/Jacia.png"  
+};  
+  
+function pad(n){return String(n).padStart(2,"0")}  
+function cleanTime(t){return String(t).split(" ")[0]}  
+function berlinNow(){return new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Berlin"}))}  
+function berlinDateParts(d=berlinNow()){  
+  const f=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Berlin",year:"numeric",month:"2-digit",day:"2-digit"});  
+  const p=Object.fromEntries(f.formatToParts(d).map(x=>[x.type,x.value]));  
+  return {year:+p.year,month:+p.month,day:+p.day,iso:`${p.year}-${p.month}-${p.day}`,api:`${p.day}-${p.month}-${p.year}`};  
+}  
+function toDate(t,base=berlinNow()){  
+  const [h,m]=cleanTime(t).split(":").map(Number),b=berlinDateParts(base);  
+  return new Date(b.year,b.month-1,b.day,h,m,0,0);  
+}  
+function formatTime(d){return pad(d.getHours())+":"+pad(d.getMinutes())}  
+function labelOf(p){return prayerNames[currentLang][p.key]||p.key}  
+function fixIkindijaTime(asrDate){  
+  /* Unifikuar me Ballinën: nuk aplikohet korrigjim i veçantë te Ikindija. */  
+  return new Date(asrDate);  
+}  
+  
+function getChronological(){  
+  return prayers.slice().sort((a,b)=>a.time-b.time);  
+}  
+function getActiveIndex(now=berlinNow()){  
+  const arr=getChronological();  
+  let idx=-1;  
+  for(let i=0;i<arr.length;i++) if(now>=arr[i].time) idx=i;  
+  return idx;  
+}  
+function getNextPrayer(now=berlinNow()){  
+  return getChronological().find(p=>p.time>now)||null;  
+}  
+function getCurrentPrayerKey(now=berlinNow()){  
+  const arr=getChronological(),idx=getActiveIndex(now);  
+  if(idx<0)return arr[0]?.key||"SABAHU";  
+  return arr[idx]?.key||"JACIA";  
+}  
+function getProgressFor(p,now=berlinNow()){  
+  const arr=getChronological();  
+  const i=arr.findIndex(x=>x.key===p.key);  
+  if(i<0)return 0;  
+  const start=arr[i].time;  
+  let end;  
+  if(i<arr.length-1) end=arr[i+1].time;  
+  else{  
+    end=new Date(start);  
+    end.setHours(23,59,59,999);  
+  }  
+  if(now<=start)return 0;  
+  if(now>=end)return 100;  
+  return Math.max(0,Math.min(100,((now-start)/(end-start))*100));  
+}  
+  
+let lastPrayerBackground="";  
+function updatePrayerBackground(){  
+  if(!prayers.length)return;  
+  let key=getCurrentPrayerKey();  
+  if(key==="IMSAKU")key="SABAHU";  
+  if(key===lastPrayerBackground)return;  
+  lastPrayerBackground=key;  
+  if(prayerBackgrounds[key]){  
+    document.body.style.backgroundImage=`linear-gradient(rgba(0,8,15,.10),rgba(0,8,15,.24)),url("${prayerBackgrounds[key]}")`;  
+  }  
+}  
+  
+function updateClock(){  
+  const now=berlinNow(),locale=currentLang==="de"?"de-DE":"sq-AL";  
+  document.getElementById("timeNow").textContent=pad(now.getHours())+":"+pad(now.getMinutes());  
+  document.getElementById("dateNow").textContent=now.toLocaleDateString(locale,{weekday:"long",day:"2-digit",month:"2-digit",year:"numeric"});  
+  document.getElementById("hijriNow").textContent=currentLang==="de"?hijriDE:hijriSQ;  
+  document.getElementById("weatherNow").textContent=`${labels[currentLang].city}: ${currentCity} • ${labels[currentLang].temp}: ${weatherTemp}`;  
+}  
+setInterval(updateClock,1000);updateClock();  
+  
+async function loadWeather(){  
+  try{  
+    /* FIX: current=temperature_2m */  
+    const u=`https://api.open-meteo.com/v1/forecast?latitude=${XHAMIA_PRAYER_LAT}&longitude=${XHAMIA_PRAYER_LON}&current=temperature_2m&timezone=Europe%2FBerlin&_=${Date.now()}`;  
+    const r=await fetch(u,{cache:"no-store"});  
+    const j=await r.json();  
+    weatherTemp=j.current&&j.current.temperature_2m!=null?Math.round(j.current.temperature_2m)+"°C":"--°C";  
+  }catch(e){weatherTemp="--°C"}  
+  updateClock();  
+}  
+  
+async function loadTimes(){  
+  document.getElementById("countdown").textContent=labels[currentLang].loading;  
+  const today=berlinDateParts();loadedForDate=today.iso;  
+  const u=`https://api.aladhan.com/v1/timings/${today.api}?latitude=${XHAMIA_PRAYER_LAT}&longitude=${XHAMIA_PRAYER_LON}&method=${XHAMIA_METHOD}&school=${XHAMIA_SCHOOL}&_=${Date.now()}`;  
+  try{  
+    const r=await fetch(u,{cache:"no-store"});  
+    const j=await r.json();  
+    if(!j.data||!j.data.timings)throw new Error("timings");  
+    const t=j.data.timings,base=berlinNow(),sunrise=toDate(t.Sunrise,base);  
+    const maghrib=new Date(toDate(t.Maghrib,base).getTime()+XHAMIA_AKSHAM_OFFSET_MIN*60000);  
+    const h=j.data.date&&j.data.date.hijri;  
+    if(h){  
+      hijriSQ=`Data Hixhri: ${h.day} ${h.month.en} ${h.year}`;  
+      hijriDE=`Hidschri-Datum: ${h.day} ${h.month.en} ${h.year}`;  
+    }  
+  
+    /* E NJËJTA LOGJIKË duhet kopjuar edhe në Ballinë */  
+    prayers=[  
+      {key:"IMSAKU",icon:"🌅",time:toDate(t.Fajr,base)},  
+      {key:"SABAHU",icon:"🕌",time:new Date(sunrise.getTime()-45*60000)},  
+      {key:"LINDJA",icon:"🌄",time:sunrise},  
+      {key:"DREKA",icon:"☀️",time:toDate(t.Dhuhr,base)},  
+      {key:"IKINDIJA",icon:"🌤️",time:toDate(t.Asr,base)},  
+      {key:"AKSHAMI",icon:"🌙",time:maghrib},  
+      {key:"JACIA",icon:"🌌",time:new Date(maghrib.getTime()+XHAMIA_JACIA_AFTER_AKSHAM_MIN*60000)}  
+    ];  
+  
+    render();update();updatePrayerBackground();  
+    if(!intervalStarted){  
+      setInterval(update,1000);  
+      setInterval(()=>rotateFirstBox(false),5000);  
+      intervalStarted=true;  
+    }  
+  }catch(e){  
+    document.getElementById("countdown").textContent=labels[currentLang].failed;  
+    setTimeout(loadTimes,30000);  
+  }  
+}  
+  
+function cardInner(p){  
+  return `<div class="icon">${p.icon}</div>  
+          <div class="name">${labelOf(p)}</div>  
+          <div class="time">${formatTime(p.time)}</div>  
+          <div class="statusBadge"></div>  
+          <div class="timeProgress"><div class="timeProgressFill"></div></div>`;  
+}  
+function cardHtml(p){return `<div class="card" id="b_${p.key}" data-prayer="${p.key}">${cardInner(p)}</div>`}  
+  
+function render(){  
+  const g=document.getElementById("grid");  
+  const d=prayers.find(p=>p.key==="DREKA"),i=prayers.find(p=>p.key==="IKINDIJA"),a=prayers.find(p=>p.key==="AKSHAMI"),j=prayers.find(p=>p.key==="JACIA");  
+  g.innerHTML=`<div class="card" id="firstBox"></div>${cardHtml(d)}${cardHtml(i)}${cardHtml(a)}${cardHtml(j)}`;  
+  rotateFirstBox(true);  
+}  
+  
+function rotateFirstBox(noNext){  
+  const a=prayers.filter(p=>["IMSAKU","SABAHU","LINDJA"].includes(p.key));  
+  const p=a[firstBoxIndex],box=document.getElementById("firstBox");  
+  if(!p||!box)return;  
+  box.dataset.prayer=p.key;  
+  box.innerHTML=cardInner(p);  
+  if(!noNext)firstBoxIndex=(firstBoxIndex+1)%a.length;  
+  highlightPrayerCards();  
+}  
+  
+function boxFor(key){  
+  if(["IMSAKU","SABAHU","LINDJA"].includes(key)){  
+    const b=document.getElementById("firstBox");  
+    return b&&b.dataset.prayer===key?b:null;  
+  }  
+  return document.getElementById("b_"+key);  
+}  
+  
+function highlightPrayerCards(now=berlinNow()){  
+  document.querySelectorAll(".card").forEach(c=>{  
+    c.classList.remove("active","next-prayer","past");  
+    const st=c.querySelector(".statusBadge");  
+    if(st)st.textContent="";  
+    const pf=c.querySelector(".timeProgressFill");  
+    if(pf)pf.style.width="0%";  
+  });  
+  
+  const arr=getChronological();  
+  const activeIdx=getActiveIndex(now);  
+  const active=activeIdx>=0?arr[activeIdx]:null;  
+  const next=arr.find(p=>p.time>now)||null;  
+  
+  arr.forEach(p=>{  
+    const b=boxFor(p.key);  
+    if(!b)return;  
+    const st=b.querySelector(".statusBadge");  
+    if(active&&p.key===active.key){  
+      b.classList.add("active");  
+      if(st)st.textContent="● "+labels[currentLang].current;  
+      const pf=b.querySelector(".timeProgressFill");  
+      if(pf)pf.style.width=getProgressFor(p,now).toFixed(1)+"%";  
+    }else if(next&&p.key===next.key){  
+      b.classList.add("next-prayer");  
+      if(st)st.textContent="● "+labels[currentLang].next;  
+    }else if(p.time<now){  
+      b.classList.add("past");  
+      if(st)st.textContent="● "+labels[currentLang].past;  
+    }else{  
+      if(st)st.textContent=labels[currentLang].later;  
+    }  
+  });  
+}  
+  
+function setCallingVisual(prayerKey,on){  
+  document.querySelectorAll(".card").forEach(c=>c.classList.remove("calling"));  
+  document.querySelectorAll(".callingBadge").forEach(x=>x.remove());  
+  if(!on)return;  
+  let box=boxFor(prayerKey);  
+  if(["IMSAKU","SABAHU","LINDJA"].includes(prayerKey)){  
+    const p=prayers.find(x=>x.key===prayerKey);  
+    box=document.getElementById("firstBox");  
+    if(box&&p){box.dataset.prayer=prayerKey;box.innerHTML=cardInner(p)}  
+  }  
+  if(box){  
+    box.classList.add("calling");  
+    const badge=document.createElement("div");  
+    badge.className="callingBadge";  
+    badge.textContent=currentLang==="de"?"🔊 Adhan läuft":"🔊 Ezani po thërret";  
+    box.appendChild(badge);  
+  }  
+}  
+  
+function handleAdhan(now){
+  if(navigator.userAgent.includes("XhamiaNative/"))return;  
+  prayers.forEach(p=>{  
+    if(p.key==="IMSAKU"||p.key==="LINDJA")return;  
+    const diff=Math.floor((now-p.time)/1000);  
+    if(diff>=0&&diff<=60&&!fired["adhan_"+p.key]){  
+      currentAdhanPrayer=p.key;playAdhan(p.key);fired["adhan_"+p.key]=true;  
+    }  
+  });  
+}  
+function playAdhan(prayerKey){  
+  const ezan=document.getElementById("ezan"),src=adhanLinks[prayerKey]||adhanLinks.SABAHU;  
+  setCallingVisual(prayerKey,true);  
+  ezan.pause();ezan.src=src;ezan.load();ezan.volume=1;ezan.currentTime=0;  
+  ezan.onended=()=>{setCallingVisual(prayerKey,false);showAdhanDua()};  
+  ezan.onerror=()=>{setCallingVisual(prayerKey,false);setTimeout(showAdhanDua,700)};  
+  ezan.play().catch(()=>{  
+    setCallingVisual(prayerKey,false);  
+    showPopup(currentLang==="de"?"⚠️ Ton aktivieren":"⚠️ Aktivizo zërin",  
+      currentLang==="de"?"Der Browser hat den Ton blockiert. Drücke bitte Adhan EIN.":"Browseri e ka bllokuar audion. Shtype Ezani ON.");  
+  });  
+}  
+  
+function showAdhanDua(){  
+  const de=currentLang==="de";  
+  document.getElementById("duaTitle").textContent=de?"🤲 Duʿa nach dem Adhan":"🤲 Duaja pas ezanit";  
+  document.getElementById("duaTranslation").textContent=de  
+    ?"O Allah, Herr dieses vollkommenen Rufes und des bevorstehenden Gebets, gewähre Muhammad ﷺ die Wasilah und die besondere Rangstufe und erwecke ihn zu der gepriesenen Stellung, die Du ihm versprochen hast."  
+    :"O Allah, Zoti i kësaj thirrjeje të përsosur dhe i namazit që do të falet, jepi Muhammedit ﷺ Vesilen dhe gradën e lartë, dhe ngrije atë në pozitën e lavdëruar që ia ke premtuar.";  
+  document.getElementById("duaAudioBtn").textContent=de?"🔊 Duʿa vorlesen":"🔊 Lexoje duanë me zë";  
+  document.getElementById("adhanDuaPopup").style.display="flex";  
+  clearTimeout(adhanDuaTimer);  
+  adhanDuaTimer=setTimeout(closeAdhanDua,45000);  
+  setTimeout(autoReadAdhanDua,500);  
+}  
+function clearDuaReading(){document.querySelectorAll(".duaReadLine").forEach(el=>el.classList.remove("reading"))}  
+function pickVoice(lang){  
+  if(!("speechSynthesis" in window))return null;  
+  const voices=window.speechSynthesis.getVoices();  
+  return voices.find(v=>v.lang&&v.lang.toLowerCase().startsWith(lang.toLowerCase()))||null;  
+}  
+function speakPart(textValue,lang,elementId,onEnd){  
+  if(!("speechSynthesis" in window)){if(onEnd)onEnd();return}  
+  const el=document.getElementById(elementId);clearDuaReading();if(el)el.classList.add("reading");  
+  const u=new SpeechSynthesisUtterance(textValue);  
+  u.lang=lang;u.rate=lang==="ar-SA"?.70:.80;u.pitch=1;u.volume=1;  
+  const v=pickVoice(lang.split("-")[0]);if(v)u.voice=v;  
+  u.onend=u.onerror=()=>{if(el)el.classList.remove("reading");if(onEnd)onEnd()};  
+  window.speechSynthesis.speak(u);  
+}  
+function autoReadAdhanDua(){  
+  if(!("speechSynthesis" in window))return;  
+  window.speechSynthesis.cancel();  
+  speakPart(document.getElementById("duaArabic").textContent.trim(),"ar-SA","duaArabic",()=>{  
+    if(currentLang==="sq")speakPart(document.getElementById("duaTranslation").textContent.trim(),"sq-AL","duaTranslation");  
+    else speakPart(document.getElementById("duaTranslation").textContent.trim(),"de-DE","duaTranslation");  
+  });  
+}  
+function speakAdhanDua(){  
+  if(!("speechSynthesis" in window))return;  
+  window.speechSynthesis.cancel();  
+  autoReadAdhanDua();  
+}  
+  
+function update(){  
+  if(!prayers.length)return;  
+  const now=berlinNow();  
+  let next=getNextPrayer(now);  
+  if(!next){  
+    const first=getChronological()[0];  
+    let d=new Date(first.time);d.setDate(d.getDate()+1);  
+    next={...first,time:d};  
+  }  
+  const diff=Math.max(0,Math.floor((next.time-now)/1000));  
+  const h=Math.floor(diff/3600),m=Math.floor((diff%3600)/60),s=diff%60;  
+  document.getElementById("countdown").textContent=`${labels[currentLang].until} ${labelOf(next)}: ${h}h ${m}m ${s}s`;  
+  highlightPrayerCards(now);updatePrayerBackground();updatePremiumMessage();handleAdhan(now);  
+}  
+  
+function enableAdhan(){
+  if(navigator.userAgent.includes("XhamiaNative/")){location.href="xhamia-notifications:open";return;}  
+  const a=document.getElementById("ezan");  
+  a.pause();a.src=adhanLinks.SABAHU;a.load();a.volume=.04;  
+  a.play().then(()=>{  
+    setTimeout(()=>{a.pause();a.currentTime=0;a.volume=1},350);  
+    showPopup(currentLang==="de"?"🔊 Adhan aktiviert":"🔊 Ezani u aktivizua",  
+      currentLang==="de"?"Der Adhan wird automatisch abgespielt, sobald die Gebetszeit eintritt.":"Ezani do të luajë automatikisht sapo të hyjë koha e namazit.");  
+  }).catch(()=>showPopup(currentLang==="de"?"⚠️ Noch einmal klicken":"⚠️ Kliko përsëri",  
+    currentLang==="de"?"Der Browser hat den Ton noch nicht freigegeben.":"Browseri ende nuk e ka lejuar audion."));  
+}  
+function showPopup(t,m){  
+  document.getElementById("ptitle").textContent=t;  
+  document.getElementById("ptext").textContent=m;  
+  document.getElementById("popup").style.display="flex";  
+  clearTimeout(popupTimer);popupTimer=setTimeout(closePopup,30000);  
+}  
+function closePopup(){document.getElementById("popup").style.display="none";clearTimeout(popupTimer)}  
+function closeAdhanDua(){  
+  document.getElementById("adhanDuaPopup").style.display="none";  
+  clearTimeout(adhanDuaTimer);clearDuaReading();  
+  if("speechSynthesis" in window)window.speechSynthesis.cancel();  
+}  
+  
+/* DRITA E DITËS */  
+function cleanDritaValue(v){  
+  if(v==null)return "";  
+  if(typeof v==="boolean")return "";  
+  const s=String(v).trim();  
+  if(!s||/^(true|false|null|undefined)$/i.test(s))return "";  
+  return s;  
+}  
+function normDritaKey(k){return String(k||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"")}  
+function firstDrita(d,keys){  
+ if(!d||typeof d!=="object")return "";  
+ for(const k of keys){const v=cleanDritaValue(d[k]);if(v)return v}  
+ const wanted=keys.map(normDritaKey);  
+ for(const [k,v0] of Object.entries(d)){const v=cleanDritaValue(v0);if(v&&wanted.includes(normDritaKey(k)))return v}  
+ return "";  
+}  
+function smartDrita(d,include,exclude=[]){  
+ if(!d||typeof d!=="object")return "";  
+ for(const [k,v0] of Object.entries(d)){const nk=normDritaKey(k),v=cleanDritaValue(v0);if(!v)continue;if(include.every(x=>nk.includes(normDritaKey(x)))&&!exclude.some(x=>nk.includes(normDritaKey(x))))return v}  
+ return "";  
+}  
+function buildDrita(d){d=window.XhamiaLive.normalizeDrita(d);  
+  const aAr=firstDrita(d,["Ajeti AR","Ajeti Arabisht","ajeti_arabisht","ajeti_ar"]);  
+  const aSq=firstDrita(d,["Ajeti SQ","Ajeti i Ditës (Shqip)","Ajeti Shqip","Përkthimi i Ajetit"]);  
+  const aRef=firstDrita(d,["Sure/Ajet","Referenca","Referenca e Ajetit"]);  
+  const hAr=firstDrita(d,["Hadithi AR","hadithi_ar"]);  
+  const hSq=firstDrita(d,["Hadithi SQ","Hadithi i Ditës (Shqip)","Hadithi Shqip"]);  
+  const hSrc=firstDrita(d,["Burimi Hadithit","Burimi i Hadithit"]);  
+  const fjala=firstDrita(d,["Thënia e Ditës","Fjala e Ditës","Thënia / Mesazhi i Ditës"]);  
+  const fjalaSrc=firstDrita(d,["Autori/Burimi","Burimi i Thënies"]);  
+  const kesh=firstDrita(d,["Këshilla e Ditës","Keshilla e Dites"]);  
+  const mesazh=firstDrita(d,["Mesazh Special","Mesazhi i Ditës","Mesazhi i Dites"]);  
+  const ngjarja=firstDrita(d,["Ngjarje Islame","Ngjarja e Ditës","Ngjarja e Dites"]);  
+  const kur=firstDrita(d,["Kuriozitet Islam","Kurioziteti Islam","Kurioziteti i Ditës"]);  
+  const duaAr=firstDrita(d,["Duaja AR","dua_ar"]),duaTr=firstDrita(d,["Transliterimi","Transkriptimi"]),duaSq=firstDrita(d,["Duaja SQ","dua_sq"]);  
+  const out=[];  
+  const add=(type,left,sq,src="",ar="")=>{sq=cleanDritaValue(sq);src=cleanDritaValue(src);ar=cleanDritaValue(ar);if(sq||ar)out.push({type,left,sq,src,ar})};  
+  add("📖 Ajeti i Ditës","AJETI I DITËS",aSq,aRef,aAr);  
+  add("📜 Hadithi i Ditës","HADITHI I DITËS",hSq,hSrc,hAr);  
+  add("🤲 Këshilla e Ditës","KËSHILLA E DITËS",kesh);  
+  add("💡 Mesazhi i Ditës","MESAZHI I DITËS",mesazh);  
+  add("💭 Fjala e Ditës","FJALA E DITËS",fjala,fjalaSrc);  
+  add("📅 Ngjarja Historike","NGJARJA HISTORIKE",ngjarja);  
+  add("🤲 Duaja e Ditës","DUAJA E DITËS",[duaTr,duaSq].filter(Boolean).join("\n"),"",duaAr);  
+  add("❓ Kurioziteti i Ditës","KURIOZITETI I DITËS",kur);  
+  return out;  
+}  
+function parseGviz(text){const a=text.indexOf("{");const b=text.lastIndexOf("}");return JSON.parse(text.slice(a,b+1))}  
+async function loadDritaDirect(){  
+  const bp=berlinDateParts(),months=["Janar","Shkurt","Mars","Prill","Maj","Qershor","Korrik","Gusht","Shtator","Tetor","Nëntor","Dhjetor"],sheet=months[bp.month-1];  
+  const u=`https://docs.google.com/spreadsheets/d/${HUB.DRITA_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheet)}&range=A3:AF40&_=${Date.now()}`;  
+  const r=await fetch(u,{cache:"no-store"});if(!r.ok)throw new Error("DRITA SHEET");const j=parseGviz(await r.text()),rows=j.table?.rows||[];  
+  if(!rows.length)throw new Error("DRITA EMPTY");const headers=(rows[0].c||[]).map(c=>String(c?.v||c?.f||"").trim());  
+  const target=`${pad(bp.day)}.${pad(bp.month)}.${bp.year}`;  
+  for(const row of rows.slice(1)){const vals=(row.c||[]).map(c=>c?(c.f??c.v??""):"");const obj={};headers.forEach((h,i)=>{if(h)obj[h]=vals[i]});if(String(obj.Data||"").trim()===target)return obj}  
+  throw new Error("DRITA TODAY NOT FOUND");  
+}  
+async function loadDrita(){
+ try{liveDritaRaw=await window.XhamiaLive.loadDrita(HUB.DRITA);liveDritaItems=buildDrita(liveDritaRaw);if(!liveDritaItems.length)throw Error('Drita pa fusha');premiumIndex=0;premiumLastChange=0;updatePremiumMessage(true)}catch(e){console.warn('Drita TV',e)}
+}
+function animatePremiumProgress(duration=18000){  
+  const f=document.getElementById("premiumProgressFill");if(!f)return;  
+  f.style.transition="none";f.style.width="0";void f.offsetWidth;  
+  f.style.transition=`width ${duration}ms linear`;f.style.width="100%";  
+}  
+function updatePremiumMessage(force=false){  
+  if(!liveDritaRaw)return;  
+  liveDritaItems=buildDrita(liveDritaRaw);if(!liveDritaItems.length)return;  
+  const now=Date.now();if(!force&&now-premiumLastChange<18000)return;  
+  premiumLastChange=now;  
+  const item=liveDritaItems[premiumIndex%liveDritaItems.length],shown=(premiumIndex%liveDritaItems.length)+1;  
+  premiumIndex=(premiumIndex+1)%liveDritaItems.length;  
+  // MAJTAS: vetem emri i rubrikes. DJATHTAS: materiali i rubrikes.  
+  const leftEl=document.getElementById("premiumArabic"), arEl=document.getElementById("premiumLabel"), sqEl=document.getElementById("premiumSq"), srcEl=document.getElementById("premiumSource");  
+  leftEl.textContent=item.left||item.type||"DRITA E DITËS";  
+  arEl.textContent=item.ar||"";  
+  arEl.style.display=item.ar?"block":"none";  
+  sqEl.textContent=item.sq||"";  
+  srcEl.textContent=item.src||"";  
+  document.getElementById("premiumCount").textContent=shown+" / "+liveDritaItems.length;  
+  animatePremiumProgress(18000);  
+}  
+  
+/* INFO SCROLL - SHPEJTËSI E QËNDRUESHME NË ÇDO TV */  
+const slide=document.getElementById("infoSlide");  
+const infoContent=document.querySelector(".info-content");  
+let hubGroups=[],hubIndex=0,hubStarted=false,hubChanging=false;  
+let scrollX=0,lastFrame=0;  
+const SCROLL_PX_PER_SECOND=42;   // mesatare  
+const HUB_REFRESH_MS=10*60*1000;  
+  
+async function getJSON(url){  
+  const c=new AbortController(),t=setTimeout(()=>c.abort(),12000);  
+  try{  
+    const r=await fetch(url+(url.includes("?")?"&":"?")+"_="+Date.now(),{cache:"no-store",signal:c.signal});  
+    if(!r.ok)throw new Error("HTTP "+r.status);  
+    return await r.json();  
+  }finally{clearTimeout(t)}  
+}  
+function short(s,n=170){s=String(s||"").replace(/\s+/g," ").trim();return s.length>n?s.slice(0,n-1)+"…":s}  
+function prayerScrollText(){  
+  if(!prayers.length)return currentLang==="de"?"Gebetszeiten werden geladen…":"Kohët po ngarkohen…";  
+  const keys=["IMSAKU","SABAHU","LINDJA","DREKA","IKINDIJA","AKSHAMI","JACIA"];  
+  return keys.map(k=>{  
+    const p=prayers.find(x=>x.key===k);  
+    return p?`${prayerNames[currentLang][k]} ${formatTime(p.time)}`:"";  
+  }).filter(Boolean).join("     •     ");  
+}  
+async function loadHub(){  
+  const groups=[];  
+  try{  
+    const j=await getJSON(HUB.INFO);  
+    const a=j&&Array.isArray(j.info)?j.info:Array.isArray(j)?j:[];  
+    const b=a.filter(x=>String(x.aktiv||"Po").toLowerCase()!=="jo"&&(x.titulli||x.permbajtja)).slice(0,12);  
+    if(b.length)groups.push({  
+      title:currentLang==="de"?"📢 MOSCHEE INFO":"📢 INFO XHAMIA",  
+      text:b.map(x=>`📢 ${short(x.titulli||"",95)}${x.permbajtja?" – "+short(x.permbajtja,155):""}`).join("     •     ")  
+    });  
+  }catch(e){}  
+  
+  try{  
+    const j=await getJSON(HUB.NEWS+"?mode=all&limit=20");  
+    const all=j&&Array.isArray(j.news)?j.news:Array.isArray(j)?j:[];  
+    if(all.length)groups.push({  
+      title:currentLang==="de"?"📰 NEWS":"📰 LAJMET",  
+      text:all.slice(0,12).map(x=>"📰 "+short(currentLang==="de"?(x.titulli_de||x.titulli_sq||x.title):(x.titulli_sq||x.titulli_de||x.title),175)).filter(Boolean).join("     •     ")  
+    });  
+  }catch(e){}  
+  
+  groups.push({title:currentLang==="de"?"🕋 GEBETSZEITEN":"🕋 KOHËT E NAMAZIT",text:prayerScrollText()});  
+  
+  if(groups.length){  
+    hubGroups=groups;  
+    if(hubIndex>=hubGroups.length)hubIndex=0;  
+    hubStarted=true;renderHub();  
+  }  
+}  
+function renderHub(){  
+  if(!hubGroups.length)return;  
+  hubChanging=false;  
+  const g=hubGroups[hubIndex%hubGroups.length];  
+  document.getElementById("infoTitle").textContent=g.title||"INFO";  
+  slide.textContent=g.text||"";  
+  requestAnimationFrame(()=>{  
+    scrollX=infoContent.clientWidth+25;  
+    slide.style.transform=`translate3d(${scrollX}px,0,0)`;  
+    lastFrame=performance.now();  
+  });  
+}  
+function advanceHub(){  
+  if(hubChanging||!hubGroups.length)return;  
+  hubChanging=true;  
+  hubIndex=(hubIndex+1)%hubGroups.length;  
+  renderHub();  
+}  
+function animateScroll(ts){  
+  if(!lastFrame)lastFrame=ts;  
+  let dt=(ts-lastFrame)/1000;  
+  if(dt>0.08)dt=0.08;  // parandalon kërcimin pas lag-ut  
+  lastFrame=ts;  
+  
+  if(hubStarted&&slide.textContent){  
+    scrollX-=SCROLL_PX_PER_SECOND*dt;  
+    slide.style.transform=`translate3d(${scrollX}px,0,0)`;  
+  
+    const sw=slide.offsetWidth;  
+    if(sw>0 && scrollX+sw < -8){  
+      advanceHub();  
+    }  
+  }  
+  requestAnimationFrame(animateScroll);  
+}  
+  
+function toggleLang(){  
+  currentLang=currentLang==="sq"?"de":"sq";  
+  document.getElementById("langBtn").textContent=currentLang==="sq"?"🇩🇪 Deutsch":"🇦🇱 Shqip";  
+  document.getElementById("adhanBtn").textContent=labels[currentLang].adhanOn;  
+  document.getElementById("closeBtn").textContent=labels[currentLang].close;  
+  updateClock();  
+  if(prayers.length){render();update()}  
+  premiumLastChange=0;updatePremiumMessage(true);  
+  loadHub();  
+}  
+  
+loadWeather();  
+loadTimes();  
+loadDrita();  
+loadHub();  
+requestAnimationFrame(animateScroll);  
+  
+setInterval(loadDrita,HUB_REFRESH_MS);  
+setInterval(loadHub,HUB_REFRESH_MS);  
+setInterval(loadWeather,HUB_REFRESH_MS);  
+  
+setInterval(()=>{  
+  const t=berlinDateParts().iso;  
+  if(loadedForDate&&loadedForDate!==t){  
+    fired={};loadWeather();loadTimes();loadDrita();loadHub();  
+  }  
+},60000);  
+  
+document.addEventListener("visibilitychange",()=>{  
+  if(!document.hidden){  
+    lastFrame=performance.now();  
+    loadWeather();loadDrita();loadHub();  
+  }  
+});  
+window.addEventListener("resize",()=>{if(hubStarted)renderHub()});  
+  
+/* ===== SHTESAT PREMIUM - pa ndryshuar scrollin/namazet/sfondet/ezanet ekzistuese ===== */  
+const PREMIUM_NEWS_REGIONS=[{label:"LIVE",flag:"🌍",keys:[]}];  
+let premiumPopupLastSlot="", premiumPopupTurn=0, premiumPopupTimer=null, premiumCache={news:null,finance:null,members:null};  
+function escTv(v){return String(v??"").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function val(o,keys){for(const k of keys){if(o&&o[k]!=null&&String(o[k]).trim()!=="")return o[k]}return ""}  
+function rowsOf(j){if(Array.isArray(j))return j;for(const k of ["news","data","items","rows","list","info"]){if(j&&Array.isArray(j[k]))return j[k]}return []}  
+function closePremiumPopup(id){const e=document.getElementById(id);if(e){e.classList.remove("show");e.setAttribute("aria-hidden","true")}clearTimeout(premiumPopupTimer)}  
+function anyPriorityPopup(){return document.getElementById("popup").style.display==="flex"||document.getElementById("adhanDuaPopup").style.display==="flex"||!!document.querySelector(".card.calling")||document.getElementById("dhikrPopup").classList.contains("show")}  
+function showPremiumPopup(id,ms=5*60*1000){if(anyPriorityPopup())return;["newsPopup","financePopup"].forEach(closePremiumPopup);const e=document.getElementById(id);e.classList.add("show");e.setAttribute("aria-hidden","false");premiumPopupTimer=setTimeout(()=>closePremiumPopup(id),ms)}  
+  
+/* I NJEJTI BURIM DHE LLOGARITJE SI BALLINA / BILANCI NDERVITE */
+/* Burimi identik me Bilancin Ndërvite 2026; pa shifra fikse. */
+async function loadFinanceReal(){
+ const api="https://script.google.com/macros/s/AKfycbzv0-liNGEZIyyz6gzx-tDJir4cHhOkX_iq8TamLpW_sUHudLeuR9QBdEl6dDsaoZrPUQ/exec";
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);
+ try{
+  const r=await fetch(api+"?action=summary&year=2026&_="+Date.now(),{cache:"no-store",redirect:"follow",signal:controller.signal});
+  if(!r.ok)throw Error("HTTP "+r.status);
+  const j=await r.json();
+  if(!j||j.success===false||!(j.totals||j.data?.totals))throw Error("MASTER totals mungon");
+  const t=j.totals||j.data.totals;
+  const keys=["hyrjeTotal","daljeTotal","total","cash","bank"];
+  if(keys.some(k=>t[k]===null||t[k]===undefined||!Number.isFinite(Number(t[k]))))throw Error("MASTER ka fusha që mungojnë");
+  return {hyrjeTotale:Number(t.hyrjeTotal),daljeTotale:Number(t.daljeTotal),gjendjaCash:Number(t.cash),gjendjaBank:Number(t.bank),gjendjaTotale:Number(t.total),burimi:"BALLINA · MASTER ROUTER LIVE"};
+ }catch(e){console.error("Kohët TV MASTER",e);return null}
+ finally{clearTimeout(timer)}
+}
+
+async function fetchPremiumData(){  
+ try{premiumCache.news=await getJSON(HUB.NEWS+"?mode=all&limit=100&_="+Date.now())}catch(e){}  
+ const freshFinance=await loadFinanceReal();if(freshFinance)premiumCache.finance=freshFinance;  
+ try{premiumCache.members=await getJSON(HUB.MEMBERS)}catch(e){}  
+}  
+function newsHay(n){return [val(n,["shteti","country","vendi","rajoni","region","kategoria","category","rubrika"]),val(n,["titulli_sq","titulli","title","headline","lajmi"])].join(" ").toLowerCase()}  
+function pickRegionNews(rows,reg,used){  
+ let n=rows.find(x=>!used.has(x)&&reg.keys.some(k=>newsHay(x).includes(k)));  
+ if(!n)n=rows.find(x=>!used.has(x));  
+ if(n)used.add(n); return n||null;  
+}  
+function newsImage(n){  
+ return val(n,["Foto URL","Foto","foto_url","foto","image_url","image","photo","img","fotografia","thumbnail","media","imageUrl","photoUrl","Imazhi","imazhi","URL Foto","url_foto"]);  
+}  
+function renderNewsPopup(){  
+ const all=rowsOf(premiumCache.news);  
+ const parseNewsTime=n=>{const ds=String(val(n,["Data","data","date"])||"").trim(),ts=String(val(n,["Ora","ora","time"])||"00:00").trim();let m=ds.match(/(\d{2})[.\/-](\d{2})[.\/-](\d{4})/);if(m)return new Date(`${m[3]}-${m[2]}-${m[1]}T${ts||"00:00"}`).getTime()||0;return Date.parse(ds+" "+ts)||0};  
+ const rows=all.filter(n=>String(val(n,["Aktiv","aktiv"])||"PO").toLowerCase()!=="jo"&&/^https?:\/\//i.test(String(newsImage(n)||""))).sort((a,b)=>parseNewsTime(b)-parseNewsTime(a)).slice(0,5);  
+ const grid=document.getElementById("newsGrid");grid.innerHTML="";  
+ if(!rows.length){grid.innerHTML=`<article class="tvCard"><div class="newsPhotoFallback">📰</div><div class="newsTitle">Duke marrë lajmet më të reja LIVE me foto…</div></article>`}  
+ rows.forEach(n=>{  
+   const title=val(n,["Titulli SQ","titulli_sq","titulli","title","headline","lajmi","tekst","pershkrimi"]);  
+   const img=newsImage(n);const cat=val(n,["Kategoria","kategoria","category","shteti","country","region"])||"Bota";  
+   grid.insertAdjacentHTML("beforeend",`<article class="tvCard"><div class="newsCountry"><span>${escTv(cat)}</span></div><img class="newsPhoto" src="${escTv(img)}" alt="" onerror="this.outerHTML='<div class="newsPhotoFallback">📰</div>'"><div class="newsTitle">${escTv(title||"Lajmi i fundit")}</div></article>`);  
+ });  
+ document.getElementById("newsStamp").textContent="LIVE • "+new Date().toLocaleTimeString("sq-AL",{hour:"2-digit",minute:"2-digit",timeZone:"Europe/Berlin"});  
+}  
+function money(v){  
+ // API i Ballinës kthen numra JS me pikë dhjetore (37872.71).  
+ // Mos e hiq pikën nga numrat: kjo e shumëzonte bilancin 100 herë.  
+ if(v===null||v===undefined||v==="")return "—";  
+ let n;  
+ if(typeof v==="number") n=v;  
+ else {  
+   let t=String(v).replace(/[^\d,.-]/g,"").trim();  
+   if(t.includes(",")&&t.includes(".")){  
+     n=t.lastIndexOf(",")>t.lastIndexOf(".")?Number(t.replace(/\./g,"").replace(",",".")):Number(t.replace(/,/g,""));  
+   }else if(t.includes(","))n=Number(t.replace(",","."));  
+   else n=Number(t);  
+ }  
+ return Number.isFinite(n)?n.toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2})+" €":"—";  
+}  
+function deepFind(obj,keys){  
+ const wanted=keys.map(x=>x.toLowerCase());let found="";  
+ function walk(x){if(found||!x||typeof x!=="object")return;for(const [k,v] of Object.entries(x)){if(wanted.includes(k.toLowerCase())&&v!=null&&String(v)!==""){found=v;return}if(typeof v==="object")walk(v)}}  
+ walk(obj);return found;  
+}  
+function renderFinancePopup(){  
+ const f=premiumCache.finance||{};const hv=v=>v!==null&&v!==undefined&&String(v).trim()!=="";  
+ const hyr=val(f,["hyrjeTotale","hyrje","hyrjet","total_hyrje","totalHyrje"])||deepFind(f,["hyrjeTotale","hyrje_totale","hyrjeTotal"]),dal=val(f,["daljeTotale","dalje","daljet","total_dalje","totalDalje"])||deepFind(f,["daljeTotale","dalje_totale","daljeTotal"]),gj=val(f,["gjendjaTotale","gjendja","balance","bilanci"])||deepFind(f,["gjendjaTotale","gjendja_totale","balance"]),cash=val(f,["gjendjaCash","cash","cash_balance"])||deepFind(f,["gjendjaCash","gjendja_cash","cash"]),bank=val(f,["gjendjaBank","bank","bank_balance"])||deepFind(f,["gjendjaBank","gjendja_bank","bank"]);  
+ const cards=[["📥","HYRJE TOTALE",hv(hyr)?money(hyr):"—",f.burimi||"NUK KA TË DHËNA"],["📤","DALJE TOTALE",hv(dal)?money(dal):"—","LIVE"],["💶","GJENDJA TOTALE",hv(gj)?money(gj):"—","LIVE"],["💵","GJENDJA CASH",hv(cash)?money(cash):"—","LIVE"],["🏦","GJENDJA BANKË",hv(bank)?money(bank):"—","LIVE"]];  
+ document.getElementById("financeGrid").innerHTML=cards.map(c=>`<article class="tvCard finCard"><div class="finIcon">${c[0]}</div><div class="finLabel">${escTv(c[1])}</div><div class="finValue">${escTv(c[2])}</div><div class="finSub">${c[3]}</div><div class="finAccent"></div></article>`).join("");  
+}  
+function autoHudbeReference(now=berlinNow()){  
+ let d=new Date(now),wd=d.getDay(),add=(5-wd+7)%7;  
+ if(wd===5 && (d.getHours()>15 || (d.getHours()===15&&d.getMinutes()>=0)))add=7;  
+ d.setDate(d.getDate()+add);  
+ return "Hudbe"+pad(d.getDate())+"."+pad(d.getMonth()+1);  
+}  
+let fridayHudbeOpened="";  
+function checkAutoHudbe(){  
+ const n=berlinNow(),iso=berlinDateParts(n).iso;  
+ if(n.getDay()===5&&n.getHours()===14&&n.getMinutes()>=0&&n.getMinutes()<30&&fridayHudbeOpened!==iso){  
+   fridayHudbeOpened=iso;window.location.href="go:"+autoHudbeReference(new Date(n.getTime()-60*60*1000));  
+ }  
+}  
+function premiumScheduler(){  
+ const n=berlinNow(),m=n.getMinutes(),kind=(m%20===0)?"news":(m%20===5?"finance":"");if(!kind)return;  
+ const slot=`${berlinDateParts(n).iso}-${n.getHours()}-${m}-${kind}`;if(slot===premiumPopupLastSlot||anyPriorityPopup())return;premiumPopupLastSlot=slot;  
+ if(kind==="news"){renderNewsPopup();showPremiumPopup("newsPopup",4*60*1000)}else{renderFinancePopup();showPremiumPopup("financePopup",4*60*1000)}  
+}  
+setInterval(premiumScheduler,15000);setInterval(checkAutoHudbe,15000);setInterval(fetchPremiumData,10*60*1000);  
+fetchPremiumData();  
+  
+/* DHIKRI: 3 karta + MP3 + auto kalim. Shfaqet vetëm në kohën e Sabahut/Akshamit. */  
+const DHIKR_ITEMS=[{"n":1,"title":"Sureja Ihlas (3x)","repeat":3,"translit":"Kul huvall-llahu ehad.\nAll-llahus-samed.\nLem jelid ve lem juled.\nVe lem jekun lehu kufuven ehad.","arabic":"قُلْ هُوَ اللَّهُ أَحَدٌ ۞\nاللَّهُ الصَّمَدُ ۞\nلَمْ يَلِدْ وَلَمْ يُولَدْ ۞\nوَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ","translation":"Thuaj: Ai është Allahu, Një!\nAllahu është i Vetmi të Cilit i drejtohen të gjitha krijesat.\nAi as nuk lind e as nuk është i lindur.\nDhe askush nuk është i barabartë me Të.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/3.Suretul%20Ihlas%20%283Here%29.mp3"},{"n":2,"title":"Sureja Felek (3x)","repeat":3,"translit":"Kul eudhu bi Rabbil-felek.\nMin sherri ma halek.\nVe min sherri gasikin idha vekab.\nVe min sherrin-neffathati fil ukad.\nVe min sherri hasidin idha hased.","arabic":"قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۞\nمِنْ شَرِّ مَا خَلَقَ ۞\nوَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۞\nوَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۞\nوَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ","translation":"Thuaj: Kërkoj mbrojtje te Zoti i agimit,\nnga sherri i asaj që Ai ka krijuar,\ndhe nga sherri i errësirës kur bie,\ndhe nga sherri i atyre që fryjnë në nyje (magjistaret),\ndhe nga sherri i smirëziut kur smiron.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/4.Suretul%20Felek%20%283Her%29.mp3"},{"n":3,"title":"Sureja Nas (3x)","repeat":3,"translit":"Kul eudhu bi Rabbin-nas.\nMelikin-nas.\nIlahin-nas.\nMin sherril-vesvasil-hannas.\nEl-ledhi juvesvisu fi sudurin-nas.\nMinel-xhinneti ven-nas.","arabic":"قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۞\nمَلِكِ النَّاسِ ۞\nإِلَهِ النَّاسِ ۞\nمِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۞\nالَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۞\nمِنَ الْجِنَّةِ وَالنَّاسِ","translation":"Thuaj: Kërkoj mbrojtje te Zoti i njerëzve,\nSundimtari i njerëzve,\ni Adhuruari i njerëzve,\nnga sherri i pëshpëritësit që fshihet,\ni cili pëshpërit në gjokset e njerëzve,\nqoftë ai prej xhinëve apo njerëzve.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/5.Suretun%20Nas%20%283Her%29.mp3"},{"n":4,"title":"Emsejna ve emsel-mulku lillah (1x)","repeat":1,"translit":"Emsejna ve emsel-mulku lillahi Rabbil-alemin.\nAll-llahumme inni es’eluke hajra hadhihil-lejle,\nfetheha ve nasreha ve nureha ve bereketeha ve hudaha,\nve eudhu bike min sherri ma fiha ve sherri ma ba’deha.","arabic":"أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ رَبِّ الْعَالَمِينَ\nاللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذِهِ اللَّيْلَةِ\nفَتْحَهَا وَنَصْرَهَا وَنُورَهَا وَبَرَكَتَهَا وَهُدَاهَا\nوَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِيهَا وَشَرِّ مَا بَعْدَهَا","translation":"E arritëm mbrëmjen dhe sundimi i takon Allahut, Zotit të botëve.\nO Allah, prej Teje kërkoj të mirën e kësaj nate, fitoren e saj, ndihmën e saj, dritën e saj, bekimin e saj dhe udhëzimin e saj.\nDhe kërkoj mbrojtjen Tënde nga e keqja e saj dhe nga e keqja e asaj që vjen pas saj.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/6.Asbahna.mp3"},{"n":5,"title":"Allahumme bike emsejna (1x)","repeat":1,"translit":"All-llahumme bike emsejna,\nve bike asbahna,\nve bike nahja,\nve bike nemutu,\nve ilejkel-mesir.","arabic":"اللَّهُمَّ بِكَ أَمْسَيْنَا\nوَبِكَ أَصْبَحْنَا\nوَبِكَ نَحْيَا\nوَبِكَ نَمُوتُ\nوَإِلَيْكَ الْمَصِيرُ","translation":"O Allah, me emrin Tënd e arrijmë mbrëmjen dhe me emrin Tënd e arrijmë mëngjesin,\nme emrin Tënd jetojmë dhe me emrin Tënd vdesim,\ndhe tek Ti është kthimi.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/7.All-llahume%20bike%20Esbahna.mp3"},{"n":6,"title":"Allahumme Ente Rabbi (1x)","repeat":1,"translit":"All-llahumme ente Rabbî, la ilahe il-la ente.\nHalaktenî ve ene abduke.\nVe ene ala ahdike ve va’dike ma isteta’tu.\nEudhu bike min sherri ma sana’tu.\nEbuu leke bi ni’metike alejje.\nVe ebuu bi dhenbî.\nFagfir lî.\nFe innehu la jegfirudh-dhunube il-la ente.","arabic":"اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ\nخَلَقْتَنِي وَأَنَا عَبْدُكَ\nوَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ\nأَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ\nأَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ\nوَأَبُوءُ بِذَنْبِي\nفَاغْفِرْ لِي\nفَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ","translation":"O Allah, Ti je Zoti im, nuk ka të adhuruar tjetër përveç Teje.\nMë krijove dhe unë jam robi Yt.\nUnë i qëndroj besnik besës dhe premtimit Tënd sa të mundem.\nKërkoj mbrojtjen Tënde nga e keqja që kam bërë.\nTë pranoj mirësitë e Tua dhe i pranoj gjynahet e mia,\nprandaj më fal, sepse askush nuk i fal gjynahet përveç Teje.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/8.Allahume%20ente%20Rabbi.mp3"},{"n":7,"title":"Allahumme inni emsejtu ush-hiduke (4x)","repeat":4,"translit":"All-llahumme inni emsejtu ush-hiduke,\nve ush-hidu hamelete arshike,\nve melaiketeke,\nve xhemi’a halkike,\nenneke ente All-llahu la ilahe il-la ente,\nvahdeke la sherike lek,\nve enne Muhammeden abduke ve resuluke.","arabic":"اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ\nوَأُشْهِدُ حَمَلَةَ عَرْشِكَ\nوَمَلَائِكَتَكَ\nوَجَمِيعَ خَلْقِكَ\nأَنَّكَ أَنْتَ اللَّهُ لَا إِلَهَ إِلَّا أَنْتَ\nوَحْدَكَ لَا شَرِيكَ لَكَ\nوَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ","translation":"O Allah, e arrita mbrëmjen duke dëshmuar për Ty,\ndhe dëshmoj mbajtësit e Arshit Tënd,\nmelaiket e Tua dhe të gjitha krijesat e Tua,\nse vërtet Ti je Allahu, nuk ka të adhuruar tjetër përveç Teje,\nTi je i Vetëm, pa shok,\ndhe se Muhammedi ﷺ është robi Yt dhe i Dërguari Yt.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/9.Allahume%20inni%20Esbahtu.mp3"},{"n":8,"title":"Allahumme ma emsa bi min ni’meh (1x)","repeat":1,"translit":"All-llahumme ma emsa bi min ni’metin,\neu bi ehadin min halkike,\nfe minke vahdeke la sherike lek,\nfe lekel-hamdu ve lekesh-shukru.","arabic":"اللَّهُمَّ مَا أَمْسَى بِي مِنْ نِعْمَةٍ\nأَوْ بِأَحَدٍ مِنْ خَلْقِكَ\nفَمِنْكَ وَحْدَكَ لَا شَرِيكَ لَكَ\nفَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ","translation":"O Allah, çdo begati që më ka ardhur mua apo ndonjërit prej krijesave të Tua këtë mbrëmje,\nështë vetëm nga Ti, i Vetëm, pa shok,\nTy të takon falënderimi dhe mirënjohja.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/10.All-llahume%20ma%20Esbaha.mp3"},{"n":9,"title":"Allahumme afini fi bedeni (3x)","repeat":3,"translit":"All-llahumme afini fi bedeni.\nAll-llahumme afini fi sem’i.\nAll-llahumme afini fi besari.\nLa ilahe il-la ente.\nAll-llahumme inni eudhu bike minel-kufri vel-fakri.\nVe audhu bike min adhabil-kabr.\nLa ilahe il-la ente.","arabic":"اللَّهُمَّ عَافِنِي فِي بَدَنِي\nاللَّهُمَّ عَافِنِي فِي سَمْعِي\nاللَّهُمَّ عَافِنِي فِي بَصَرِي\nلَا إِلَهَ إِلَّا أَنْتَ\nاللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ وَالْفَقْرِ\nوَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ\nلَا إِلَهَ إِلَّا أَنْتَ","translation":"O Allah, më jep shëndet në trupin tim.\nO Allah, më jep shëndet në dëgjimin tim.\nO Allah, më jep shëndet në shikimin tim.\nNuk ka të adhuruar tjetër përveç Teje.\nO Allah, kërkoj mbrojtjen Tënde nga kufri dhe varfëria.\nDhe kërkoj mbrojtjen Tënde nga dënimi i varrit.\nNuk ka të adhuruar tjetër përveç Teje.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/11.Allahume%20Afini%20fi%20bedeni.mp3"},{"n":10,"title":"HasbijAllahu la ilahe il-la Hu (7x)","repeat":7,"translit":"HasbijAllahu la ilahe il-la Hu.\nAlejhi tevekkeltu.\nVe Huve Rabbul-arshil-adhim.","arabic":"حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ\nعَلَيْهِ تَوَكَّلْتُ\nوَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ","translation":"Më mjafton Allahu, nuk ka të adhuruar tjetër përveç Tij.\nTek Ai jam mbështetur.\nDhe Ai është Zoti i Arshit të Madh.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/Hasbiyallahu.mp3"},{"n":11,"title":"Allahumme inni es’elukel afve vel afije (1x)","repeat":1,"translit":"All-llahumme inni es’elukel afve vel afije\nfid-dunja vel-ahire.\nAll-llahumme inni es’elukel afve vel afije\nfi dini ve dunjaja ve ehli ve mali.\nAll-llahummestur avratî,\nve amin rev’atî.\nAll-llahumme ihfedhnî min bejni jedejje,\nve min halfî,\nve an jemînî,\nve an shimâlî,\nve min fevkî,\nve euudhu bi adhametike en ughtale min tahtî.","arabic":"اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ\nفِي الدُّنْيَا وَالْآخِرَةِ\nاللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ\nفِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي\nاللَّهُمَّ اسْتُرْ عَوْرَاتِي\nوَآمِنْ رَوْعَاتِي\nاللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ\nوَمِنْ خَلْفِي\nوَعَنْ يَمِينِي\nوَعَنْ شِمَالِي\nوَمِنْ فَوْقِي\nوَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِيَ","translation":"O Allah, kërkoj prej Teje falje dhe shëndet në këtë botë dhe në Ahiret.\nO Allah, kërkoj prej Teje falje dhe shëndet në fenë time, jetën time, familjen time dhe pasurinë time.\nO Allah, m’i mbulo të metat e mia dhe më qetëso frikërat e mia.\nO Allah, më ruaj nga para dhe nga pas, nga e djathta dhe nga e majta dhe nga lart,\ndhe kërkoj mbrojtjen Tënde nga madhështia Jote që të mos më shkatërrohem nga poshtë.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/13.Allahumme%20Inni%20Es%27eluke.mp3"},{"n":12,"title":"Allahumme Alimel-Gajbi vesh-Shehadeti (1x)","repeat":1,"translit":"All-llahumme alimel-gajbi vesh-shehadeti,\nfatiras-semavati vel-erdi,\nRabbe kul-le shej’in ve melikehu.\nEsh-hedu en la ilahe il-la ente.\nEuudhu bike min sherri nefsi,\nve min sherrish-shejtani ve shirkihi,\nve en akterife ala nefsi su’en,\neu exhurr-rehu ila muslimin.","arabic":"اللَّهُمَّ عَالِمَ الْغَيْبِ وَالشَّهَادَةِ\nفَاطِرَ السَّمَاوَاتِ وَالْأَرْضِ\nرَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ\nأَشْهَدُ أَنْ لَا إِلَهَ إِلَّا أَنْتَ\nأَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي\nوَمِنْ شَرِّ الشَّيْطَانِ وَشِرْكِهِ\nوَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءًا\nأَوْ أَجُرَّهُ إِلَى مُسْلِمٍ","translation":"O Allah, Njohës i së fshehtës dhe i së dukshmes,\nKrijues i qiejve dhe i tokës,\nZot i çdo gjëje dhe Sundues i saj.\nDëshmoj se nuk ka të adhuruar tjetër përveç Teje.\nKërkoj mbrojtjen Tënde nga e keqja e vetes sime,\nnga e keqja e shejtanit dhe shirku i tij,\ndhe që të mos i bëj vetes sime ndonjë të keqe\napo ta shkaktoj atë ndaj ndonjë muslimani.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/14.All-llahume%20Alimel%20Gsjbi.mp3"},{"n":13,"title":"Bismil-lahil-ledhi la jedurru (3x)","repeat":3,"translit":"Bismil-lahil-ledhi la jedurru me’a ismihi shej’un,\nfil-erdi ve la fis-semai,\nve Huves-Semi’ul-Alim.","arabic":"بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ\nفِي الْأَرْضِ وَلَا فِي السَّمَاءِ\nوَهُوَ السَّمِيعُ الْعَلِيمُ","translation":"Me emrin e Allahut, me emrin e të Cilit nuk bën dëm asgjë\nas në tokë e as në qiell,\ndhe Ai është Dëgjuesi, i Gjithëdijshmi.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/15.Bismillahillezi%20la%20jedurru.mp3"},{"n":14,"title":"Raditu billahi Rabban (3x)","repeat":3,"translit":"Raditu billahi Rabban,\nve bil-Islami dinan,\nve bi Muhammedin nebijjan.","arabic":"رَضِيتُ بِاللَّهِ رَبًّا\nوَبِالْإِسْلَامِ دِينًا\nوَبِمُحَمَّدٍ ﷺ نَبِيًّا","translation":"Jam i kënaqur me Allahun si Zot,\nme Islamin si fe,\ndhe me Muhammedin ﷺ si pejgamber.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/16.Raditu%20billahi%20Rabban.mp3"},{"n":15,"title":"Ja Hajju Ja Kajjum (3x)","repeat":3,"translit":"Ja Hajju ja Kajjum,\nbi rahmetike estegithu,\naslih li she’ni kul-lehu,\nve la tekilni ila nefsi tarfete ajn.","arabic":"يَا حَيُّ يَا قَيُّومُ\nبِرَحْمَتِكَ أَسْتَغِيثُ\nأَصْلِحْ لِي شَأْنِي كُلَّهُ\nوَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ","translation":"O i Gjallë, o i Përhershëm,\nme mëshirën Tënde kërkoj ndihmë.\nPërmirësoje gjendjen time në çdo çështje\ndhe mos më lër në dorën e vetes sime as sa hap e mbyll sytë.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/17.Ya%20Hayyu%20Ya%20Qayyum.mp3"},{"n":16,"title":"Emsejna ve emsel-mulku lillah (1x)","repeat":1,"translit":"Emsejna ve emsel-mulku lillahi Rabbil-alemin.\nAll-llahumme inni es’eluke hajra hadhihil-lejle,\nfetheha ve nasreha ve nureha ve bereketeha ve hudaha,\nve euudhu bike min sherri ma fiha ve sherri ma ba’deha.","arabic":"أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ رَبِّ الْعَالَمِينَ\nاللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذِهِ اللَّيْلَةِ\nفَتْحَهَا وَنَصْرَهَا وَنُورَهَا وَبَرَكَتَهَا وَهُدَاهَا\nوَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِيهَا وَشَرِّ مَا بَعْدَهَا","translation":"E arritëm mbrëmjen dhe sundimi i takon Allahut, Zotit të botëve.\nO Allah, prej Teje kërkoj të mirën e kësaj nate, fitoren e saj, ndihmën e saj, dritën e saj, bekimin e saj dhe udhëzimin e saj.\nDhe kërkoj mbrojtjen Tënde nga e keqja e saj dhe nga e keqja e asaj që vjen pas saj.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/6.Asbahna.mp3"},{"n":17,"title":"Emsejna ala Fitret’il-Islam (1x)","repeat":1,"translit":"Emsejna ala fitret’il-Islam,\nve ala kelimetil-ihlasi,\nve ala dini nebijjina Muhammedin ﷺ,\nve ala milleti ebinna Ibrahima hanifan musliman,\nve ma kane minel-mushrikin.","arabic":"أَمْسَيْنَا عَلَى فِطْرَةِ الإِسْلَامِ\nوَعَلَى كَلِمَةِ الإِخْلَاصِ\nوَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ\nوَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ حَنِيفًا مُسْلِمًا\nوَمَا كَانَ مِنَ الْمُشْرِكِينَ","translation":"E arritëm mbrëmjen në natyrshmërinë e Islamit,\nnë fjalën e sinqeritetit,\nnë fenë e Pejgamberit tonë Muhammed ﷺ,\ndhe në fenë e babait tonë Ibrahim, i drejtë dhe musliman,\ndhe ai nuk ishte prej idhujtarëve.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/18.Emsejna%20ala%20fitratil%20Islam.mp3"},{"n":18,"title":"SubhanAllahi ve bihamdihi (100x)","repeat":100,"translit":"SubhanAllahi ve bihamdihi","arabic":"سُبْحَانَ اللَّهِ وَبِحَمْدِهِ","translation":"I Lartësuar qoftë Allahu dhe Atij i takon falënderimi.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/Subhanallah%20wa%20bihamdihi.mp3"},{"n":19,"title":"La ilahe il-lAllahu vahdehu la sherike leh (10x)","repeat":10,"translit":"La ilahe il-lAllahu vahdehu la sherike leh.\nLehul-mulku ve lehul-hamdu.\nVe Huve ala kul-li shej’in kadir.","arabic":"لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ\nلَهُ الْمُلْكُ وَلَهُ الْحَمْدُ\nوَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ","translation":"Nuk ka të adhuruar tjetër me të drejtë përveç Allahut, të Vetmit, pa shok.\nAtij i takon sundimi dhe falënderimi.\nDhe Ai është i Plotfuqishëm mbi çdo gjë.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/La%20ilahe%20illallah%20wahdehu.mp3"},{"n":20,"title":"Eudhu bi-kelimatillahi-tammati (3x)","repeat":3,"translit":"Eudhu bi-kelimatillahi-tammati,\nmin sherri ma halek.","arabic":"أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ\nمِنْ شَرِّ مَا خَلَقَ","translation":"Kërkoj mbrojtje me fjalët e plota të Allahut\nnga sherri i asaj që Ai ka krijuar.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/Eudhu%20bi%20kelimatillah.mp3"},{"n":21,"title":"Salavate mbi Pejgamberin ﷺ (10x)","repeat":10,"translit":"All-llahumme sal-li ve sel-lim ala nebijjina Muhammed.","arabic":"اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ\nاللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ","translation":"O Allah, dërgo salavate dhe selame mbi Pejgamberin tonë Muhammed ﷺ.","audio":"https://archive.org/download/11.-allahume-afini-fi-bedeni/Allahumme%20salli%20ala%20Muhammad.mp3"}];  
+// Koleksioni i mbrëmjes dërguar më 07.10.2026. Nuk përdorim MP3 me "Asbahna/Esbahtu" për tekst "Emsejna".  
+const eveningAudioMap={5:"https://archive.org/download/dhikri-i-mbremjes/6.All-llahume%20bike%20Emsejna.mp3"};let eveningAudioPromise=null;  
+function resolveEveningAudio(){  
+ if(eveningAudioPromise)return eveningAudioPromise;  
+ eveningAudioPromise=fetch("https://archive.org/metadata/dhikri-i-mbremjes").then(r=>{if(!r.ok)throw Error("Arkivi");return r.json()}).then(meta=>{  
+  const files=(meta.files||[]).filter(f=>/\.(mp3|ogg|m4a)$/i.test(f.name||""));  
+  const norm=t=>String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]/g,"");  
+  const keys={4:["emsejna ve emsel", "amsejna ve amsel", "emsejna ve emsel mulku"],5:["bike emsejna","bike amsejna"],7:["inni emsejtu","inni amsajtu","inni emsejtu ush"],8:["ma emsa bi","ma amsa bi"],16:["emsejna ve emsel","amsejna ve amsel"]};  
+  for(const [id,patterns] of Object.entries(keys)){  
+   const f=files.find(f=>patterns.some(k=>norm(f.name).includes(norm(k))) && !/asbah|esbah|asbaht|esbaht/.test(norm(f.name)));  
+   if(f)eveningAudioMap[id]="https://archive.org/download/dhikri-i-mbremjes/"+f.name.split("/").map(encodeURIComponent).join("/");  
+  }  
+  return eveningAudioMap;  
+ }).catch(()=>eveningAudioMap);  
+ return eveningAudioPromise;  
+}  
+const DHIKR_SHARED_SURES=DHIKR_ITEMS.slice(0,3);
+const DHIKR_EVENING=[...DHIKR_ITEMS];
+const DHIKR_MORNING=DHIKR_ITEMS.filter(d=>![4,5,7,8,16,17,20].includes(d.n)); // Mos shfaq Emsejna në mëngjes; ruaj vetëm dhikret e përbashkëta.
+let dhikrIdx=0,dhikrRepeatNow=0,dhikrOpen=false;
+function activeDhikrItems(){return dhikrPeriod()==="mëngjesit"?DHIKR_MORNING:DHIKR_EVENING}  
+function dhikrPeriod(){  
+ if(!prayers.length)return "";  
+ const now=berlinNow(),sa=prayers.find(x=>x.key==="SABAHU"),li=prayers.find(x=>x.key==="LINDJA"),ak=prayers.find(x=>x.key==="AKSHAMI"),ja=prayers.find(x=>x.key==="JACIA");  
+ if(sa&&li&&now>=sa.time&&now<li.time)return "mëngjesit";  
+ if(ak&&ja&&now>=ak.time&&now<ja.time)return "mbrëmjes";  
+ return "";  
+}  
+/* V11: shënim i tekstit sipas progresit real të MP3-së. */  
+let dhikrPlaybackToken=0,dhikrFallbackTimer=null;  
+function dhikrMarkText(progress){
+ const d=activeDhikrItems()[dhikrIdx%activeDhikrItems().length];
+ const rep=Math.max(1,Number(d.repeat||1));
+ const fraction=Math.min(.999999,Math.max(0,progress||0));
+ // Numërimi bëhet vetëm kur skedari MP3 e ka përfunduar realisht leximin.
+ // Për suret 3x të regjistruara në një MP3, tregohet progresi, jo një numërim i hamendësuar.
+ const embedded=dhikrIdx<3;
+ document.getElementById("dhikrRepeat").textContent=embedded
+   ?`Dhikri ${dhikrIdx+1} / ${activeDhikrItems().length} • Leximi ${Math.min(rep,Math.floor(fraction*rep)+1)} / ${rep}`
+   :`Dhikri ${dhikrIdx+1} / ${activeDhikrItems().length} • Përsëritja ${dhikrRepeatNow+1} / ${rep}`;
+ for(const id of ["dhikrAr","dhikrTr","dhikrSq"]){
+  const el=document.getElementById(id);if(!el)return;
+  const raw=el.dataset.raw||"";
+  const lines=raw.split("\n");
+  // Rreshtat ndjekin currentTime/duration të MP3-së, jo sekonda fikse.
+  // Sinkronizimi i saktë fjalë për fjalë kërkon timestamp-e të regjistrimit.
+  const weights=lines.map(x=>Math.max(1,x.trim().length));
+  const total=weights.reduce((a,b)=>a+b,0);
+  const target=fraction*total;
+  let acc=0,pos=0;
+  for(let i=0;i<weights.length;i++){acc+=weights[i];if(target<acc){pos=i;break;}}
+  el.replaceChildren();
+  lines.forEach((line,i)=>{
+   const span=document.createElement("span");span.textContent=line;
+   if(i===pos)span.className="dhikrReadingLine";
+   el.appendChild(span);
+   if(i<lines.length-1)el.appendChild(document.createElement("br"));
+  });
+  const current=el.querySelector(".dhikrReadingLine");
+  if(current)el.scrollTop=Math.max(0,current.offsetTop-el.offsetTop-el.clientHeight/2);
+ }
+}
+function activateDhikrAudio(){
+ const a=document.getElementById("dhikrAudio");
+ if(!a.src){renderDhikr();return;}
+ a.muted=false;a.volume=1;
+ a.play().then(()=>{document.getElementById("dhikrPlayBtn").textContent="🔊 Duke lexuar";}).catch(()=>{document.getElementById("dhikrCount").textContent="MP3 NUK FILLOI — PROVO PËRSËRI";});
+}
+function renderDhikr(){  
+ const d=activeDhikrItems()[dhikrIdx%activeDhikrItems().length];  
+ const ar=d.arabic||d.ar||"",tr=d.translit||d.tr||"",sq=d.translation||d.sq||"";  
+ const period=dhikrPeriod();  
+ document.getElementById("dhikrTitle").textContent="🤲 Dhikri i "+period+" • "+d.title;  
+ for(const [id,raw] of [["dhikrAr",ar],["dhikrTr",tr],["dhikrSq",sq]]){  
+  const el=document.getElementById(id);el.dataset.raw=raw;el.textContent=raw;  
+ }  
+ document.getElementById("dhikrCount").textContent=`${dhikrIdx+1} / ${activeDhikrItems().length} • AUTO LEXIM • MP3`;  
+ const longText=Math.max(ar.length,tr.length,sq.length)>430;  
+ ["dhikrCardAr","dhikrCardTr","dhikrCardSq"].forEach(x=>{  
+  const el=document.getElementById(x);el.classList.toggle("longText",longText);el.classList.add("dhikrActive");el.scrollTop=0;  
+ });  
+ const bar=document.getElementById("dhikrProgress");bar.style.transition="none";bar.style.width=(100*dhikrRepeatNow/Math.max(1,Number(d.repeat||1)))+"%";  
+ const a=document.getElementById("dhikrAudio");  
+ const token=++dhikrPlaybackToken;  
+ clearTimeout(dhikrFallbackTimer);a.pause();a.onended=null;a.onerror=null;a.ontimeupdate=null;  
+ dhikrMarkText(0);  
+ const advance=()=>{if(dhikrOpen&&token===dhikrPlaybackToken)nextDhikr()};  
+ // MP3 e mbrëmjes: merret nga koleksioni origjinal i dërguar, jo nga skedarët e mëngjesit.  
+ const eveningNeeded=period==="mbrëmjes" && [4,5,7,8,16].includes(d.n);  
+ if(eveningNeeded){  
+  const mp3=eveningAudioMap[d.n];  
+  if(!mp3){  
+   document.getElementById("dhikrCount").textContent=`${dhikrIdx+1} / ${activeDhikrItems().length} • MP3 E MBRËMJES DUKE U GJETUR`;  
+   resolveEveningAudio().then(()=>{if(token!==dhikrPlaybackToken||!dhikrOpen)return;if(eveningAudioMap[d.n])renderDhikr();else {document.getElementById("dhikrCount").textContent="MP3 e këtij dhikri mungon — kalim te tjetri";dhikrFallbackTimer=setTimeout(()=>{if(dhikrOpen&&token===dhikrPlaybackToken)nextDhikr();},3500);}});  
+   return;  
+  }  
+  d.audio=mp3;  
+ }  
+ a.src=d.audio;a.load();a.muted=false;a.volume=1;a.currentTime=0;  
+ a.ontimeupdate=()=>{  
+  if(token!==dhikrPlaybackToken)return;  
+  const q=Number.isFinite(a.duration)&&a.duration>0?a.currentTime/a.duration:0;  
+  const d=activeDhikrItems()[dhikrIdx%activeDhikrItems().length];
+  const rep=Math.max(1,Number(d.repeat||1));
+  const embedded=dhikrIdx<3;
+  const full=embedded?q:(dhikrRepeatNow+q)/rep;
+  bar.style.width=(Math.min(100,full*100))+"%";dhikrMarkText(q);  
+ };  
+ a.onended=advance;  
+ a.onerror=()=>{if(token===dhikrPlaybackToken){document.getElementById("dhikrCount").textContent="MP3 nuk u ngarkua — kalim te tjetri";dhikrFallbackTimer=setTimeout(()=>{if(dhikrOpen&&token===dhikrPlaybackToken)nextDhikr();},3500);}};  
+ a.play().then(()=>{document.getElementById("dhikrPlayBtn").textContent="🔊 Duke lexuar";}).catch(()=>{document.getElementById("dhikrCount").textContent="SHTYP ▶ DËGJO PËR TË AKTIVIZUAR ZËRIN";document.getElementById("dhikrPlayBtn").textContent="▶ Dëgjo";});  
+}  
+function nextDhikr(){  
+ const d=activeDhikrItems()[dhikrIdx%activeDhikrItems().length],rep=Number(d.repeat||1);  
+ if(dhikrIdx<3){dhikrRepeatNow=0;dhikrIdx=(dhikrIdx+1)%activeDhikrItems().length}  
+ else{dhikrRepeatNow++;if(dhikrRepeatNow>=rep){dhikrRepeatNow=0;dhikrIdx=(dhikrIdx+1)%activeDhikrItems().length}}  
+ if(dhikrOpen)renderDhikr();  
+}  
+function openDhikrPopup(){if(!dhikrPeriod()||anyPriorityPopup())return;dhikrIdx=0;dhikrRepeatNow=0;dhikrOpen=true;document.getElementById("dhikrPopup").classList.add("show");renderDhikr()}  
+function closeDhikrPopup(){document.getElementById("dhikrPlayBtn").textContent="▶ Dëgjo";dhikrPlaybackToken++;clearTimeout(dhikrFallbackTimer);if("speechSynthesis" in window)speechSynthesis.cancel();dhikrOpen=false;document.getElementById("dhikrPopup").classList.remove("show");const a=document.getElementById("dhikrAudio");a.pause();a.currentTime=0}  
+let lastDhikrWindow="";  
+function checkDhikrPopup(){  
+ const p=dhikrPeriod();if(!p)return;  
+ const n=berlinNow(),key=berlinDateParts(n).iso+"-"+p;  
+ if(key!==lastDhikrWindow&&!anyPriorityPopup()){lastDhikrWindow=key;openDhikrPopup()}  
+}  
+setInterval(checkDhikrPopup,30000);  
+  
+</script>  </body>  
+</html>
