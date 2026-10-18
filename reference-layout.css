@@ -39,3 +39,15 @@ html{overflow-x:hidden}body{font-family:Georgia,serif;background:#faf9f5;overflo
  .home-lower .feature-photo,.home-lower .feature-graphic{height:105px!important}
 }
 @media(max-width:360px){.hero-reference .hero-scene{grid-template-columns:41% 59%!important}.hero-reference .hero-copy h1{font-size:20px!important}}
+
+/* One live prayer panel: clearly distinguish current and next prayer. */
+.prayer-board{position:relative!important;isolation:isolate!important;overflow:hidden!important}
+.prayer-board>*:not(.prayer-watermark){position:relative!important;z-index:2!important}
+.prayer-board .prayer-watermark{position:absolute!important;z-index:0!important;right:-25px!important;bottom:90px!important;width:220px!important;height:220px!important;display:grid!important;place-items:center!important;opacity:.09!important;pointer-events:none!important;user-select:none!important;color:#f2d391!important;font-size:185px!important;line-height:1!important}
+.prayer-board .prayer-row{border-radius:8px!important;transition:background .2s ease!important}
+.prayer-board .prayer-row.current{background:linear-gradient(90deg,#b18a4044,#e3bb6750)!important;box-shadow:inset 3px 0 #e9c474!important}
+.prayer-board .prayer-row.upcoming{background:linear-gradient(90deg,#24675d99,#2e7369b0)!important;box-shadow:inset 3px 0 #80dfc6!important}
+.prayer-board .prayer-row>span{display:flex!important;align-items:center!important;gap:8px!important;min-width:0!important}
+.prayer-board .prayer-state{font:700 9px/1 system-ui!important;letter-spacing:.04em!important;color:#002d27!important;background:#f2cf85!important;border-radius:4px!important;padding:4px 5px!important;white-space:nowrap!important}
+.prayer-board .prayer-row.upcoming .prayer-state{background:#a2e8d6!important}
+@media(max-width:760px){.prayer-board .prayer-row>span{gap:3px!important;flex-wrap:wrap!important}.prayer-board .prayer-state{font-size:8px!important;padding:3px!important}.prayer-board .prayer-watermark{right:-35px!important;bottom:90px!important}}
