@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<title>Aktivitetet në Xhami 🕌</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  padding: 20px;
+}
+
+h1 {
+  color: #007BFF;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.activity {
+  background: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px auto;
+  max-width: 600px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.activity h2 {
+  color: #0056b3;
+  margin-bottom: 10px;
+}
+
+.activity p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.activity img, .activity iframe {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* Slider CSS */
+.slider {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-top: 12px;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* Placeholder */
+.placeholder {
+  width: 100%;
+  height: 250px;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 18px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-style: italic;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Aktivitetet në Xhami 🕌</h1>
+
+<!-- 1. Konvertime -->
+<div class="activity">
+  <h2>1. Konvertime në Islam</h2>
+  <p>Janë bërë 3 konvertime: 2 vajza Polake dhe 1 Gjerman. Video e momentit:</p>
+  <iframe frameborder="0" height="315"
+    src="https://www.dailymotion.com/embed/video/x4zxlhg"
+    allowfullscreen></iframe>
+</div>
+
+<!-- 2. Iftare -->
+<div class="activity">
+  <h2>2. Iftare të përbashkëta gjatë Ramazanit</h2>
+  <p>Çdo Ramazan organizohen iftare për të gjithë besimtarët.</p>
+  <div class="slider">
+    <img class="slide active" src="https://archive.org/download/fb-img-1767318168042/FB_IMG_1767318203232.jpg">
+    <img class="slide" src="https://archive.org/download/fb-img-1767318168042/FB_IMG_1767318217619.jpg">
+    <img class="slide" src="https://archive.org/download/fb-img-1767318168042/FB_IMG_1767318340477.jpg">
+    <img class="slide" src="https://archive.org/download/fb-img-1767318168042/FB_IMG_1767318389327.jpg">
+  </div>
+</div>
+
+<!-- 3. Niqah -->
+<div class="activity">
+  <h2>3. Niqahe dhe lidhje kurorë</h2>
+  <p>Çdo vit organizohen Niqahe ku çifti merr certifikatën e Xhamisë.</p>
+  <div class="placeholder">Foto e ardhshme</div>
+</div>
+
+<!-- 4. Tribuna -->
+<div class="activity">
+  <h2>4. Tribuna Islame</h2>
+  <p>Janë mbajtur tribuna me tema islame.</p>
+  <div class="slider">
+    <img class="slide active" src="https://archive.org/download/fb-img-1767318168042/FB_IMG_1767318203232.jpg">
+    <img class="slide" src="https://archive.org/download/fb-img-1767318168042/FB_IMG_1767318103688.jpg">
+  </div>
+</div>
+
+<!-- 5. Mësim -->
+<div class="activity">
+  <h2>5. Mësim Besimi Islam</h2>
+  <p>Mësime fetare për fëmijë dhe të rritur.</p>
+  <div class="slider">
+    <img class="slide active" src="https://archive.org/download/fb-img-1767318168042/FB_IMG_1767318181561.jpg">
+  </div>
+</div>
+
+<!-- 6. Sunetije -->
+<div class="activity">
+  <h2>6. Tubime Sunetije</h2>
+  <p>Tubime familjare pas lindjes së fëmijëve.</p>
+  <img src="https://archive.org/download/fb-img-1767318168042/FB_IMG_1767318103688.jpg">
+</div>
+
+<!-- 7. Pajtime -->
+<div class="activity">
+  <h2>7. Pamje dhe Pajtesa</h2>
+  <p>Vizita dhe pajtime në komunitet.</p>
+  <div class="placeholder">Foto e ardhshme</div>
+</div>
+
+<!-- 8. UMRAH – E RREGULLUAR -->
+<div class="activity">
+  <h2>8. Organizimi i Umres</h2>
+  <p>Çdo vit organizohet udhëtimi për Umre.</p>
+
+  <iframe
+    height="315"
+    src="https://www.dailymotion.com/embed/video/x9wx21a"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+
+  <img
+    src="https://archive.org/download/fb-img-1767318168042/FB_IMG_1767318548108.jpg"
+    alt="Organizimi i Umres">
+</div>
+
+<!-- 9. Sport -->
+<div class="activity">
+  <h2>9. Aktivitetet sportive</h2>
+  <p>Aktivitete sportive për të rinjtë.</p>
+  <div class="placeholder">Foto e ardhshme</div>
+</div>
+
+<script>
+document.querySelectorAll(".slider").forEach(slider => {
+  let slides = slider.querySelectorAll(".slide");
+  let index = 0;
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 3500);
+});
+</script>
+
+</body>
+</html>
