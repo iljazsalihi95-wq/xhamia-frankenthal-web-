@@ -55,3 +55,22 @@ html{overflow-x:hidden}body{font-family:Georgia,serif;background:#faf9f5;overflo
 /* Background image used in original Kohet TV */
 .prayer-board{background-image:linear-gradient(rgba(0,32,29,.88),rgba(0,32,29,.79)),url('https://archive.org/download/Jacia/Sabahu.png')!important;background-size:cover!important;background-position:center!important}
 .prayer-board .prayer-watermark{display:none!important}
+
+/* Premium Drita e Dites: source cards available on demand, not duplicated on scroll. */
+#drita{padding-top:36px!important;padding-bottom:42px!important;background:linear-gradient(140deg,#f4f1e9,#fbfaf6)!important}
+#drita .heading{border-bottom:1px solid #d9c89f!important;padding-bottom:14px!important;margin-bottom:16px!important}
+#drita .heading h2{color:#073a33!important;letter-spacing:-.025em!important}
+.drita-premium-details{border:1px solid #d3bd8b;border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 9px 30px #16372b12}
+.drita-premium-details summary{list-style:none;display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:18px 22px;color:#083d36;font:700 15px system-ui;gap:12px}
+.drita-premium-details summary::-webkit-details-marker{display:none}
+.drita-premium-details summary span:last-child{font-size:24px;color:#ac843d}
+.drita-premium-details[open] summary{border-bottom:1px solid #e9dfca;background:#f8f4e9}
+.drita-premium-details[open] summary span:last-child{transform:rotate(45deg)}
+.drita-premium-details .news-grid{padding:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.drita-premium-details .news-grid>article{border:1px solid #e6dfd0!important;border-radius:13px!important;background:#fff!important;padding:18px!important;min-width:0;overflow-wrap:anywhere}
+.drita-premium-details .news-grid p,.drita-premium-details .news-grid div{line-height:1.75}
+.drita-live-slider{background:linear-gradient(125deg,#002c28,#0d4c41)!important;border:1px solid #c7a35c!important;color:#f9f3e5!important;border-radius:16px!important;box-shadow:0 14px 32px #00282030!important;min-width:0!important}
+.drita-live-slider .slider-top{border-bottom:1px solid #e2c88c55!important}
+.drita-live-slider .slider-top h3,.drita-live-slider .slider-content strong{color:#f3d48f!important}
+.drita-live-slider .slider-content p,.drita-live-slider .slider-content small{color:#f6f1e5!important;line-height:1.6!important}
+@media(max-width:760px){.drita-premium-details .news-grid{grid-template-columns:1fr!important;padding:10px!important}.drita-premium-details summary{padding:15px;font-size:13px}.drita-live-slider{border-radius:12px!important}}
