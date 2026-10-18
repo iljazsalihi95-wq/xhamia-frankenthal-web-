@@ -135,3 +135,13 @@ html{overflow-x:hidden}body{font-family:Georgia,serif;background:#faf9f5;overflo
 .hero-gallery-dots button.is-current{width:26px;background:#eac77e}
 .hero-gallery :focus-visible{outline:3px solid #ffe1a1;outline-offset:3px}
 @media(max-width:760px){.hero-gallery{min-height:320px!important}.hero-gallery-caption{left:14px;right:14px;bottom:38px}.hero-gallery-prev,.hero-gallery-next{width:32px;height:38px;font-size:23px}}
+
+
+/* Display original AppCreator rubric artwork rather than glyph placeholders */
+.rubrics .rubric .symbol{display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important}
+.rubrics .rubric .symbol img{display:block;width:45px;height:45px;max-width:100%;object-fit:contain;filter:drop-shadow(0 3px 4px #0003)}
+.library-original-icon{width:57px;height:57px;object-fit:contain;display:block;margin-bottom:14px;filter:drop-shadow(0 5px 9px #002b2224)}
+.library .library-grid>a{cursor:pointer}
+.library .library-grid>a:hover{border-color:#b18b4d!important}
+.library .library-grid .library-pending{opacity:.72}
+@media(max-width:760px){.rubrics .rubric .symbol img{width:30px;height:30px}.library-original-icon{width:43px;height:43px;margin-bottom:9px}}
