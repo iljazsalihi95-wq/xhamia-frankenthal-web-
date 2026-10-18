@@ -1,0 +1,85 @@
+<section style="
+  padding:25px;
+  text-align:center;
+  font-family:Arial, sans-serif;
+  background:#ffffff;
+">
+
+  <h2 id="qiblaTitle" style="
+    font-size:26px;
+    margin-bottom:10px;
+  ">
+    🧭 Qibla Direction
+  </h2>
+
+  <p id="qiblaText" style="
+    font-size:16px;
+    color:#444;
+    margin-bottom:25px;
+    line-height:1.5;
+  ">
+    Please allow location access to find the correct Qibla direction.
+  </p>
+
+  <a
+    href="https://qiblafinder.withgoogle.com/"
+    target="_blank"
+    id="qiblaButton"
+    style="
+      display:inline-block;
+      padding:18px 34px;
+      background:#1f8f4a;
+      color:#ffffff;
+      font-size:19px;
+      font-weight:bold;
+      border-radius:14px;
+      text-decoration:none;
+      box-shadow:0 4px 12px rgba(0,0,0,0.25);
+    "
+  >
+    🧭 Open Qibla Direction
+  </a>
+
+  <p id="qiblaNote" style="
+    margin-top:18px;
+    font-size:14px;
+    color:#777;
+  ">
+    (Opens in browser for maximum accuracy)
+  </p>
+
+</section>
+
+<script>
+const lang = navigator.language || navigator.userLanguage;
+
+const translations = {
+  sq: {
+    title: "🧭 Drejtimi i Qibles",
+    text: "📍 Ju lutemi lejoni qasjen në vendndodhje (Location) për të gjetur drejtimin e saktë të Qibles.",
+    button: "🧭 Hap Drejtimin e Qibles",
+    note: "(Hapet në shfletues për saktësi maksimale)"
+  },
+  de: {
+    title: "🧭 Gebetsrichtung (Qibla)",
+    text: "📍 Bitte erlauben Sie den Standortzugriff, um die korrekte Qibla-Richtung zu ermitteln.",
+    button: "🧭 Qibla-Richtung öffnen",
+    note: "(Öffnet im Browser für maximale Genauigkeit)"
+  },
+  en: {
+    title: "🧭 Qibla Direction",
+    text: "📍 Please allow location access to find the correct Qibla direction.",
+    button: "🧭 Open Qibla Direction",
+    note: "(Opens in browser for maximum accuracy)"
+  }
+};
+
+let selectedLang = "en";
+if (lang && lang.startsWith("sq")) selectedLang = "sq";
+else if (lang && lang.startsWith("de")) selectedLang = "de";
+
+document.getElementById("qiblaTitle").innerText  = translations[selectedLang].title;
+document.getElementById("qiblaText").innerText   = translations[selectedLang].text;
+document.getElementById("qiblaButton").innerText = translations[selectedLang].button;
+document.getElementById("qiblaNote").innerText   = translations[selectedLang].note;
+</script>
