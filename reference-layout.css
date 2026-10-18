@@ -51,3 +51,7 @@ html{overflow-x:hidden}body{font-family:Georgia,serif;background:#faf9f5;overflo
 .prayer-board .prayer-state{font:700 9px/1 system-ui!important;letter-spacing:.04em!important;color:#002d27!important;background:#f2cf85!important;border-radius:4px!important;padding:4px 5px!important;white-space:nowrap!important}
 .prayer-board .prayer-row.upcoming .prayer-state{background:#a2e8d6!important}
 @media(max-width:760px){.prayer-board .prayer-row>span{gap:3px!important;flex-wrap:wrap!important}.prayer-board .prayer-state{font-size:8px!important;padding:3px!important}.prayer-board .prayer-watermark{right:-35px!important;bottom:90px!important}}
+
+/* Background image used in original Kohet TV */
+.prayer-board{background-image:linear-gradient(rgba(0,32,29,.88),rgba(0,32,29,.79)),url('https://archive.org/download/Jacia/Sabahu.png')!important;background-size:cover!important;background-position:center!important}
+.prayer-board .prayer-watermark{display:none!important}
