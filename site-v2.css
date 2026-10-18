@@ -13,3 +13,13 @@
 .drita-card>*{position:relative;z-index:1}
 @media(max-width:900px){.news-carousel>.news-api-item{flex-basis:calc((100% - 18px)/2)}}
 @media(max-width:680px){.news-carousel>.news-api-item{flex-basis:88%}}
+
+
+.comments-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:22px}
+.comments-list article{background:#fff;padding:20px;border:1px solid #e6dfcf;border-radius:14px;box-shadow:0 8px 24px #103b2a0d}
+.comments-list article h3{margin:0 0 8px}.comments-list article p{line-height:1.6;overflow-wrap:anywhere}
+.comment-form{max-width:740px;padding:25px;border:1px solid #dfd2b1;background:white;border-radius:16px;box-shadow:0 12px 35px #002b2312}
+.comment-form label{display:grid;gap:8px;margin:15px 0;color:#24473c;font-weight:600}
+.comment-form input,.comment-form textarea{width:100%;font:inherit;padding:12px;border:1px solid #c9d2cb;border-radius:8px;background:#fcfcf9}
+.comment-form .honeypot{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.comment-form button{border:0;cursor:pointer}
