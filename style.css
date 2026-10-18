@@ -141,3 +141,20 @@ html,body{max-width:100%;overflow-x:clip}img,iframe{max-width:100%}main,header,s
  .hero-reference .hero-copy .hero-verse{font-size:9px}
  .quick-links .rubrics{grid-template-columns:repeat(4,minmax(0,1fr))!important}
 }
+
+/* Final mobile reference alignment: natural page width, compact dropdown, no giant overlay */
+@media(max-width:760px){
+ .top .head{min-height:72px!important}
+ .identity strong{font-size:clamp(13px,3.2vw,17px)!important;line-height:1.2!important}
+ .identity small{font-size:11px!important}
+ .main-navigation{display:none!important;position:absolute!important;top:calc(100% - 2px)!important;left:12px!important;right:12px!important;width:auto!important;max-height:min(55vh,370px)!important;overflow-y:auto!important;overflow-x:hidden!important;padding:8px!important;box-shadow:0 12px 28px #0009!important;z-index:90!important}
+ .main-navigation.open{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important;align-content:start!important}
+ .main-navigation a{font-size:13px!important;min-height:42px!important;display:flex!important;justify-content:flex-start!important;white-space:normal!important;padding:9px!important;background:#06443e;border:1px solid #d6b77650;border-radius:6px}
+ .main-navigation a:first-child{background:#edc678;color:#002723}
+ .hero-reference .hero-scene{grid-template-columns:37% 63%!important}
+ .hero-reference .hero-copy{min-width:0;padding:20px 10px 20px 16px!important}
+ .hero-reference .hero-photo,.hero-reference .hero-photo img{min-height:300px!important}
+ .hero-reference .prayer-board{grid-column:1/-1!important;grid-row:2!important}
+ .quick-links .rubrics{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:7px!important}
+ .quick-links .rubric{min-width:0!important;flex:initial!important}
+}
