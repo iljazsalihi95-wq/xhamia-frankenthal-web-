@@ -104,3 +104,15 @@ html{overflow-x:hidden}body{font-family:Georgia,serif;background:#faf9f5;overflo
 #aktualitet-detaje .news-card h3{color:#0a4238!important;font-size:22px!important}
 @media(max-width:980px){.home-sliders .slider-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.library .library-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:620px){.home-sliders{padding-top:38px!important;padding-bottom:40px!important}.home-sliders .slider-grid{grid-template-columns:1fr!important;gap:13px!important}.home-sliders .live-slider{min-height:240px!important;padding:20px!important}.home-sliders .slider-content{padding:18px 0!important}.library{padding-top:38px!important;padding-bottom:40px!important}.library .library-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}.library .library-grid>*{min-height:145px!important;padding:14px!important}.library .library-grid h3{font-size:17px!important}.library .library-grid p{font-size:12px!important}}
+
+
+/* Functional mobile/touch feedback and slider navigation */
+.library .library-grid>a.library-item{display:flex!important;flex-direction:column!important;text-decoration:none!important;color:inherit!important;cursor:pointer!important;touch-action:manipulation}
+.library .library-grid .library-action{display:inline-flex;margin-top:auto;padding-top:18px;color:#a47b39;font-size:12px;font-weight:800}
+.library .library-grid .library-pending{opacity:.78}
+.library .library-grid>a.library-item:active,.home-sliders .live-slider>a:active{transform:scale(.975)!important}
+.library .library-grid>a.library-item:focus-visible,.slider-controls button:focus-visible{outline:3px solid #d9aa58!important;outline-offset:3px!important}
+.home-sliders .slider-controls{display:flex;justify-content:flex-end;gap:9px;margin-top:14px}
+.home-sliders .slider-controls button{width:39px;height:39px;display:grid;place-items:center;border-radius:50%;border:1px solid #e8d49c99;background:#ffffff16;color:#f8d99b;font-size:29px;line-height:1;cursor:pointer;transition:background .2s,transform .2s}
+.home-sliders .slider-controls button:hover{background:#d6ac65;color:#102d2b}
+.home-sliders .slider-controls button:active{transform:scale(.9)}
