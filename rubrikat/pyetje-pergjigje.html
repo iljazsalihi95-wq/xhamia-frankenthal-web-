@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pyetje & Përgjigje</title>
+
+<style>
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  font-family:Arial, sans-serif;
+  background:#07151b;
+  color:white;
+}
+
+.page{
+  min-height:100vh;
+  padding:16px;
+  background:
+    linear-gradient(rgba(4,18,25,.88),rgba(4,18,25,.96)),
+    url("https://archive.org/download/pngtree-makkah-kaba-image_15802070/pngtree-the-majestic-kaaba-a-symbol-of-unity-image_16651521.jpg");
+  background-size:cover;
+  background-position:center;
+}
+
+.card{
+  max-width:850px;
+  margin:0 auto;
+  background:rgba(0,0,0,.68);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 10px 35px rgba(0,0,0,.45);
+  text-align:center;
+}
+
+.logo{
+  width:95px;
+  height:95px;
+  object-fit:contain;
+  background:white;
+  border-radius:18px;
+  padding:5px;
+  margin-bottom:12px;
+}
+
+h1{
+  margin:0;
+  color:#ffd56b;
+  font-size:30px;
+}
+
+p{
+  font-size:17px;
+  line-height:1.55;
+  color:#e6f6ff;
+}
+
+.info{
+  background:rgba(255,213,107,.12);
+  border-left:5px solid #ffd56b;
+  border-radius:14px;
+  padding:14px;
+  margin:18px 0;
+  text-align:left;
+}
+
+.info b{color:#ffd56b}
+
+.btn{
+  display:block;
+  width:100%;
+  margin:12px 0;
+  padding:16px;
+  border-radius:18px;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:18px;
+  color:white;
+  background:#16a34a;
+  box-shadow:0 5px 18px rgba(0,0,0,.25);
+}
+
+.btn.blue{background:#2563eb}
+.btn.gold{background:#ca8a04}
+
+.small{
+  margin-top:15px;
+  font-size:14px;
+  color:#cbd5e1;
+}
+
+iframe{
+  width:100%;
+  height:82vh;
+  border:none;
+  border-radius:20px;
+  margin-top:18px;
+  background:white;
+}
+
+@media(max-width:700px){
+  .page{padding:10px}
+  .card{padding:16px;border-radius:20px}
+  h1{font-size:24px}
+  p{font-size:15px}
+  iframe{height:78vh}
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+  <div class="card">
+
+    <img class="logo" src="https://archive.org/download/20260126-152726-0000/20260126_152726_0000.png">
+
+    <h1>🕌 Pyetje & Përgjigje</h1>
+
+    <p>
+      Në këtë rubrikë mund të lexoni pyetje islame nga arkivi
+      dhe të dërgoni pyetje të reja për hoxhën.
+    </p>
+
+    <div class="info">
+      <b>Kujdes:</b><br>
+      Për çështje të ndjeshme si martesa, talaku, trashëgimia,
+      problemet familjare apo fetva personale, kontaktoni hoxhën drejtpërdrejt,
+      sepse përgjigjja mund të ndryshojë sipas rrethanave.
+    </div>
+
+    <a class="btn" href="https://pyetje-pergjigje-hoxhes.netlify.app/" target="_blank">
+      📚 Hape Pyetje & Përgjigje
+    </a>
+
+    <a class="btn blue" href="https://wa.me/4915758576719?text=Eselamu%20alejkum.%20Kam%20nj%C3%AB%20pyetje%20p%C3%ABr%20hoxh%C3%ABn:" target="_blank">
+      💬 Pyet në WhatsApp
+    </a>
+
+    <a class="btn gold" href="mailto:xhamiafrankenthal@gmail.com?subject=Pyetje%20p%C3%ABr%20Hoxh%C3%ABn">
+      📧 Dërgo pyetje me Email
+    </a>
+
+    <div class="small">
+      Xhamia Frankenthal · Pyete Hoxhën<br>
+      Ideator dhe kreator: Hoxhë Ilaz ef. Salihi
+    </div>
+
+    <iframe
+      src="https://pyetje-pergjigje-hoxhes.netlify.app/"
+      loading="lazy"
+      referrerpolicy="no-referrer">
+    </iframe>
+
+  </div>
+</div>
+
+</body>
+</html>
