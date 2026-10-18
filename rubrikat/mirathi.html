@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mirathi / Trashëgimia Islame</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:radial-gradient(circle at top,#167a61 0,#073f35 38%,#081d2b 100%);color:#14213d}
+.wrap{max-width:1050px;margin:auto;padding:12px}
+.card{background:#fff;border-radius:24px;padding:20px;margin:16px 0;box-shadow:0 12px 34px rgba(0,0,0,.22);overflow:hidden}
+.hero{text-align:center;color:white;background:linear-gradient(135deg,#03342b,#0c7b5b)}
+.hero h1{font-size:30px;margin:10px 0}.hero p{font-size:17px;color:#eafaf3;line-height:1.6}
+.langbar{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}
+.langbar button{border:none;border-radius:16px;padding:12px 8px;background:#0b5d4a;color:white;font-weight:900;font-size:15px}
+.langbar button.active{background:#ffe58a;color:#073b2f}
+.badge{display:inline-block;padding:9px 14px;border-radius:999px;background:#ffe58a;color:#08392d;font-weight:900}
+h2{text-align:center;color:#086044;margin:6px 0 18px;font-size:25px}h3{color:#7a4b00;margin-bottom:8px}
+p,li{font-size:16px;line-height:1.7}
+.arabic{direction:rtl;text-align:right;font-size:25px;line-height:2.1;font-family:"Traditional Arabic","Amiri","Scheherazade New",serif;color:#073b2f;background:#f6fff9;border-right:6px solid #0b5d4a;border-radius:16px;padding:14px}
+.quote{background:#fff8e1;border:1px solid #e1bd4f;border-radius:18px;padding:14px;margin:12px 0}
+.warning{background:#fff0f0;border:1px solid #d77;border-radius:18px;padding:14px;color:#7a1111;margin:12px 0}
+.info{background:#eefaf4;border:1px solid #7ec6a2;border-radius:18px;padding:14px;color:#0b4b37}
+.grid,.mobile-list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.box,.share-card{background:#f8fbfa;border:1px solid #dbe8e3;border-radius:18px;padding:15px}
+.name{font-size:20px;font-weight:900;color:#0b5d4a}.part{display:inline-block;background:#ffe58a;color:#073b2f;border-radius:999px;padding:7px 11px;font-weight:900;margin:8px 0}
+.form{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+label{font-weight:bold;color:#134e3a}input,select{width:100%;padding:13px;border:1px solid #cfd8d3;border-radius:14px;font-size:17px;margin-top:6px}
+.help{display:block;font-size:13px;color:#666;font-weight:normal;margin-top:4px;line-height:1.35}
+.btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+button.action{border:none;border-radius:15px;padding:14px 20px;background:#0b5d4a;color:white;font-size:16px;font-weight:bold}
+button.reset{background:#666}.result{background:#fff8e1;border:2px solid #d4af37}
+.amount{font-size:34px;font-weight:900;color:#8b0000;text-align:center;margin:10px 0}
+.details div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px dashed #d2c081;font-size:15px}
+.small{font-size:14px;color:#555}.footer{text-align:right;font-style:italic;margin-top:18px}
+@media(max-width:760px){.wrap{padding:8px}.card{padding:16px;border-radius:20px;margin:12px 0}.hero h1{font-size:24px}h2{font-size:23px}.arabic{font-size:22px}.grid,.form,.mobile-list{grid-template-columns:1fr}.langbar{grid-template-columns:1fr 1fr}.amount{font-size:30px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="card hero">
+<span class="badge" data-t="badge">📘 Rubrika e Mirathit</span>
+<h1 data-t="title">Trashëgimia Islame / Mirathi</h1>
+<p data-t="hero">Përpunuar sipas shpjegimeve të hoxhës Jusuf Zimeri mbi të drejtën e trashëgimisë, me përkthim të përgatitur manualisht në disa gjuhë.</p>
+<div class="langbar">
+<button onclick="setLang('sq')" id="b-sq" class="active">🇦🇱 Shqip</button>
+<button onclick="setLang('de')" id="b-de">🇩🇪 Deutsch</button>
+<button onclick="setLang('tr')" id="b-tr">🇹🇷 Türkçe</button>
+<button onclick="setLang('bs')" id="b-bs">🇧🇦 Bosanski</button>
+<button onclick="setLang('it')" id="b-it">🇮🇹 Italiano</button>
+</div>
+<p><strong data-t="author">Ideuar dhe ndërtuar nga: Hoxhë Ilaz ef. Salihi</strong></p>
+</section>
+
+<section class="card warning" data-t="warn">Kujdes: Mirathi është dispozitë e Allahut dhe jo llogari e zakonshme. Ky kalkulator është vetëm ndihmës për raste bazë. Rastet reale duhet verifikuar me dijetar të besueshëm.</section>
+
+<section class="card">
+<h2 data-t="whatTitle">Çfarë është Mirathi?</h2>
+<p data-t="whatText">Në terminologjinë islame, e drejta e trashëgimisë njihet si Ilmul Mirath ose Ilmul Feraid. Kjo shkencë merret me dispozitat juridike dhe llogaritëse për bartjen e pasurisë pas vdekjes së trashëgimlënësit te trashëgimtarët e ligjshëm.</p>
+<div class="quote"><div class="arabic">قَوَاعِدٌ فِقْهِيَّةٌ وَحِسَابِيَّةٌ يُعْرَفُ بِهَا نَصِيبُ كُلِّ وَارِثٍ مِنَ التَّرِكَةِ</div><p data-t="def">Është përmbledhje normash juridike dhe matematikore përmes të cilave njihet pjesa që i takon secilit trashëgimtar nga pasuria e lënë.</p></div>
+</section>
+
+<section class="card">
+<h2 data-t="valueTitle">Vlera e mësimit të Feraidit</h2>
+<div class="quote"><div class="arabic">تَعَلَّمُوا الْفَرَائِضَ وَعَلِّمُوهَا فَإِنَّهُ نِصْفُ الْعِلْمِ وَهُوَ يُنْسَى</div><p data-t="had1">“Mësojeni shkencën e Feraidit dhe mësojani të tjerëve, sepse ajo është gjysma e diturisë dhe harrohet.”</p></div>
+<div class="quote"><div class="arabic">تَعَلَّمُوا الْقُرْآنَ وَالْفَرَائِضَ وَعَلِّمُوا النَّاسَ فَإِنِّي مَقْبُوضٌ</div><p data-t="had2">“Mësojeni Kur’anin dhe Feraidin dhe mësojani njerëzve, sepse unë jam njeri që do të vdes.”</p></div>
+</section>
+
+<section class="card">
+<h2 data-t="quranTitle">Baza nga Kur’ani</h2>
+<div class="quote"><div class="arabic">لِلرِّجَالِ نَصِيبٌ مِمَّا تَرَكَ الْوَالِدَانِ وَالْأَقْرَبُونَ وَلِلنِّسَاءِ نَصِيبٌ</div><p data-t="q1">Meshkujve u takon pjesë nga ajo që lënë prindërit dhe të afërmit, edhe femrave u takon pjesë. En-Nisa 4:7</p></div>
+<div class="quote"><div class="arabic">يُوصِيكُمُ اللَّهُ فِي أَوْلَادِكُمْ ۖ لِلذَّكَرِ مِثْلُ حَظِّ الْأُنثَيَيْنِ</div><p data-t="q2">Allahu ju urdhëron për fëmijët tuaj: mashkullit i takon sa pjesa e dy femrave. En-Nisa 4:11</p></div>
+<div class="quote"><div class="arabic">وَلَكُمْ نِصْفُ مَا تَرَكَ أَزْوَاجُكُمْ إِن لَّمْ يَكُن لَّهُنَّ وَلَدٌ</div><p data-t="q3">Juve ju takon gjysma e asaj që lënë bashkëshortet tuaja, nëse ato nuk kanë fëmijë. En-Nisa 4:12</p></div>
+</section>
+
+<section class="card">
+<h2 data-t="pillarsTitle">Shtyllat, shkaqet dhe kushtet</h2>
+<div class="grid">
+<div class="box"><h3 data-t="p1t">Shtyllat</h3><p data-t="p1">Trashëgimlënësi, trashëgimtari dhe pasuria e lënë. Pa këto tri nuk ka mirath.</p></div>
+<div class="box"><h3 data-t="p2t">Shkaqet</h3><p data-t="p2">Afërsia familjare nga gjaku, martesa e ligjshme dhe velaul-itk si çështje historike e librave klasikë.</p></div>
+<div class="box"><h3 data-t="p3t">Kushtet</h3><p data-t="p3">Vdekja e trashëgimlënësit, jeta e trashëgimtarit në momentin e vdekjes dhe mungesa e pengesave.</p></div>
+<div class="box"><h3 data-t="p4t">Pengesat</h3><p data-t="p4">Robëria në librat klasikë, vrasja e trashëgimlënësit dhe ndryshimi i fesë sipas dispozitave të fikhut.</p></div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-t="rightsTitle">Renditja para ndarjes</h2>
+<ol>
+<li data-t="r1">Përgatitja dhe varrimi i xhenazes, pa teprim dhe pa shpërdorim.</li>
+<li data-t="r2">Shpagimi i borxheve të të ndjerit para ndarjes së pasurisë.</li>
+<li data-t="r3">Ekzekutimi i testamentit të vlefshëm deri në një të tretën.</li>
+<li data-t="r4">Pastaj bëhet ndarja e pasurisë për trashëgimtarët.</li>
+</ol>
+<div class="quote"><div class="arabic">نَفْسُ الْمُؤْمِنِ مُعَلَّقَةٌ بِدَيْنِهِ حَتَّى يُقْضَى عَنْهُ</div><p data-t="debtHad">“Shpirti i besimtarit është i lidhur me borxhin e tij derisa të paguhet për të.”</p></div>
+</section>
+
+<section class="card">
+<h2 data-t="sharesTitle">Pjesët kryesore të trashëgimtarëve</h2>
+<div class="mobile-list">
+<div class="share-card"><div class="name" data-t="s1n">Bashkëshorti</div><div class="part">1/2 ose 1/4</div><p data-t="s1">1/2 kur gruaja nuk ka fëmijë; 1/4 kur ka fëmijë.</p></div>
+<div class="share-card"><div class="name" data-t="s2n">Bashkëshortja</div><div class="part">1/4 ose 1/8</div><p data-t="s2">1/4 kur burri nuk ka fëmijë; 1/8 kur ka fëmijë.</p></div>
+<div class="share-card"><div class="name" data-t="s3n">Vajza</div><div class="part">1/2 ose 2/3</div><p data-t="s3">Një vajzë pa djalë merr 1/2; dy ose më shumë vajza pa djalë marrin 2/3.</p></div>
+<div class="share-card"><div class="name" data-t="s4n">Djali</div><div class="part" data-t="rem">Mbetja</div><p data-t="s4">Me vajza, djali merr sa dy vajza.</p></div>
+<div class="share-card"><div class="name" data-t="s5n">Nëna</div><div class="part">1/3 ose 1/6</div><p data-t="s5">1/6 kur ka fëmijë ose disa vëllezër/motra; ndryshe 1/3.</p></div>
+<div class="share-card"><div class="name" data-t="s6n">Babai</div><div class="part">1/6 +</div><p data-t="s6">Me fëmijë merr 1/6; në disa raste merr edhe mbetjen.</p></div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-t="calcTitle">Kalkulator orientues i Mirathit</h2>
+<p class="info" data-t="calcInfo">Llogarit vetëm raste bazë: bashkëshort/bashkëshorte, babë, nënë, djem dhe vajza. Për raste të plota duhet dijetar.</p>
+<div class="form">
+<label><span data-t="estate">Pasuria totale (€)</span><input id="estate" type="number" step="0.01" placeholder="0"></label>
+<label><span data-t="funeral">Shpenzime varrimi (€)</span><input id="funeral" type="number" step="0.01" placeholder="0"></label>
+<label><span data-t="debts">Borxhe të të ndjerit (€)</span><input id="debts" type="number" step="0.01" placeholder="0"></label>
+<label><span data-t="will">Testament i vlefshëm (€)</span><input id="will" type="number" step="0.01" placeholder="0"></label>
+<label><span data-t="spouse">I ndjeri ka lënë:</span><select id="spouse"><option value="none" data-t="none">Nuk ka</option><option value="husband" data-t="husband">Bashkëshort</option><option value="wife" data-t="wife">Bashkëshorte</option></select></label>
+<label><span data-t="wives">Numri i bashkëshorteve</span><input id="wivesCount" type="number" step="1" value="1" min="1"></label>
+<label><span data-t="father">A është babai gjallë?</span><select id="father"><option value="no" data-t="no">Jo</option><option value="yes" data-t="yes">Po</option></select></label>
+<label><span data-t="mother">A është nëna gjallë?</span><select id="mother"><option value="no" data-t="no">Jo</option><option value="yes" data-t="yes">Po</option></select></label>
+<label><span data-t="sons">Numri i djemve</span><input id="sons" type="number" step="1" min="0" placeholder="0"></label>
+<label><span data-t="daughters">Numri i vajzave</span><input id="daughters" type="number" step="1" min="0" placeholder="0"></label>
+</div>
+<div class="btns"><button class="action" onclick="calculateMirath()" data-t="calcBtn">Llogarit Mirathin</button><button class="action reset" onclick="resetMirath()" data-t="clearBtn">Pastro</button></div>
+</section>
+
+<section class="card result">
+<h2 data-t="resultTitle">Rezultati orientues</h2>
+<p style="text-align:center" data-t="netText">Pasuria që ndahet pas zbritjeve:</p>
+<div id="netEstate" class="amount">0,00 €</div>
+<div id="resultArea" class="details"><p class="small" data-t="fillText">Plotëso të dhënat dhe shtyp “Llogarit Mirathin”.</p></div>
+</section>
+
+<section class="card">
+<h2 data-t="finalTitle">Porosi fetare</h2>
+<p data-t="finalText">Trashëgimia nuk është çështje dëshire, zakoni apo emocioni. Ajo është e drejtë e caktuar nga Allahu. Muslimani duhet të ruhet nga padrejtësia, fshehja e pasurisë dhe marrja e pasurisë pa të drejtë.</p>
+<div class="quote"><div class="arabic">وَمَن يَعْصِ اللَّهَ وَرَسُولَهُ وَيَتَعَدَّ حُدُودَهُ يُدْخِلْهُ نَارًا</div><p data-t="q14">Kush e kundërshton Allahun dhe të Dërguarin e Tij dhe i kalon kufijtë e Tij, Ai e fut në zjarr. En-Nisa 4:14</p></div>
+<p class="footer" data-t="footer">Burimi kryesor i përpunimit: shkrimi “E Drejta e Trashëgimisë” nga Jusuf Zimeri. Ideuar dhe ndërtuar nga: Hoxhë Ilaz ef. Salihi</p>
+</section>
+
+</div>
+
+<script>
+const T = {
+sq:{badge:"📘 Rubrika e Mirathit",title:"Trashëgimia Islame / Mirathi",hero:"Përpunuar sipas shpjegimeve të hoxhës Jusuf Zimeri mbi të drejtën e trashëgimisë, me përkthim të përgatitur manualisht në disa gjuhë.",author:"Ideuar dhe ndërtuar nga: Hoxhë Ilaz ef. Salihi",warn:"Kujdes: Mirathi është dispozitë e Allahut dhe jo llogari e zakonshme. Ky kalkulator është vetëm ndihmës për raste bazë. Rastet reale duhet verifikuar me dijetar të besueshëm.",whatTitle:"Çfarë është Mirathi?",whatText:"Në terminologjinë islame, e drejta e trashëgimisë njihet si Ilmul Mirath ose Ilmul Feraid. Kjo shkencë merret me dispozitat juridike dhe llogaritëse për bartjen e pasurisë pas vdekjes së trashëgimlënësit te trashëgimtarët e ligjshëm.",def:"Është përmbledhje normash juridike dhe matematikore përmes të cilave njihet pjesa që i takon secilit trashëgimtar nga pasuria e lënë.",valueTitle:"Vlera e mësimit të Feraidit",had1:"“Mësojeni shkencën e Feraidit dhe mësojani të tjerëve, sepse ajo është gjysma e diturisë dhe harrohet.”",had2:"“Mësojeni Kur’anin dhe Feraidin dhe mësojani njerëzve, sepse unë jam njeri që do të vdes.”",quranTitle:"Baza nga Kur’ani",q1:"Meshkujve u takon pjesë nga ajo që lënë prindërit dhe të afërmit, edhe femrave u takon pjesë. En-Nisa 4:7",q2:"Allahu ju urdhëron për fëmijët tuaj: mashkullit i takon sa pjesa e dy femrave. En-Nisa 4:11",q3:"Juve ju takon gjysma e asaj që lënë bashkëshortet tuaja, nëse ato nuk kanë fëmijë. En-Nisa 4:12",pillarsTitle:"Shtyllat, shkaqet dhe kushtet",p1t:"Shtyllat",p1:"Trashëgimlënësi, trashëgimtari dhe pasuria e lënë. Pa këto tri nuk ka mirath.",p2t:"Shkaqet",p2:"Afërsia familjare nga gjaku, martesa e ligjshme dhe velaul-itk si çështje historike e librave klasikë.",p3t:"Kushtet",p3:"Vdekja e trashëgimlënësit, jeta e trashëgimtarit në momentin e vdekjes dhe mungesa e pengesave.",p4t:"Pengesat",p4:"Robëria në librat klasikë, vrasja e trashëgimlënësit dhe ndryshimi i fesë sipas dispozitave të fikhut.",rightsTitle:"Renditja para ndarjes",r1:"Përgatitja dhe varrimi i xhenazes, pa teprim dhe pa shpërdorim.",r2:"Shpagimi i borxheve të të ndjerit para ndarjes së pasurisë.",r3:"Ekzekutimi i testamentit të vlefshëm deri në një të tretën.",r4:"Pastaj bëhet ndarja e pasurisë për trashëgimtarët.",debtHad:"“Shpirti i besimtarit është i lidhur me borxhin e tij derisa të paguhet për të.”",sharesTitle:"Pjesët kryesore të trashëgimtarëve",s1n:"Bashkëshorti",s1:"1/2 kur gruaja nuk ka fëmijë; 1/4 kur ka fëmijë.",s2n:"Bashkëshortja",s2:"1/4 kur burri nuk ka fëmijë; 1/8 kur ka fëmijë.",s3n:"Vajza",s3:"Një vajzë pa djalë merr 1/2; dy ose më shumë vajza pa djalë marrin 2/3.",s4n:"Djali",rem:"Mbetja",s4:"Me vajza, djali merr sa dy vajza.",s5n:"Nëna",s5:"1/6 kur ka fëmijë ose disa vëllezër/motra; ndryshe 1/3.",s6n:"Babai",s6:"Me fëmijë merr 1/6; në disa raste merr edhe mbetjen.",calcTitle:"Kalkulator orientues i Mirathit",calcInfo:"Llogarit vetëm raste bazë: bashkëshort/bashkëshorte, babë, nënë, djem dhe vajza. Për raste të plota duhet dijetar.",estate:"Pasuria totale (€)",funeral:"Shpenzime varrimi (€)",debts:"Borxhe të të ndjerit (€)",will:"Testament i vlefshëm (€)",spouse:"I ndjeri ka lënë:",none:"Nuk ka",husband:"Bashkëshort",wife:"Bashkëshorte",wives:"Numri i bashkëshorteve",father:"A është babai gjallë?",mother:"A është nëna gjallë?",no:"Jo",yes:"Po",sons:"Numri i djemve",daughters:"Numri i vajzave",calcBtn:"Llogarit Mirathin",clearBtn:"Pastro",resultTitle:"Rezultati orientues",netText:"Pasuria që ndahet pas zbritjeve:",fillText:"Plotëso të dhënat dhe shtyp “Llogarit Mirathin”.",finalTitle:"Porosi fetare",finalText:"Trashëgimia nuk është çështje dëshire, zakoni apo emocioni. Ajo është e drejtë e caktuar nga Allahu. Muslimani duhet të ruhet nga padrejtësia, fshehja e pasurisë dhe marrja e pasurisë pa të drejtë.",q14:"Kush e kundërshton Allahun dhe të Dërguarin e Tij dhe i kalon kufijtë e Tij, Ai e fut në zjarr. En-Nisa 4:14",footer:"Burimi kryesor i përpunimit: shkrimi “E Drejta e Trashëgimisë” nga Jusuf Zimeri. Ideuar dhe ndërtuar nga: Hoxhë Ilaz ef. Salihi"},
+de:{badge:"📘 Rubrik Erbrecht",title:"Islamisches Erbrecht / Mirath",hero:"Auf Grundlage der Erläuterungen von Hoxha Jusuf Zimeri zum islamischen Erbrecht, mit manuell vorbereiteter Übersetzung in mehreren Sprachen.",author:"Konzipiert und erstellt von: Hoxhë Ilaz ef. Salihi",warn:"Achtung: Mirath ist eine göttliche Rechtsbestimmung und keine gewöhnliche Rechnung. Dieser Rechner dient nur als Hilfe für einfache Fälle. Reale Fälle müssen von einem vertrauenswürdigen Gelehrten geprüft werden.",whatTitle:"Was ist Mirath?",whatText:"In der islamischen Fachsprache wird das Erbrecht als Ilmul Mirath oder Ilmul Faraid bezeichnet. Diese Wissenschaft behandelt die rechtlichen und rechnerischen Regeln zur Übertragung des Vermögens nach dem Tod auf die rechtmäßigen Erben.",def:"Es ist eine Sammlung juristischer und mathematischer Regeln, durch die der Anteil jedes Erben am Nachlass erkannt wird.",valueTitle:"Der Wert des Lernens von Faraid",had1:"„Lernt die Wissenschaft der Faraid und lehrt sie andere, denn sie ist ein großer Teil des Wissens und wird vergessen.“",had2:"„Lernt den Qur’an und die Faraid und lehrt sie den Menschen, denn ich bin ein Mensch, der sterben wird.“",quranTitle:"Grundlage aus dem Qur’an",q1:"Den Männern steht ein Anteil von dem zu, was Eltern und Verwandte hinterlassen, und den Frauen steht ebenfalls ein Anteil zu. An-Nisa 4:7",q2:"Allah gebietet euch hinsichtlich eurer Kinder: dem männlichen Kind steht der Anteil von zwei weiblichen zu. An-Nisa 4:11",q3:"Euch steht die Hälfte dessen zu, was eure Ehefrauen hinterlassen, wenn sie keine Kinder haben. An-Nisa 4:12",pillarsTitle:"Säulen, Ursachen und Bedingungen",p1t:"Säulen",p1:"Der Erblasser, der Erbe und der Nachlass. Ohne diese drei gibt es kein Mirath.",p2t:"Ursachen",p2:"Blutsverwandtschaft, gültige Ehe und Wala al-itq als historische Regel der klassischen Bücher.",p3t:"Bedingungen",p3:"Tod des Erblassers, Leben des Erben zum Todeszeitpunkt und keine Erbhindernisse.",p4t:"Hindernisse",p4:"Sklaverei in klassischen Werken, Tötung des Erblassers und Religionsverschiedenheit nach den Regeln des Fiqh.",rightsTitle:"Reihenfolge vor der Verteilung",r1:"Vorbereitung und Beerdigung der Janaza ohne Übertreibung.",r2:"Begleichung der Schulden des Verstorbenen vor der Verteilung.",r3:"Ausführung eines gültigen Testaments bis zu einem Drittel.",r4:"Danach wird der Nachlass unter den Erben verteilt.",debtHad:"„Die Seele des Gläubigen bleibt wegen seiner Schuld gebunden, bis sie beglichen wird.“",sharesTitle:"Wichtigste Erbanteile",s1n:"Ehemann",s1:"1/2, wenn die Frau keine Kinder hat; 1/4, wenn sie Kinder hat.",s2n:"Ehefrau",s2:"1/4, wenn der Mann keine Kinder hat; 1/8, wenn er Kinder hat.",s3n:"Tochter",s3:"Eine Tochter ohne Sohn erhält 1/2; zwei oder mehr Töchter ohne Sohn erhalten 2/3.",s4n:"Sohn",rem:"Restanteil",s4:"Zusammen mit Töchtern erhält der Sohn den Anteil von zwei Töchtern.",s5n:"Mutter",s5:"1/6 bei Kindern oder mehreren Geschwistern; sonst 1/3.",s6n:"Vater",s6:"Bei Kindern erhält er 1/6; in manchen Fällen auch den Rest.",calcTitle:"Orientierender Mirath-Rechner",calcInfo:"Berechnet nur einfache Fälle: Ehepartner, Vater, Mutter, Söhne und Töchter. Für vollständige Fälle braucht man einen Gelehrten.",estate:"Gesamtnachlass (€)",funeral:"Beerdigungskosten (€)",debts:"Schulden des Verstorbenen (€)",will:"Gültiges Testament (€)",spouse:"Der Verstorbene hinterließ:",none:"Keinen Ehepartner",husband:"Ehemann",wife:"Ehefrau",wives:"Anzahl der Ehefrauen",father:"Lebt der Vater?",mother:"Lebt die Mutter?",no:"Nein",yes:"Ja",sons:"Anzahl der Söhne",daughters:"Anzahl der Töchter",calcBtn:"Mirath berechnen",clearBtn:"Löschen",resultTitle:"Orientierendes Ergebnis",netText:"Zu verteilender Nachlass nach Abzügen:",fillText:"Fülle die Angaben aus und drücke „Mirath berechnen“.",finalTitle:"Religiöse Mahnung",finalText:"Erbschaft ist keine Frage von Wunsch, Brauch oder Gefühl. Sie ist ein von Allah festgelegtes Recht. Der Muslim muss sich vor Ungerechtigkeit, Verbergen von Vermögen und unrechtmäßigem Nehmen schützen.",q14:"Wer Allah und Seinem Gesandten widerspricht und Seine Grenzen überschreitet, den lässt Er ins Feuer eingehen. An-Nisa 4:14",footer:"Hauptquelle der Bearbeitung: „E Drejta e Trashëgimisë“ von Jusuf Zimeri. Konzipiert und erstellt von: Hoxhë Ilaz ef. Salihi"},
+tr:{badge:"📘 Miras Bölümü",title:"İslami Miras Hukuku / Mirath",hero:"Hoca Jusuf Zimeri’nin miras hukuku açıklamaları esas alınarak hazırlanmış, birkaç dile elle çevrilmiş metin.",author:"Fikir ve hazırlayan: Hoxhë Ilaz ef. Salihi",warn:"Dikkat: Mirath Allah’ın hükmüdür, sıradan bir hesap değildir. Bu hesaplayıcı sadece temel durumlar için yardımcıdır. Gerçek meseleler güvenilir bir âlim tarafından kontrol edilmelidir.",whatTitle:"Mirath nedir?",whatText:"İslami terminolojide miras hukuku Ilmul Mirath veya Ilmul Feraid olarak bilinir. Bu ilim, kişinin ölümünden sonra malının meşru mirasçılara geçmesiyle ilgili hukuki ve matematiksel hükümleri inceler.",def:"Terekeden her mirasçının payını bilmeye yarayan fıkhî ve matematiksel kurallar bütünüdür.",valueTitle:"Feraid ilmini öğrenmenin değeri",had1:"“Feraid ilmini öğrenin ve başkalarına öğretin; çünkü o ilmin büyük bir bölümüdür ve unutulur.”",had2:"“Kur’an’ı ve Feraid’i öğrenin ve insanlara öğretin; çünkü ben de ölecek bir insanım.”",quranTitle:"Kur’an’daki temel",q1:"Erkeklere, anne-baba ve akrabaların bıraktıklarından pay vardır; kadınlara da pay vardır. Nisa 4:7",q2:"Allah çocuklarınız hakkında size emreder: erkeğe iki kız payı kadar vardır. Nisa 4:11",q3:"Eşlerinizin çocukları yoksa bıraktıklarının yarısı sizindir. Nisa 4:12",pillarsTitle:"Rükünler, sebepler ve şartlar",p1t:"Rükünler",p1:"Muris, varis ve tereke. Bu üçü olmadan miras söz konusu olmaz.",p2t:"Sebepler",p2:"Kan akrabalığı, sahih nikâh ve klasik kitaplarda tarihî bir mesele olarak velaul-itk.",p3t:"Şartlar",p3:"Mûrisin ölümü, varisin ölüm anında hayatta olması ve mirasa engel bir durumun bulunmaması.",p4t:"Engeller",p4:"Klasik kitaplarda kölelik, miras bırakanı öldürme ve fıkıh hükümlerine göre din farklılığı.",rightsTitle:"Paylaşımdan önce sıra",r1:"Cenazenin hazırlanması ve defni, israf olmadan.",r2:"Ölen kişinin borçlarının miras taksiminden önce ödenmesi.",r3:"Geçerli vasiyetin üçte bire kadar uygulanması.",r4:"Sonra mal mirasçılar arasında paylaştırılır.",debtHad:"“Müminin ruhu, borcu ödeninceye kadar borcuna bağlı kalır.”",sharesTitle:"Başlıca miras payları",s1n:"Koca",s1:"Kadının çocuğu yoksa 1/2; çocuğu varsa 1/4.",s2n:"Eş",s2:"Erkeğin çocuğu yoksa 1/4; çocuğu varsa 1/8.",s3n:"Kız",s3:"Oğul yoksa bir kız 1/2 alır; iki veya daha fazla kız 2/3 alır.",s4n:"Oğul",rem:"Kalan",s4:"Kızlarla birlikte oğul iki kız payı alır.",s5n:"Anne",s5:"Çocuk veya birden çok kardeş varsa 1/6; aksi halde 1/3.",s6n:"Baba",s6:"Çocuk varsa 1/6 alır; bazı durumlarda kalanı da alır.",calcTitle:"Yardımcı miras hesaplayıcı",calcInfo:"Sadece temel durumları hesaplar: eş, baba, anne, oğullar ve kızlar. Tam meseleler için âlim gerekir.",estate:"Toplam tereke (€)",funeral:"Defin masrafları (€)",debts:"Ölenin borçları (€)",will:"Geçerli vasiyet (€)",spouse:"Ölen geride bıraktı:",none:"Eş yok",husband:"Koca",wife:"Eş",wives:"Eş sayısı",father:"Baba hayatta mı?",mother:"Anne hayatta mı?",no:"Hayır",yes:"Evet",sons:"Oğul sayısı",daughters:"Kız sayısı",calcBtn:"Mirath hesapla",clearBtn:"Temizle",resultTitle:"Yaklaşık sonuç",netText:"Kesintilerden sonra dağıtılacak mal:",fillText:"Bilgileri doldurup “Mirath hesapla”ya basın.",finalTitle:"Dinî öğüt",finalText:"Miras istek, gelenek veya duygu meselesi değildir. Allah’ın belirlediği bir haktır. Müslüman haksızlıktan, malı gizlemekten ve hakkı olmayan malı almaktan sakınmalıdır.",q14:"Kim Allah’a ve Resulüne isyan eder ve sınırlarını aşarsa, Allah onu ateşe sokar. Nisa 4:14",footer:"Ana kaynak: Jusuf Zimeri’nin “E Drejta e Trashëgimisë” yazısı. Fikir ve hazırlayan: Hoxhë Ilaz ef. Salihi"},
+bs:{badge:"📘 Rubrika o nasljedstvu",title:"Islamsko nasljedno pravo / Mirath",hero:"Priređeno prema objašnjenjima ef. Jusufa Zimerija o pravu nasljeđivanja, sa ručno pripremljenim prevodom na više jezika.",author:"Ideja i izrada: Hoxhë Ilaz ef. Salihi",warn:"Pažnja: Mirath je Allahova odredba, a ne običan račun. Ovaj kalkulator je samo pomoć za osnovne slučajeve. Stvarni slučajevi moraju se provjeriti kod pouzdanog učenjaka.",whatTitle:"Šta je Mirath?",whatText:"U islamskoj terminologiji nasljedno pravo se naziva Ilmul Mirath ili Ilmul Feraid. Ova nauka bavi se pravnim i računskim pravilima prenosa imovine nakon smrti na zakonite nasljednike.",def:"To je skup fikhskih i matematičkih pravila pomoću kojih se poznaje udio svakog nasljednika u ostavini.",valueTitle:"Vrijednost učenja Feraida",had1:"“Učite nauku Feraida i podučavajte je druge, jer je ona veliki dio znanja i zaboravlja se.”",had2:"“Učite Kur’an i Feraid i podučavajte ljude, jer sam i ja čovjek koji će umrijeti.”",quranTitle:"Osnova iz Kur’ana",q1:"Muškarcima pripada dio onoga što ostave roditelji i rodbina, a i ženama pripada dio. En-Nisa 4:7",q2:"Allah vam naređuje u pogledu vaše djece: muškom pripada koliko dvjema ženama. En-Nisa 4:11",q3:"Vama pripada polovina onoga što ostave vaše supruge, ako nemaju djece. En-Nisa 4:12",pillarsTitle:"Stubovi, uzroci i uvjeti",p1t:"Stubovi",p1:"Ostavitelj, nasljednik i ostavina. Bez ovo troje nema miratha.",p2t:"Uzroci",p2:"Krvno srodstvo, ispravan brak i velaul-itk kao historijsko pitanje klasičnih knjiga.",p3t:"Uvjeti",p3:"Smrt ostavitelja, život nasljednika u trenutku smrti i nepostojanje prepreka.",p4t:"Prepreke",p4:"Ropstvo u klasičnim knjigama, ubistvo ostavitelja i razlika u vjeri prema propisima fikha.",rightsTitle:"Redoslijed prije podjele",r1:"Priprema i ukop dženaze, bez pretjerivanja.",r2:"Isplata dugova umrlog prije podjele imovine.",r3:"Izvršenje važeće oporuke do jedne trećine.",r4:"Zatim se imovina dijeli nasljednicima.",debtHad:"“Duša vjernika vezana je za njegov dug dok se ne isplati.”",sharesTitle:"Glavni nasljedni udjeli",s1n:"Muž",s1:"1/2 ako žena nema djece; 1/4 ako ima djece.",s2n:"Supruga",s2:"1/4 ako muž nema djece; 1/8 ako ima djece.",s3n:"Kćerka",s3:"Jedna kćerka bez sina dobija 1/2; dvije ili više kćerki bez sina dobijaju 2/3.",s4n:"Sin",rem:"Ostatak",s4:"Sa kćerkama sin dobija koliko dvije kćerke.",s5n:"Majka",s5:"1/6 ako ima djece ili više braće/sestara; inače 1/3.",s6n:"Otac",s6:"Sa djecom dobija 1/6; u nekim slučajevima i ostatak.",calcTitle:"Orijentacioni kalkulator miratha",calcInfo:"Računa samo osnovne slučajeve: supružnik, otac, majka, sinovi i kćerke. Za potpune slučajeve potreban je učenjak.",estate:"Ukupna ostavina (€)",funeral:"Troškovi ukopa (€)",debts:"Dugovi umrlog (€)",will:"Važeća oporuka (€)",spouse:"Umrli je ostavio:",none:"Nema supružnika",husband:"Muž",wife:"Supruga",wives:"Broj supruga",father:"Da li je otac živ?",mother:"Da li je majka živa?",no:"Ne",yes:"Da",sons:"Broj sinova",daughters:"Broj kćerki",calcBtn:"Izračunaj mirath",clearBtn:"Obriši",resultTitle:"Orijentacioni rezultat",netText:"Imovina za podjelu nakon odbitaka:",fillText:"Popunite podatke i pritisnite “Izračunaj mirath”.",finalTitle:"Vjerska poruka",finalText:"Nasljedstvo nije pitanje želje, običaja ili emocije. To je pravo koje je Allah odredio. Musliman se mora čuvati nepravde, skrivanja imovine i uzimanja onoga što mu ne pripada.",q14:"Ko se suprotstavi Allahu i Njegovom Poslaniku i pređe Njegove granice, Allah ga uvodi u vatru. En-Nisa 4:14",footer:"Glavni izvor obrade: tekst “E Drejta e Trashëgimisë” Jusufa Zimerija. Ideja i izrada: Hoxhë Ilaz ef. Salihi"},
+it:{badge:"📘 Sezione Eredità",title:"Diritto ereditario islamico / Mirath",hero:"Elaborato sulla base delle spiegazioni dell’imam Jusuf Zimeri sul diritto ereditario, con traduzione preparata manualmente in più lingue.",author:"Ideato e realizzato da: Hoxhë Ilaz ef. Salihi",warn:"Attenzione: il Mirath è una disposizione di Allah, non un semplice calcolo. Questo calcolatore è solo un aiuto per casi di base. I casi reali devono essere verificati da uno studioso affidabile.",whatTitle:"Che cos’è il Mirath?",whatText:"Nella terminologia islamica, il diritto ereditario è noto come Ilmul Mirath o Ilmul Feraid. Questa scienza tratta le norme giuridiche e matematiche per il trasferimento dei beni dopo la morte agli eredi legittimi.",def:"È un insieme di norme giuridiche e matematiche attraverso cui si conosce la quota spettante a ogni erede dal patrimonio lasciato.",valueTitle:"Il valore dello studio del Feraid",had1:"“Imparate la scienza del Feraid e insegnatela agli altri, perché essa è una grande parte della conoscenza e viene dimenticata.”",had2:"“Imparate il Corano e il Feraid e insegnateli alla gente, perché io sono un uomo che morirà.”",quranTitle:"Fondamento dal Corano",q1:"Agli uomini spetta una parte di ciò che lasciano genitori e parenti, e anche alle donne spetta una parte. An-Nisa 4:7",q2:"Allah vi prescrive riguardo ai vostri figli: al maschio spetta la parte di due femmine. An-Nisa 4:11",q3:"A voi spetta la metà di ciò che lasciano le vostre mogli, se non hanno figli. An-Nisa 4:12",pillarsTitle:"Pilastri, cause e condizioni",p1t:"Pilastri",p1:"Il defunto, l’erede e il patrimonio lasciato. Senza questi tre non vi è mirath.",p2t:"Cause",p2:"Parentela di sangue, matrimonio valido e wala al-itq come questione storica dei testi classici.",p3t:"Condizioni",p3:"Morte del defunto, vita dell’erede al momento della morte e assenza di impedimenti.",p4t:"Impedimenti",p4:"Schiavitù nei testi classici, uccisione del defunto e differenza di religione secondo le norme del fiqh.",rightsTitle:"Ordine prima della divisione",r1:"Preparazione e sepoltura del defunto, senza eccessi.",r2:"Pagamento dei debiti del defunto prima della divisione.",r3:"Esecuzione del testamento valido fino a un terzo.",r4:"Poi il patrimonio viene diviso tra gli eredi.",debtHad:"“L’anima del credente resta legata al suo debito finché non viene pagato.”",sharesTitle:"Quote principali degli eredi",s1n:"Marito",s1:"1/2 se la moglie non ha figli; 1/4 se ha figli.",s2n:"Moglie",s2:"1/4 se il marito non ha figli; 1/8 se ha figli.",s3n:"Figlia",s3:"Una figlia senza figlio maschio riceve 1/2; due o più figlie senza figlio maschio ricevono 2/3.",s4n:"Figlio",rem:"Resto",s4:"Con le figlie, il figlio riceve quanto due figlie.",s5n:"Madre",s5:"1/6 se ci sono figli o più fratelli/sorelle; altrimenti 1/3.",s6n:"Padre",s6:"Con figli riceve 1/6; in alcuni casi anche il resto.",calcTitle:"Calcolatore orientativo del Mirath",calcInfo:"Calcola solo casi di base: coniuge, padre, madre, figli e figlie. Per casi completi serve uno studioso.",estate:"Patrimonio totale (€)",funeral:"Spese funebri (€)",debts:"Debiti del defunto (€)",will:"Testamento valido (€)",spouse:"Il defunto ha lasciato:",none:"Nessun coniuge",husband:"Marito",wife:"Moglie",wives:"Numero di mogli",father:"Il padre è vivo?",mother:"La madre è viva?",no:"No",yes:"Sì",sons:"Numero di figli maschi",daughters:"Numero di figlie",calcBtn:"Calcola Mirath",clearBtn:"Pulisci",resultTitle:"Risultato orientativo",netText:"Patrimonio da dividere dopo le detrazioni:",fillText:"Compila i dati e premi “Calcola Mirath”.",finalTitle:"Messaggio religioso",finalText:"L’eredità non è questione di desiderio, abitudine o emozione. È un diritto stabilito da Allah. Il musulmano deve evitare l’ingiustizia, il nascondere i beni e il prendere ciò che non gli spetta.",q14:"Chi disobbedisce ad Allah e al Suo Messaggero e oltrepassa i Suoi limiti, Allah lo introduce nel Fuoco. An-Nisa 4:14",footer:"Fonte principale dell’elaborazione: “E Drejta e Trashëgimisë” di Jusuf Zimeri. Ideato e realizzato da: Hoxhë Ilaz ef. Salihi"}
+};
+
+let currentLang='sq';
+function setLang(lang){
+ currentLang=lang;
+ document.querySelectorAll('.langbar button').forEach(b=>b.classList.remove('active'));
+ document.getElementById('b-'+lang).classList.add('active');
+ document.querySelectorAll('[data-t]').forEach(el=>{
+   const k=el.getAttribute('data-t');
+   if(T[lang] && T[lang][k]) el.textContent=T[lang][k];
+ });
+ resetMirath();
+}
+function eur(n){return Number(n||0).toLocaleString('de-DE',{style:'currency',currency:'EUR'});}
+function val(id){return parseFloat(document.getElementById(id).value)||0;}
+function intVal(id){return Math.max(0,parseInt(document.getElementById(id).value||'0',10));}
+function addLine(html,title,amount,note){if(amount<=0)return html;return html+'<div><span><strong>'+title+'</strong><br><small>'+note+'</small></span><strong>'+eur(amount)+'</strong></div>';}
+function calculateMirath(){
+ const L=T[currentLang];
+ const estate=val('estate'),funeral=val('funeral'),debts=val('debts'),beforeWill=Math.max(0,estate-funeral-debts);
+ const willInput=val('will'),maxWill=beforeWill/3,validWill=Math.min(willInput,maxWill),net=Math.max(0,beforeWill-validWill);
+ document.getElementById('netEstate').innerHTML=eur(net);
+ const spouse=document.getElementById('spouse').value,wivesCount=Math.max(1,intVal('wivesCount')||1),father=document.getElementById('father').value==='yes',mother=document.getElementById('mother').value==='yes',sons=intVal('sons'),daughters=intVal('daughters'),hasChildren=(sons+daughters)>0;
+ let remaining=net,html='';
+ html+=addLine('',L.estate,estate,'');
+ html+=addLine('',L.funeral,funeral,'-');
+ html+=addLine('',L.debts,debts,'-');
+ html+=addLine('',L.will,validWill,'-');
+ if(spouse==='husband'){const share=hasChildren?net/4:net/2;remaining-=share;html=addLine(html,L.husband,share,hasChildren?'1/4':'1/2');}
+ if(spouse==='wife'){const share=hasChildren?net/8:net/4;remaining-=share;html=addLine(html,L.wife,share,(hasChildren?'1/8':'1/4')+' / secila: '+eur(share/wivesCount));}
+ if(mother){const share=hasChildren?net/6:net/3;remaining-=share;html=addLine(html,L.mother.replace('?',''),share,hasChildren?'1/6':'1/3');}
+ if(father&&hasChildren){const share=net/6;remaining-=share;html=addLine(html,L.father.replace('?',''),share,'1/6');}
+ if(hasChildren){
+   if(sons>0){const units=sons*2+daughters,sonEach=remaining*2/units,daughterEach=remaining/units;html=addLine(html,L.sons,sonEach*sons,sons+' × '+eur(sonEach));html=addLine(html,L.daughters,daughterEach*daughters,daughters+' × '+eur(daughterEach));remaining=0;}
+   else{let dShare=daughters===1?net/2:net*2/3;if(dShare>remaining)dShare=remaining;remaining-=dShare;html=addLine(html,L.daughters,dShare,daughters===1?'1/2':'2/3');if(father&&remaining>0){html=addLine(html,L.father.replace('?',''),remaining,L.rem);remaining=0;}}
+ }else if(father&&remaining>0){html=addLine(html,L.father.replace('?',''),remaining,L.rem);remaining=0;}
+ if(remaining>0.009) html+='<p class="warning">'+eur(remaining)+' mbetet pa u ndarë. Pyet dijetar.</p>';
+ html+='<p class="small">'+L.calcInfo+'</p>';
+ document.getElementById('resultArea').innerHTML=html;
+}
+function resetMirath(){
+ ['estate','funeral','debts','will','sons','daughters'].forEach(id=>document.getElementById(id).value='');
+ document.getElementById('spouse').value='none';document.getElementById('wivesCount').value='1';document.getElementById('father').value='no';document.getElementById('mother').value='no';
+ document.getElementById('netEstate').innerHTML=eur(0);
+ document.getElementById('resultArea').innerHTML='<p class="small">'+T[currentLang].fillText+'</p>';
+}
+</script>
+</body>
+</html>
