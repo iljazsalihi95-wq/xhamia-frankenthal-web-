@@ -116,3 +116,22 @@ html{overflow-x:hidden}body{font-family:Georgia,serif;background:#faf9f5;overflo
 .home-sliders .slider-controls button{width:39px;height:39px;display:grid;place-items:center;border-radius:50%;border:1px solid #e8d49c99;background:#ffffff16;color:#f8d99b;font-size:29px;line-height:1;cursor:pointer;transition:background .2s,transform .2s}
 .home-sliders .slider-controls button:hover{background:#d6ac65;color:#102d2b}
 .home-sliders .slider-controls button:active{transform:scale(.9)}
+
+
+/* Photo hero gallery */
+.hero-gallery{position:relative!important;overflow:hidden!important;isolation:isolate!important;background:#07352f!important;min-height:370px!important}
+.hero-gallery-track{position:absolute;inset:0;z-index:1}
+.hero-gallery-slide{position:absolute;inset:0;display:block;opacity:0;visibility:hidden;pointer-events:none;background-size:cover;background-position:center;background-repeat:no-repeat;transition:opacity .8s ease,visibility .8s ease;transform:scale(1.001);text-decoration:none!important}
+.hero-gallery-slide.is-visible{opacity:1;visibility:visible;pointer-events:auto}
+.hero-gallery-slide:after{content:"";position:absolute;inset:30% 0 0;background:linear-gradient(transparent,#001b1be8)}
+.hero-gallery-caption{position:absolute;z-index:2;bottom:45px;left:22px;right:22px;display:flex;flex-direction:column;gap:6px;color:#fff!important;text-shadow:0 2px 8px #000b}
+.hero-gallery-caption b{font-size:clamp(19px,2.3vw,32px);line-height:1.1;color:#ffe1a1}
+.hero-gallery-caption small{font-size:clamp(11px,1vw,15px);color:#fff}
+.hero-gallery-prev,.hero-gallery-next{position:absolute;z-index:4;top:47%;transform:translateY(-50%);width:39px;height:45px;display:grid;place-items:center;border:1px solid #fff8;border-radius:9px;background:#002e2bc9;color:#ffe2a0;font-size:30px;cursor:pointer}
+.hero-gallery-prev{left:9px}.hero-gallery-next{right:9px}
+.hero-gallery-prev:active,.hero-gallery-next:active{background:#b58d46;color:#062d28}
+.hero-gallery-dots{position:absolute;z-index:4;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:9px}
+.hero-gallery-dots button{width:9px;height:9px;border-radius:20px;border:1px solid #fff9;background:#ffffff7a;cursor:pointer;padding:0}
+.hero-gallery-dots button.is-current{width:26px;background:#eac77e}
+.hero-gallery :focus-visible{outline:3px solid #ffe1a1;outline-offset:3px}
+@media(max-width:760px){.hero-gallery{min-height:320px!important}.hero-gallery-caption{left:14px;right:14px;bottom:38px}.hero-gallery-prev,.hero-gallery-next{width:32px;height:38px;font-size:23px}}
