@@ -1,0 +1,11 @@
+{
+  "name": "Xhamia Frankenthal — Mehmed & Shaban",
+  "short_name": "Xhamia Frankenthal",
+  "lang": "sq",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#062e29",
+  "theme_color": "#063b33",
+  "description": "Webfaqja dhe shërbimet e Xhamisë Frankenthal"
+}
