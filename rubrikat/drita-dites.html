@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Administrimi – Drita e Ditës 365</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Arial,sans-serif;background:linear-gradient(180deg,#073f32,#021f19);color:#fff}
+.wrap{max-width:1120px;margin:auto;padding:14px}
+.hero,.panel{background:#0b4b3a;border:1px solid #8c7a43;border-radius:24px;padding:18px;margin-bottom:14px;box-shadow:0 10px 30px #0004}
+.hero{text-align:center}
+.hero h1{margin:0;color:#ffd66b;font-size:34px}
+.hero p{margin:8px 0 0;color:#d8eee7}
+.login{max-width:520px;margin:30px auto;background:#fff;color:#123d32;border-radius:22px;padding:20px}
+h2{color:#ffd66b;margin:0 0 12px}
+h3{color:#087758;margin:0 0 10px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #bdcec8;border-radius:12px;font-size:16px;background:#fff;color:#123d32}
+textarea{min-height:110px;resize:vertical}
+button{border:0;border-radius:12px;padding:12px 15px;font-size:15px;font-weight:900;cursor:pointer}
+.green{background:#18875e;color:#fff} .red{background:#c93443;color:#fff} .gold{background:#ffd66b;color:#07372c}
+.gray{background:#e8efed;color:#163f34} .blue{background:#2d77c8;color:#fff}
+.hidden{display:none!important}
+.status{padding:11px 13px;border-radius:12px;background:#315d53;font-weight:800;margin:10px 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.filters{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.5fr;gap:8px;margin:12px 0}
+.card{background:#fff;color:#123d32;border-radius:18px;padding:15px;margin-bottom:10px;border-left:6px solid #1a9d70}
+.card.inactive{opacity:.7;border-left-color:#999}
+.meta{font-size:13px;color:#677b74;margin-bottom:8px;line-height:1.5}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:800;margin:3px 3px 0 0}
+.yes{background:#dcfce7;color:#166534} .no{background:#fee2e2;color:#991b1b}
+.prio{background:#fff3cd;color:#7a5b00} .month{background:#dbeafe;color:#1e40af}
+.preview{background:#f5faf8;border-radius:14px;padding:12px;line-height:1.5;margin-top:10px;white-space:pre-wrap}
+.ar{direction:rtl;text-align:right;font-family:serif;font-size:21px}
+.note{background:#fff7d6;color:#654b00;border-radius:12px;padding:12px;line-height:1.45}
+.modal{position:fixed;inset:0;background:#000b;z-index:9999;padding:14px;overflow:auto}
+.modalbox{max-width:900px;margin:20px auto;background:#fff;color:#123d32;border-radius:22px;padding:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+label{display:block;font-weight:800;margin-top:10px;margin-bottom:4px}
+.rubrika{border:1px solid #d9e7e2;border-radius:16px;padding:14px;margin-top:14px;background:#fbfefd}
+.rubrika h3{margin-bottom:4px}
+@media(max-width:800px){.filters,.grid2,.grid3{grid-template-columns:1fr}.hero h1{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hero">
+  <h1>🌙 Administrimi – Drita e Ditës 365</h1>
+  <p>Janar–Dhjetor · Sot · Zgjedh datën · Edit / Shto / Fshi · Google Sheet LIVE</p>
+</div>
+
+<div id="loginBox" class="login">
+  <h2 style="color:#087758">Hyrje Admin</h2>
+  <input id="passInput" type="password" placeholder="Password">
+  <div class="actions" style="margin-top:10px"><button class="green" onclick="login()">🔓 Hyr</button></div>
+  <div id="loginStatus" class="status">Password Admin: Bismilah</div>
+</div>
+
+<div id="app" class="hidden">
+  <div class="panel">
+    <div class="actions">
+      <button class="green" onclick="openNew()">➕ Shto Ditë</button>
+      <button class="blue" onclick="openToday()">📅 Sot</button>
+      <button class="gray" onclick="loadData()">🔄 Rifresko</button>
+      <button class="gold" onclick="logout()">🚪 Dil</button>
+    </div>
+
+    <div id="status" class="status">⏳ Duke marrë të dhënat...</div>
+
+    <div class="filters">
+      <select id="monthFilter" onchange="render()">
+        <option value="0">Të gjithë muajt</option>
+        <option value="1">Janar</option><option value="2">Shkurt</option><option value="3">Mars</option>
+        <option value="4">Prill</option><option value="5">Maj</option><option value="6">Qershor</option>
+        <option value="7">Korrik</option><option value="8">Gusht</option><option value="9">Shtator</option>
+        <option value="10">Tetor</option><option value="11">Nëntor</option><option value="12">Dhjetor</option>
+      </select>
+
+      <input id="dateJump" type="date">
+      <button class="blue" onclick="jumpToDate()">🔎 Hape datën</button>
+      <input id="search" placeholder="Kërko në përmbajtje..." oninput="render()">
+    </div>
+
+    <div class="note">
+      “Sot” hap automatikisht datën e sotme. Mund të zgjedhësh edhe muajin ose një datë të caktuar.
+      Rubrikat e reja janë përfshirë në formular dhe mund t'i plotësojmë gradualisht për 365 ditët.
+    </div>
+  </div>
+  <div id="list"></div>
+</div>
+</div>
+
+<div id="modal" class="modal hidden">
+<div class="modalbox">
+  <h2 id="formTitle" style="color:#087758">Drita e Ditës</h2>
+
+  <div class="grid3">
+    <div><label>Data</label><input id="fData" placeholder="18.08.2026"></div>
+    <div><label>Aktiv</label><select id="fAktiv"><option value="TRUE">Po</option><option value="FALSE">Jo</option></select></div>
+    <div><label>Prioriteti</label><select id="fPrioriteti"><option>Lartë</option><option>Mesëm</option><option selected>Normal</option><option>Ulët</option></select></div>
+  </div>
+
+  <div class="rubrika">
+    <h3>📖 Ajeti i Ditës</h3>
+    <label>Ajeti Arabisht</label><textarea id="fAjetiAr" class="ar"></textarea>
+    <div class="grid2">
+      <div><label>Referenca / Sure-Ajet</label><input id="fSureAjet"></div>
+      <div><label>Mesazhi i ajetit (Shqip)</label><textarea id="fAjetiSq"></textarea></div>
+    </div>
+  </div>
+
+  <div class="rubrika">
+    <h3>ﷺ Hadithi i Ditës</h3>
+    <label>Hadithi Arabisht</label><textarea id="fHadithiAr" class="ar"></textarea>
+    <div class="grid2">
+      <div><label>Hadithi Shqip</label><textarea id="fHadithiSq"></textarea></div>
+      <div><label>Burimi i Hadithit</label><input id="fBurimiHadithit"></div>
+    </div>
+  </div>
+
+  <div class="rubrika">
+    <h3>💡 Thënia & Këshilla</h3>
+    <label>Thënia / Mesazhi i Ditës</label><textarea id="fThenia"></textarea>
+    <label>Autori / Burimi</label><input id="fAutoriBurimi">
+    <label>Këshilla e Ditës</label><textarea id="fKeshilla"></textarea>
+    <label>Kuriozitet Islam</label><textarea id="fKuriozitet"></textarea>
+  </div>
+
+  <div class="rubrika">
+    <h3>🤲 Duaja e Ditës</h3>
+    <label>Duaja Arabisht</label><textarea id="fDuajaAr" class="ar"></textarea>
+    <div class="grid2">
+      <div><label>Transliterimi</label><textarea id="fTransliterimi"></textarea></div>
+      <div><label>Duaja Shqip</label><textarea id="fDuajaSq"></textarea></div>
+    </div>
+  </div>
+
+  <div class="rubrika">
+    <h3>📿 Dhikri i Ditës</h3>
+    <div class="grid2">
+      <div><label>Dhikri</label><textarea id="fDhikri"></textarea></div>
+      <div><label>Përsëritje</label><input id="fPerseritje" placeholder="p.sh. 3, 7, 33, 100"></div>
+    </div>
+  </div>
+
+  <div class="rubrika">
+    <h3>🌿 Rubrika Shtesë</h3>
+    <label>Suneti i Ditës</label><textarea id="fSuneti"></textarea>
+    <label>Vepra e Mirë</label><textarea id="fVepraMire"></textarea>
+    <label>Ngjarje Islame</label><textarea id="fNgjarje"></textarea>
+    <label>Mesazh Special</label><textarea id="fMesazhSpecial"></textarea>
+    <label>Shënim Admin</label><textarea id="fShenimAdmin"></textarea>
+  </div>
+
+  <div class="actions" style="margin-top:14px">
+    <button class="green" onclick="saveForm()">💾 Ruaj në Sheet</button>
+    <button class="gray" onclick="closeForm()">Mbyll</button>
+  </div>
+</div>
+</div>
+
+<script>
+const API='https://script.google.com/macros/s/AKfycbw9M1i3sBBrIvlFoVfjRPQ9fjFgF425MXayYkDxd9GDb2Nt9k-Nc_uG24RUYsKIBfWn/exec';
+const ADMIN_PASS=null;
+const MONTHS=["","Janar","Shkurt","Mars","Prill","Maj","Qershor","Korrik","Gusht","Shtator","Tetor","Nëntor","Dhjetor"];
+let ITEMS=[], editing=null;
+
+function norm(s){return String(s||"").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ë/g,"e").replace(/ç/g,"c")}
+
+/* FIX 19.08.2026: gabimi i sintaksës këtu bllokonte gjithë JavaScript-in */
+function esc(s){
+  return String(s ?? "").replace(/[&<>"']/g, m => ({
+    "&":"&",
+    "<":"<",
+    ">":">",
+    '"':"&quot;",
+    "'":"'"
+  }[m]));
+}
+
+function pick(x,keys){for(const k of keys){if(x&&x[k]!==undefined&&x[k]!==null&&String(x[k]).trim()!=="")return x[k]}return ""}
+function isActive(v){return ["true","po","1","yes"].includes(norm(v))}
+function deDateFromISO(v){if(!v)return "";const p=v.split("-");return p.length===3?`${p[2]}.${p[1]}.${p[0]}`:""}
+function monthFromDateText(v){const m=String(v||"").match(/^\d{1,2}[.\/-](\d{1,2})[.\/-]\d{4}$/);return m?Number(m[1]):0}
+
+function login(){
+ const pass=document.getElementById("passInput");
+ const stat=document.getElementById("loginStatus");
+ const loginBox=document.getElementById("loginBox");
+ const app=document.getElementById("app");
+ if(pass.value.trim()!==ADMIN_PASS){stat.textContent="❌ Password gabim.";return}
+ stat.textContent="✅ Hyrja u pranua.";
+ loginBox.classList.add("hidden");
+ app.classList.remove("hidden");
+ loadData();
+}
+function logout(){
+ document.getElementById("passInput").value="";
+ document.getElementById("app").classList.add("hidden");
+ document.getElementById("loginBox").classList.remove("hidden");
+ document.getElementById("loginStatus").textContent="Password Admin: Bismilah";
+}
+
+async function loadData(){
+ const status=document.getElementById("status");
+ status.textContent="⏳ Duke lexuar të gjithë muajt Janar–Dhjetor...";
+ try{
+  const r=await fetch(API+"?action=list&t="+Date.now(),{cache:"no-store"});
+  const d=await r.json(); if(!d.success) throw Error(d.error||"Gabim API");
+  ITEMS=d.items||[];
+  status.textContent=`✅ LIVE · ${d.count??ITEMS.length} ditë · ${(d.sheets||[]).filter(x=>!x.missing).length} muaj të gjetur`;
+  render();
+ }catch(e){status.textContent="❌ "+e.message}
+}
+
+function render(){
+ const searchEl=document.getElementById("search");
+ const monthEl=document.getElementById("monthFilter");
+ const list=document.getElementById("list");
+ const q=norm(searchEl.value);
+ const mf=Number(monthEl.value||0);
+ let rows=ITEMS.filter(x=>{
+   if(mf && Number(x.month)!==mf)return false;
+   const txt=[x.data,x.dita,x.mesazhi_i_ajetit_shqip,x.hadithi_i_dites_shqip,x.thenia_mesazhi_i_dites,x.keshilla_e_dites,x.kuriozitet_islam,x.ajeti_sq,x.hadithi_sq,x.thenia_e_dites,x.mesazh_special].join(" ");
+   return !q || norm(txt).includes(q);
+ });
+
+ rows.sort((a,b)=>String(a.data||"").localeCompare(String(b.data||"")));
+
+ list.innerHTML=rows.map(x=>{
+   const safe=encodeURIComponent(JSON.stringify(x));
+   const active=isActive(pick(x,["aktiv"]));
+   const ajetAr=pick(x,["ajeti_arabisht","ajeti_ar"]);
+   const ref=pick(x,["referenca","sure_ajet"]);
+   const msgSq=pick(x,["mesazhi_i_ajetit_shqip","ajeti_sq"]);
+   const hadithSq=pick(x,["hadithi_i_dites_shqip","hadithi_sq"]);
+   const thenia=pick(x,["thenia_mesazhi_i_dites","thenia_e_dites"]);
+   const kesh=pick(x,["keshilla_e_dites"]);
+   return `<div class="card ${active?"":"inactive"}">
+     <h3>📅 ${esc(x.data||"Pa datë")}</h3>
+     <div class="meta">🗂 ${esc(x.sheetName||MONTHS[x.month]||"")} · Rreshti ${x.rowNumber||"—"} · ${esc(x.dita||"")}</div>
+     <span class="badge month">${esc(MONTHS[x.month]||String(x.month||""))}</span>
+     <span class="badge ${active?"yes":"no"}">${active?"Aktiv":"Joaktiv"}</span>
+     <span class="badge prio">${esc(pick(x,["prioriteti"])||"Normal")}</span>
+     ${ajetAr?`<div class="preview ar">${esc(ajetAr)}</div>`:""}
+     ${ref?`<div class="meta" style="margin-top:7px"><b>Referenca:</b> ${esc(ref)}</div>`:""}
+     ${msgSq?`<div class="preview"><b>🇦🇱 Mesazhi:</b><br>${esc(msgSq)}</div>`:""}
+     ${hadithSq?`<div class="preview"><b>ﷺ Hadithi:</b><br>${esc(hadithSq)}</div>`:""}
+     ${thenia?`<div class="preview"><b>💡 Thënia:</b><br>${esc(thenia)}</div>`:""}
+     ${kesh?`<div class="preview"><b>🌿 Këshilla:</b><br>${esc(kesh)}</div>`:""}
+     <div class="actions" style="margin-top:12px">
+       <button class="gold" onclick="openEdit(decodeURIComponent('${safe}'))">✏️ Edit</button>
+       <button class="red" onclick="deleteItem(decodeURIComponent('${safe}'))">🗑 Fshi</button>
+     </div>
+   </div>`;
+ }).join("") || '<div class="panel">Nuk ka të dhëna për këtë zgjedhje.</div>';
+}
+
+async function openToday(){
+ try{
+   const r=await fetch(API+"?action=today&t="+Date.now(),{cache:"no-store"});
+   const d=await r.json(); if(!d.success) throw Error(d.error||"Gabim");
+   if(d.item){openEdit(JSON.stringify(d.item));return}
+   openNew(); document.getElementById("fData").value=d.today||new Date().toLocaleDateString("de-DE");
+ }catch(e){alert("❌ "+e.message)}
+}
+
+function jumpToDate(){
+ const d=deDateFromISO(document.getElementById("dateJump").value);
+ if(!d){alert("Zgjidh datën.");return}
+ const x=ITEMS.find(v=>String(v.data||"")===d);
+ if(x){openEdit(JSON.stringify(x));return}
+ openNew();document.getElementById("fData").value=d;
+}
+
+function clearForm(){
+ ["fData","fAjetiAr","fAjetiSq","fSureAjet","fHadithiAr","fHadithiSq","fBurimiHadithit","fThenia","fAutoriBurimi","fKeshilla","fKuriozitet","fDuajaAr","fTransliterimi","fDuajaSq","fDhikri","fPerseritje","fSuneti","fVepraMire","fNgjarje","fMesazhSpecial","fShenimAdmin"].forEach(id=>document.getElementById(id).value="");
+ document.getElementById("fAktiv").value="TRUE";
+ document.getElementById("fPrioriteti").value="Normal";
+}
+
+function openNew(){
+ editing=null;clearForm();document.getElementById("fData").value=new Date().toLocaleDateString("de-DE");
+ document.getElementById("formTitle").textContent="➕ Shto Dritën e Ditës";
+ document.getElementById("modal").classList.remove("hidden");
+}
+
+function openEdit(json){
+ const x=typeof json==="string"?JSON.parse(json):json;editing=x;clearForm();
+ document.getElementById("formTitle").textContent="✏️ Edit · "+(x.data||"");
+ document.getElementById("fData").value=x.data||"";
+ document.getElementById("fAktiv").value=isActive(x.aktiv)?"TRUE":"FALSE";
+ document.getElementById("fPrioriteti").value=pick(x,["prioriteti"])||"Normal";
+ document.getElementById("fAjetiAr").value=pick(x,["ajeti_arabisht","ajeti_ar"]);
+ document.getElementById("fAjetiSq").value=pick(x,["mesazhi_i_ajetit_shqip","ajeti_sq"]);
+ document.getElementById("fSureAjet").value=pick(x,["referenca","sure_ajet"]);
+ document.getElementById("fHadithiAr").value=pick(x,["hadithi_ar"]);
+ document.getElementById("fHadithiSq").value=pick(x,["hadithi_i_dites_shqip","hadithi_sq"]);
+ document.getElementById("fBurimiHadithit").value=pick(x,["burimi_i_hadithit","burimi_hadithit"]);
+ document.getElementById("fThenia").value=pick(x,["thenia_mesazhi_i_dites","thenia_e_dites"]);
+ document.getElementById("fAutoriBurimi").value=pick(x,["autori_burimi"]);
+ document.getElementById("fKeshilla").value=pick(x,["keshilla_e_dites"]);
+ document.getElementById("fKuriozitet").value=pick(x,["kuriozitet_islam"]);
+ document.getElementById("fDuajaAr").value=pick(x,["duaja_ar"]);
+ document.getElementById("fTransliterimi").value=pick(x,["transliterimi"]);
+ document.getElementById("fDuajaSq").value=pick(x,["duaja_sq"]);
+ document.getElementById("fDhikri").value=pick(x,["dhikri"]);
+ document.getElementById("fPerseritje").value=pick(x,["perseritje"]);
+ document.getElementById("fSuneti").value=pick(x,["suneti_i_dites"]);
+ document.getElementById("fVepraMire").value=pick(x,["vepra_e_mire"]);
+ document.getElementById("fNgjarje").value=pick(x,["ngjarje_islame"]);
+ document.getElementById("fMesazhSpecial").value=pick(x,["mesazh_special"]);
+ document.getElementById("fShenimAdmin").value=pick(x,["shenim_admin","shenim"]);
+ document.getElementById("modal").classList.remove("hidden");
+}
+
+function closeForm(){document.getElementById("modal").classList.add("hidden");editing=null}
+
+async function saveForm(){
+ const fData=document.getElementById("fData");
+ if(!fData.value.trim()){alert("Shkruaj datën.");return}
+ const q=new URLSearchParams();
+ q.set("action","save");q.set("pass",ADMIN_PASS);q.set("data",fData.value.trim());
+
+ const v=id=>document.getElementById(id).value.trim();
+ q.set("ajeti_arabisht",v("fAjetiAr")); q.set("ajeti_ar",v("fAjetiAr"));
+ q.set("referenca",v("fSureAjet")); q.set("sure_ajet",v("fSureAjet"));
+ q.set("mesazhi_i_ajetit_shqip",v("fAjetiSq")); q.set("ajeti_sq",v("fAjetiSq"));
+ q.set("hadithi_i_dites_shqip",v("fHadithiSq")); q.set("hadithi_sq",v("fHadithiSq"));
+ q.set("hadithi_ar",v("fHadithiAr"));
+ q.set("burimi_i_hadithit",v("fBurimiHadithit")); q.set("burimi_hadithit",v("fBurimiHadithit"));
+ q.set("thenia_mesazhi_i_dites",v("fThenia")); q.set("thenia_e_dites",v("fThenia"));
+ q.set("autori_burimi",v("fAutoriBurimi"));
+ q.set("keshilla_e_dites",v("fKeshilla"));
+ q.set("kuriozitet_islam",v("fKuriozitet"));
+ q.set("duaja_ar",v("fDuajaAr")); q.set("transliterimi",v("fTransliterimi")); q.set("duaja_sq",v("fDuajaSq"));
+ q.set("dhikri",v("fDhikri")); q.set("perseritje",v("fPerseritje"));
+ q.set("suneti_i_dites",v("fSuneti")); q.set("vepra_e_mire",v("fVepraMire"));
+ q.set("ngjarje_islame",v("fNgjarje")); q.set("mesazh_special",v("fMesazhSpecial"));
+ q.set("aktiv",document.getElementById("fAktiv").value);
+ q.set("prioriteti",document.getElementById("fPrioriteti").value);
+ q.set("shenim_admin",v("fShenimAdmin"));
+
+ try{
+  const r=await fetch(API+"?"+q.toString()+"&t="+Date.now(),{cache:"no-store"});
+  const d=await r.json();if(!d.success)throw Error(d.error||"Gabim");
+  alert("✅ U ruajt në Google Sheet · "+(d.sheetName||""));
+  closeForm();await loadData();
+ }catch(e){alert("❌ "+e.message)}
+}
+
+async function deleteItem(json){
+ const x=typeof json==="string"?JSON.parse(json):json;
+ if(!confirm("Ta fshij "+(x.data||"këtë ditë")+" nga "+(x.sheetName||"tabi")+"?"))return;
+ const q=new URLSearchParams({action:"delete",pass:ADMIN_PASS,sheetName:x.sheetName||"",rowNumber:String(x.rowNumber||"")});
+ try{
+  const r=await fetch(API+"?"+q.toString()+"&t="+Date.now(),{cache:"no-store"});
+  const d=await r.json();if(!d.success)throw Error(d.error||"Gabim");
+  alert("✅ U fshi.");await loadData();
+ }catch(e){alert("❌ "+e.message)}
+}
+
+/* Enter në password */
+document.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById("passInput").addEventListener("keydown",e=>{
+    if(e.key==="Enter") login();
+  });
+});
+</script>
+<div style="padding:12px;margin:12px;background:#fff2d2;color:#553800;border-radius:10px">Editimi privat kërkon autentikim nga serveri. Hyrja e vjetër me fjalëkalim brenda HTML-së është çaktivizuar; të dhënat dhe dokumentet ruhen.</div></body>
+</html>
