@@ -99,3 +99,45 @@ body{background:#f9f8f3}
 /* Mobile regression fix: prevent desktop-sized overflow and full-screen dropdown */
 html,body{max-width:100%;overflow-x:clip}img,iframe{max-width:100%}main,header,section{min-width:0}
 @media(max-width:760px){.top{position:relative;z-index:60}.head{width:calc(100% - 24px);min-height:64px;gap:8px}.identity{min-width:0;max-width:calc(100% - 58px)}.identity>span:last-child{min-width:0}.identity strong,.identity small{overflow-wrap:anywhere}.menu{display:block;flex:none;position:relative;z-index:63}.main-navigation{position:absolute!important;display:none!important;top:100%;left:12px;right:12px;width:auto!important;max-height:min(65vh,460px);overflow-y:auto;overflow-x:hidden;padding:6px!important;flex-direction:column!important;gap:0!important;align-items:stretch!important;box-shadow:0 12px 35px #0009}.main-navigation.open{display:flex!important}.main-navigation a{flex:none!important;min-height:37px!important;padding:8px 12px!important;font-size:13px!important;justify-content:flex-start!important}.hero-reference .hero-scene{width:100%;max-width:100%;min-width:0}.hero-reference .hero-photo{min-width:0}.hero-reference .hero-photo img{max-width:100%;width:100%}.hero-reference .prayer-board{min-width:0;max-width:calc(100% - 24px)}.quick-links .rubrics{grid-template-columns:repeat(4,minmax(0,1fr))!important}.home-lower{width:calc(100% - 24px);grid-template-columns:repeat(2,minmax(0,1fr))}.home-lower>*{min-width:0}.hero-reference .hero-copy h1{overflow-wrap:anywhere}}
+
+/* Reference v2 — keep masthead, photograph and live times in the intended visual order. */
+@media(min-width:1101px){
+ .hero-reference .hero-scene{grid-template-columns:minmax(250px,24%) minmax(0,48%) minmax(320px,28%);max-width:1600px;margin:auto}
+ .hero-reference .hero-copy{padding-left:max(30px,calc((100vw - 1480px)/2));padding-right:20px}
+ .hero-reference .prayer-board{grid-column:3;grid-row:1;margin:15px 14px 15px 0}
+ .hero-reference .hero-photo{grid-column:2;grid-row:1}
+ .hero-reference .hero-copy{grid-column:1;grid-row:1}
+ .home-lower{grid-template-columns:1.05fr 1fr 1fr 1fr 1.05fr}
+ .home-lower .home-notices,.home-lower .home-khutbah{grid-column:auto!important}
+}
+@media(min-width:761px) and (max-width:1100px){
+ .hero-reference .hero-scene{grid-template-columns:26% 46% 28%;min-height:380px}
+ .hero-reference .hero-copy{grid-column:1;grid-row:1;padding:18px}
+ .hero-reference .hero-photo{grid-column:2;grid-row:1;min-height:380px}
+ .hero-reference .hero-photo img{min-height:380px}
+ .hero-reference .prayer-board{grid-column:3;grid-row:1;margin:10px 8px;padding:10px}
+ .prayer-board .prayer-rows{grid-template-columns:1fr}
+ .quick-links .rubrics{grid-template-columns:repeat(12,minmax(0,1fr))}
+ .quick-links .rubric{min-height:85px!important}
+ .quick-links .rubric h3{font-size:10px}
+}
+@media(max-width:760px){
+ .top .head{width:calc(100% - 24px)}
+ .main-navigation{left:12px!important;right:12px!important;top:100%!important;width:auto!important;max-height:55vh!important}
+ .main-navigation:not(.open){display:none!important}
+ .hero-reference .hero-scene{display:grid!important;grid-template-columns:minmax(0,35%) minmax(0,65%)!important;align-items:stretch}
+ .hero-reference .hero-copy{grid-column:1;grid-row:1;padding:18px 9px 18px 14px;min-width:0}
+ .hero-reference .hero-photo{grid-column:2;grid-row:1;min-width:0;min-height:300px}
+ .hero-reference .hero-photo img{height:100%;min-height:300px;object-fit:cover}
+ .hero-reference .prayer-board{grid-column:1/-1;grid-row:2;margin:10px 12px 14px!important;width:auto;max-width:none}
+ .quick-links .rubrics{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:7px!important}
+ .home-lower{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .home-lower .home-notices,.home-lower .home-khutbah{grid-column:span 2!important}
+}
+@media(max-width:400px){
+ .hero-reference .hero-scene{grid-template-columns:40% 60%!important}
+ .hero-reference .hero-copy h1{font-size:21px}
+ .hero-reference .hero-copy .lead{font-size:10px}
+ .hero-reference .hero-copy .hero-verse{font-size:9px}
+ .quick-links .rubrics{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
