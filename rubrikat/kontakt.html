@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<title>Na Kontakto 🕌</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f3f3;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+h1 {
+  color: #007BFF;
+  margin-bottom: 30px;
+}
+
+.contact-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 500px;
+  margin: auto;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
+
+input, textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #007BFF;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.contact-links a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  margin: 10px;
+  background: #007BFF;
+  color: white;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.contact-links a:hover {
+  background: #0056b3;
+}
+
+.contact-links a span {
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Na Kontakto 🕌</h1>
+
+<div class="contact-form">
+  <input type="text" id="emri" placeholder="Emri" required>
+  <input type="text" id="mbiemri" placeholder="Mbiemri" required>
+  <textarea id="mesazhi" placeholder="Mesazhi juaj..." rows="5" required></textarea>
+  <button onclick="sendEmail()">📧 Dërgo Email</button>
+
+  <div class="contact-links">
+    <a href="tel:+4915758576719">
+      📞
+      <span>Thirr Telefon</span>
+    </a>
+    <a href="#" onclick="sendWhatsApp()">
+      💬
+      <span>WhatsApp</span>
+    </a>
+  </div>
+</div>
+
+<script>
+function sendEmail() {
+  let emri = document.getElementById('emri').value;
+  let mbiemri = document.getElementById('mbiemri').value;
+  let mesazhi = document.getElementById('mesazhi').value;
+
+  let subject = encodeURIComponent("Mesazh nga faqja e kontaktit");
+  let body = encodeURIComponent(`Emri: ${emri}\nMbiemri: ${mbiemri}\nMesazhi: ${mesazhi}`);
+
+  window.location.href = `mailto:xhamiafrankenthal@gmail.com?subject=${subject}&body=${body}`;
+}
+
+function sendWhatsApp() {
+  let emri = document.getElementById('emri').value;
+  let mbiemri = document.getElementById('mbiemri').value;
+  let mesazhi = document.getElementById('mesazhi').value;
+
+  let rawNumber = "15758576719"; // numri i xhamisë
+  let text = encodeURIComponent(`Emri: ${emri}\nMbiemri: ${mbiemri}\nMesazhi: ${mesazhi}`);
+  let waLink = "https://wa.me/+49" + rawNumber + "?text=" + text;
+
+  window.open(waLink, "_blank");
+}
+</script>
+
+</body>
+</html>
