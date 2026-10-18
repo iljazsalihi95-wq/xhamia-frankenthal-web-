@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Lajmet Ditore – Xhamia Frankenthal</title>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:
+    radial-gradient(circle at top,#117966 0,#06493f 38%,#031f2a 100%);
+  color:#14222a;
+}
+
+.wrap{
+  max-width:1000px;
+  margin:auto;
+  padding:12px 12px 80px;
+}
+
+.hero{
+  background:linear-gradient(135deg,#064d42,#0c826c);
+  color:white;
+  border-radius:22px;
+  padding:20px 16px;
+  margin-bottom:12px;
+  box-shadow:0 10px 28px rgba(0,0,0,.25);
+}
+
+.heroTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.hero h1{
+  margin:0;
+  font-size:28px;
+}
+
+.hero p{
+  margin:7px 0 0;
+  opacity:.9;
+  font-size:14px;
+}
+
+.langs{
+  display:flex;
+  gap:6px;
+}
+
+.langBtn{
+  border:0;
+  padding:8px 10px;
+  border-radius:10px;
+  background:rgba(255,255,255,.16);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.langBtn.active{
+  background:white;
+  color:#075c50;
+}
+
+.status{
+  background:white;
+  border-radius:15px;
+  padding:11px 13px;
+  margin-bottom:12px;
+  box-shadow:0 5px 16px rgba(0,0,0,.16);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  font-size:13px;
+}
+
+.live{
+  color:#078261;
+  font-weight:bold;
+}
+
+.refresh{
+  border:0;
+  background:#087765;
+  color:white;
+  padding:8px 11px;
+  border-radius:9px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.mainNews{
+  background:white;
+  border-radius:22px;
+  overflow:hidden;
+  margin-bottom:14px;
+  box-shadow:0 10px 28px rgba(0,0,0,.22);
+}
+
+.mainImage{
+  width:100%;
+  height:240px;
+  object-fit:cover;
+  display:block;
+  background:#e7ecee;
+}
+
+.mainBody{
+  padding:17px;
+}
+
+.category{
+  display:inline-block;
+  background:#e2f5ef;
+  color:#08725e;
+  border-radius:20px;
+  padding:6px 10px;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.mainTitle{
+  margin:2px 0 7px;
+  font-size:24px;
+  line-height:1.25;
+  color:#063f39;
+}
+
+.meta{
+  font-size:12px;
+  color:#788287;
+  margin-bottom:10px;
+}
+
+.summary{
+  font-size:15px;
+  line-height:1.55;
+  color:#35434a;
+  white-space:pre-line;
+}
+
+.read{
+  display:inline-block;
+  border:0;
+  text-decoration:none;
+  background:#087765;
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:bold;
+  margin-top:11px;
+}
+
+.newsGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.newsCard{
+  background:white;
+  border-radius:17px;
+  overflow:hidden;
+  box-shadow:0 7px 20px rgba(0,0,0,.19);
+}
+
+.newsCard img{
+  width:100%;
+  height:145px;
+  object-fit:cover;
+  display:block;
+  background:#e7ecee;
+}
+
+.cardBody{
+  padding:12px;
+}
+
+.cardTitle{
+  font-size:17px;
+  line-height:1.3;
+  font-weight:bold;
+  color:#064a40;
+  margin:4px 0 7px;
+}
+
+.cardSummary{
+  font-size:13px;
+  line-height:1.45;
+  color:#46535a;
+  white-space:pre-line;
+}
+
+.cardRead{
+  display:inline-block;
+  margin-top:9px;
+  color:#087765;
+  font-weight:bold;
+  font-size:13px;
+  text-decoration:none;
+}
+
+.centerBox{
+  background:white;
+  border-radius:18px;
+  padding:30px 15px;
+  text-align:center;
+  box-shadow:0 7px 20px rgba(0,0,0,.18);
+  color:#526168;
+}
+
+.spinner{
+  width:35px;
+  height:35px;
+  border:4px solid #dce7e5;
+  border-top-color:#087765;
+  border-radius:50%;
+  margin:5px auto 14px;
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.footer{
+  color:rgba(255,255,255,.78);
+  text-align:center;
+  padding:20px 10px 28px;
+  font-size:12px;
+}
+
+/* ADMIN BUTTON */
+.adminBtn{
+  position:fixed;
+  right:12px;
+  bottom:14px;
+  z-index:9999;
+
+  background:rgba(3,31,42,.94);
+  color:#fff;
+
+  text-decoration:none;
+  font-size:12px;
+  font-weight:bold;
+
+  padding:9px 13px;
+  border-radius:22px;
+
+  border:1px solid rgba(255,255,255,.25);
+  box-shadow:0 5px 18px rgba(0,0,0,.28);
+
+  opacity:.76;
+  backdrop-filter:blur(6px);
+}
+
+.adminBtn:active{
+  transform:scale(.96);
+  opacity:1;
+}
+
+@media(max-width:600px){
+
+  .wrap{
+    padding:8px 8px 75px;
+  }
+
+  .hero{
+    border-radius:17px;
+    padding:17px 13px;
+  }
+
+  .hero h1{
+    font-size:23px;
+  }
+
+  .mainImage{
+    height:205px;
+  }
+
+  .mainTitle{
+    font-size:21px;
+  }
+
+  .newsGrid{
+    grid-template-columns:1fr;
+  }
+
+  .newsCard{
+    display:grid;
+    grid-template-columns:125px 1fr;
+  }
+
+  .newsCard img{
+    width:125px;
+    height:100%;
+    min-height:135px;
+  }
+
+  .cardSummary{
+    display:none;
+  }
+
+  .adminBtn{
+    right:9px;
+    bottom:10px;
+    font-size:11px;
+    padding:8px 11px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <header class="hero">
+
+    <div class="heroTop">
+
+      <div>
+        <h1 id="pageTitle">📰 Lajmet Ditore</h1>
+        <p id="pageSub">Xhamia Frankenthal • Informacionet më të fundit</p>
+      </div>
+
+      <div class="langs">
+        <button id="sqBtn" class="langBtn active" onclick="setLang('sq')">🇦🇱</button>
+        <button id="deBtn" class="langBtn" onclick="setLang('de')">🇩🇪</button>
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <div class="status">
+
+    <span class="live" id="liveText">
+      ● LIVE • Google Sheet
+    </span>
+
+    <button class="refresh" onclick="loadNews()">
+      🔄
+    </button>
+
+  </div>
+
+
+  <div id="content">
+
+    <div class="centerBox">
+
+      <div class="spinner"></div>
+
+      <div id="loadingText">
+        Duke ngarkuar lajmet...
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer" id="footerText">
+    Xhamia Frankenthal • Lajmet Ditore
+  </div>
+
+</div>
+
+
+<!-- ADMIN -->
+<a
+  class="adminBtn"
+  href="https://script.google.com/macros/s/AKfycbxaLG8ciR8rAhT0lFFam7gy6djjepI6DeP9xL24Kz0zQuyetcrTqug1bb_hJLG-zu6c/exec?mode=edit"
+  target="_blank"
+  rel="noopener"
+>
+  🔐 Admin
+</a>
+
+
+<script>
+
+const API =
+"https://script.google.com/macros/s/AKfycbxaLG8ciR8rAhT0lFFam7gy6djjepI6DeP9xL24Kz0zQuyetcrTqug1bb_hJLG-zu6c/exec";
+
+let LANG = "sq";
+let NEWS = [];
+
+
+const TXT = {
+
+  sq:{
+    title:"📰 Lajmet Ditore",
+    sub:"Xhamia Frankenthal • Informacionet më të fundit",
+    loading:"Duke ngarkuar lajmet...",
+    empty:"Nuk ka lajme aktive për momentin.",
+    error:"Lajmet nuk mund të ngarkohen. Provo përsëri.",
+    read:"Lexo më shumë",
+    live:"● LIVE • Google Sheet",
+    footer:"Xhamia Frankenthal • Lajmet Ditore"
+  },
+
+  de:{
+    title:"📰 Tägliche Nachrichten",
+    sub:"Moschee Frankenthal • Aktuelle Informationen",
+    loading:"Nachrichten werden geladen...",
+    empty:"Momentan sind keine Nachrichten verfügbar.",
+    error:"Nachrichten konnten nicht geladen werden. Bitte erneut versuchen.",
+    read:"Mehr lesen",
+    live:"● LIVE • Google Sheet",
+    footer:"Moschee Frankenthal • Tägliche Nachrichten"
+  }
+
+};
+
+
+function setLang(lang){
+
+  LANG =
+    lang === "de"
+      ? "de"
+      : "sq";
+
+  document
+    .getElementById("sqBtn")
+    .classList
+    .toggle(
+      "active",
+      LANG === "sq"
+    );
+
+  document
+    .getElementById("deBtn")
+    .classList
+    .toggle(
+      "active",
+      LANG === "de"
+    );
+
+  updateTexts();
+  renderNews();
+}
+
+
+function updateTexts(){
+
+  const t =
+    TXT[LANG];
+
+  document.getElementById("pageTitle").textContent =
+    t.title;
+
+  document.getElementById("pageSub").textContent =
+    t.sub;
+
+  document.getElementById("liveText").textContent =
+    t.live;
+
+  document.getElementById("footerText").textContent =
+    t.footer;
+}
+
+
+async function loadNews(){
+
+  const content =
+    document.getElementById("content");
+
+  content.innerHTML = `
+    <div class="centerBox">
+      <div class="spinner"></div>
+      <div>${TXT[LANG].loading}</div>
+    </div>
+  `;
+
+
+  try{
+
+    const url =
+      API
+      + "?mode=all"
+      + "&limit=50"
+      + "&_="
+      + Date.now();
+
+
+    const response =
+      await fetch(
+        url,
+        {
+          cache:"no-store"
+        }
+      );
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "HTTP " + response.status
+      );
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !data ||
+      data.success !== true
+    ){
+
+      throw new Error(
+        data && data.error
+          ? data.error
+          : "API ERROR"
+      );
+    }
+
+
+    NEWS =
+      Array.isArray(data.news)
+        ? data.news
+        : [];
+
+
+    renderNews();
+
+  }
+
+  catch(error){
+
+    console.error(
+      "LAJMET ERROR:",
+      error
+    );
+
+
+    content.innerHTML = `
+      <div class="centerBox">
+        ⚠️<br><br>
+        ${TXT[LANG].error}
+        <br><br>
+        <button
+          class="refresh"
+          onclick="loadNews()"
+        >
+          🔄
+        </button>
+      </div>
+    `;
+  }
+}
+
+
+function renderNews(){
+
+  const content =
+    document.getElementById("content");
+
+
+  if(!NEWS.length){
+
+    content.innerHTML = `
+      <div class="centerBox">
+        📰<br><br>
+        ${TXT[LANG].empty}
+      </div>
+    `;
+
+    return;
+  }
+
+
+  const first =
+    NEWS[0];
+
+
+  let html =
+    renderMain(
+      first
+    );
+
+
+  if(NEWS.length > 1){
+
+    html +=
+      '<div class="newsGrid">';
+
+
+    for(
+      let i = 1;
+      i < NEWS.length;
+      i++
+    ){
+
+      html +=
+        renderCard(
+          NEWS[i]
+        );
+    }
+
+
+    html +=
+      '</div>';
+  }
+
+
+  content.innerHTML =
+    html;
+}
+
+
+function renderMain(n){
+
+  const title =
+    getTitle(n);
+
+  const summary =
+    getSummary(n);
+
+  const image =
+    safeURL(
+      n.foto
+    );
+
+  const link =
+    safeURL(
+      n.link
+    );
+
+
+  return `
+
+    <article class="mainNews">
+
+      ${
+        image
+          ?
+          `<img
+            class="mainImage"
+            src="${esc(image)}"
+            alt=""
+            onerror="this.style.display='none'"
+          >`
+          :
+          ``
+      }
+
+      <div class="mainBody">
+
+        <span class="category">
+          ${esc(n.kategoria || "Lajme")}
+        </span>
+
+        <h2 class="mainTitle">
+          ${esc(title)}
+        </h2>
+
+        <div class="meta">
+          ${esc(n.data || "")}
+          ${n.ora ? " • " + esc(n.ora) : ""}
+        </div>
+
+        ${
+          summary
+            ?
+            `<div class="summary">
+              ${esc(summary)}
+            </div>`
+            :
+            ``
+        }
+
+        ${
+          link
+            ?
+            `<a
+              class="read"
+              href="${esc(link)}"
+              target="_blank"
+              rel="noopener"
+            >
+              ${TXT[LANG].read} →
+            </a>`
+            :
+            ``
+        }
+
+      </div>
+
+    </article>
+
+  `;
+}
+
+
+function renderCard(n){
+
+  const title =
+    getTitle(n);
+
+  const summary =
+    getSummary(n);
+
+  const image =
+    safeURL(
+      n.foto
+    );
+
+  const link =
+    safeURL(
+      n.link
+    );
+
+
+  return `
+
+    <article class="newsCard">
+
+      ${
+        image
+          ?
+          `<img
+            src="${esc(image)}"
+            alt=""
+            onerror="this.style.display='none'"
+          >`
+          :
+          `<div
+            style="
+              min-height:130px;
+              background:#e9eeee;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              font-size:30px
+            "
+          >
+            📰
+          </div>`
+      }
+
+      <div class="cardBody">
+
+        <span class="category">
+          ${esc(n.kategoria || "Lajme")}
+        </span>
+
+        <div class="cardTitle">
+          ${esc(title)}
+        </div>
+
+        <div class="meta">
+          ${esc(n.data || "")}
+          ${n.ora ? " • " + esc(n.ora) : ""}
+        </div>
+
+        ${
+          summary
+            ?
+            `<div class="cardSummary">
+              ${esc(summary)}
+            </div>`
+            :
+            ``
+        }
+
+        ${
+          link
+            ?
+            `<a
+              class="cardRead"
+              href="${esc(link)}"
+              target="_blank"
+              rel="noopener"
+            >
+              ${TXT[LANG].read} →
+            </a>`
+            :
+            ``
+        }
+
+      </div>
+
+    </article>
+
+  `;
+}
+
+
+function getTitle(n){
+
+  if(LANG === "de"){
+
+    return (
+      n.titulli_de ||
+      n.titulli_sq ||
+      ""
+    );
+  }
+
+
+  return (
+    n.titulli_sq ||
+    n.titulli_de ||
+    ""
+  );
+}
+
+
+function getSummary(n){
+
+  if(LANG === "de"){
+
+    return (
+      n.permbledhja_de ||
+      n.permbledhja_sq ||
+      ""
+    );
+  }
+
+
+  return (
+    n.permbledhja_sq ||
+    n.permbledhja_de ||
+    ""
+  );
+}
+
+
+function safeURL(url){
+
+  url =
+    String(
+      url || ""
+    ).trim();
+
+
+  if(
+    url.startsWith("https://") ||
+    url.startsWith("http://")
+  ){
+
+    return url;
+  }
+
+
+  return "";
+}
+
+
+function esc(value){
+
+  return String(
+    value == null
+      ? ""
+      : value
+  )
+
+  .replace(
+    /&/g,
+    "&"
+  )
+
+  .replace(
+    /</g,
+    "<"
+  )
+
+  .replace(
+    />/g,
+    ">"
+  )
+
+  .replace(
+    /"/g,
+    """
+  )
+
+  .replace(
+    /'/g,
+    "'"
+  );
+}
+
+
+updateTexts();
+loadNews();
+
+setInterval(
+  loadNews,
+  120000
+);
+
+</script>
+
+</body>
+</html>
