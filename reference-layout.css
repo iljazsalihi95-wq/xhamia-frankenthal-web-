@@ -161,3 +161,11 @@ html{overflow-x:hidden}body{font-family:Georgia,serif;background:#faf9f5;overflo
 #newsApiStatus{font-size:12px;color:#65766d}
 @media(max-width:900px){.news-api-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.news-premium{padding:15px!important}.news-api-cards{grid-template-columns:1fr}.news-api-item{flex-direction:row}.news-api-item img{width:38%;height:auto;min-height:115px}.news-api-body{padding:11px}.news-api-body strong{font-size:14px}}
+
+
+/* No unrelated photo carousel: prayer background belongs exclusively to prayer panel */
+.hero-reference .hero-scene{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(310px,430px)!important;gap:20px!important;align-items:stretch!important}
+.hero-reference .hero-copy{min-width:0!important}
+.hero-reference .prayer-board{min-width:0!important;width:100%!important;max-width:none!important;grid-column:2!important}
+.hero-reference .hero-photo,.hero-reference .hero-gallery{display:none!important}
+@media(max-width:760px){.hero-reference .hero-scene{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}.hero-reference .prayer-board{grid-column:1!important}}
