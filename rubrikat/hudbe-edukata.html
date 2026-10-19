@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hudbe e Xhumasë - Allahu e do edukatën e mirë</title>
+<style>
+*{box-sizing:border-box}
+html,body{
+  margin:0;padding:0;width:100%;height:100%;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
+  background:
+    linear-gradient(rgba(4,18,25,.82),rgba(4,18,25,.94)),
+    url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop");
+  background-size:cover;background-position:center;color:white;
+}
+.app{height:100vh;display:flex;flex-direction:column;padding:8px;gap:8px}
+.topFixed{
+  flex:0 0 auto;
+  background:rgba(0,0,0,.78);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:16px;
+  padding:10px 12px;
+  box-shadow:0 8px 30px rgba(0,0,0,.35);
+}
+.titleRow{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+h1{margin:0;color:#ffd56b;font-size:28px;line-height:1.15}
+.mainTitles{display:flex;flex-direction:column;gap:3px}
+.titleArabic{direction:rtl;text-align:right;font-family:"Amiri","Scheherazade New","Times New Roman",serif;font-size:27px;color:#ffe8a3}
+.titleGerman{font-size:24px;color:#ffd56b;font-weight:900}
+.titleAlbanian{font-size:24px;color:#ffd56b;font-weight:900}
+.sub{margin-top:4px;color:#dbeafe;font-size:15px}
+.fixedNames{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.nameChip{padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);font-weight:bold;color:#e5e7eb}
+.nameChip.active{background:rgba(255,213,107,.22);color:#ffe8a3;border-color:rgba(255,213,107,.52)}
+.timerBox{
+  min-width:155px;text-align:center;border-radius:14px;padding:8px 10px;
+  background:rgba(255,213,107,.14);border:1px solid rgba(255,213,107,.38);
+}
+.timerLabel{font-size:12px;color:#ffe8a3;font-weight:bold}
+.timer{font-size:31px;color:#ffd56b;font-weight:900;letter-spacing:1px;line-height:1.05}
+.totalTime{font-size:12px;color:#cbd5e1;margin-top:2px}
+.controls{flex:0 0 auto;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+button{border:0;border-radius:12px;padding:10px 14px;font-weight:bold;background:#16a34a;color:white;cursor:pointer;font-size:15px}
+button.blue{background:#2563eb} button.orange{background:#b45309} button.gray{background:#334155} button.red{background:#991b1b}
+.stage{flex:1;min-height:0;background:rgba(0,0,0,.70);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:12px;display:flex;flex-direction:column;overflow:hidden}
+.langTitle{text-align:center;color:#ffd56b;font-size:28px;font-weight:bold;margin-bottom:6px}
+.counter{text-align:center;color:#cbd5e1;font-size:14px;margin-bottom:6px}
+.content{flex:1;min-height:0;overflow-y:auto;scroll-behavior:smooth;font-size:29px;line-height:1.66;padding:0 8px 24px;background:rgba(0,0,0,.20);border-radius:16px}
+.content::-webkit-scrollbar{width:10px} .content::-webkit-scrollbar-thumb{background:#64748b;border-radius:20px}
+.line{padding:11px 14px;margin:8px 0;border-radius:14px;opacity:.68;transition:.25s;word-break:normal;overflow-wrap:break-word}
+.line.active{
+  opacity:1!important;
+  background:#6b5618!important;
+  color:#fff4b5!important;
+  border:2px solid #ffd56b!important;
+  box-shadow:0 0 18px rgba(255,213,107,.35)!important;
+  transform:none!important;
+  font-weight:900!important;
+}
+.arabic{direction:rtl;text-align:right;font-family:"Amiri","Scheherazade New","Times New Roman",serif;font-size:38px;line-height:1.95}
+.progress{height:10px;background:rgba(255,255,255,.18);border-radius:30px;overflow:hidden;margin-top:9px}
+.bar{height:100%;width:0%;background:#ffd56b}
+.footer{flex:0 0 auto;text-align:center;color:#cbd5e1;font-size:13px}
+@media(max-width:800px){
+  .app{padding:5px;gap:5px}
+  .topFixed{padding:7px 8px;border-radius:13px}
+  .titleRow{grid-template-columns:1fr auto;gap:6px}
+  h1{font-size:18px}
+  .mainTitles{gap:2px}
+  .titleArabic{font-size:17px;text-align:right}
+  .titleGerman,.titleAlbanian{font-size:16px;line-height:1.12}
+  .sub{font-size:11px}
+  .nameChip{font-size:12px;padding:5px 7px}
+  .timerBox{min-width:100px;padding:6px 7px}
+  .timer{font-size:23px}
+  .timerLabel,.totalTime{font-size:10px}
+  button{font-size:13px;padding:8px 10px}
+  .stage{padding:7px;border-radius:15px}
+  .langTitle{font-size:22px}
+  .counter{font-size:12px}
+  .content{font-size:22px;line-height:1.58;padding:2px 5px 20px}
+  .arabic{font-size:30px;line-height:1.85}
+  .line{padding:8px 9px;margin:6px 0}
+  .footer{display:none}
+}
+@media(max-height:690px){
+  h1{font-size:16px} .titleArabic{font-size:15px}.titleGerman,.titleAlbanian{font-size:14px}.sub{display:none} .fixedNames{margin-top:5px}
+  button{font-size:12px;padding:7px 8px}
+  .langTitle{font-size:20px;margin-bottom:2px}
+  .counter{font-size:11px;margin-bottom:3px}
+  .content{font-size:21px}
+  .arabic{font-size:28px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topFixed">
+    <div class="titleRow">
+      <div>
+        <h1 class="mainTitles">
+          <span class="titleArabic">خطبة الجمعة – إِنَّ اللَّهَ يُحِبُّ حُسْنَ الْخُلُقِ</span>
+          <span class="titleGerman">Freitagspredigt – Allah liebt den guten Charakter</span>
+          <span class="titleAlbanian">Hudbe e Xhumasë – Allahu e do edukatën e mirë</span>
+        </h1>
+        <div class="sub">11.09.2026 • Islamischen Verein Frankenthal • Ligjërues: Ilaz ef. Salihi • Tema: Morali i mirë – adhurim, fisnikëri dhe rrugë drejt dashurisë së Allahut</div>
+      </div>
+      <div class="timerBox">
+        <div class="timerLabel">TIMER</div>
+        <div id="timer" class="timer">05:00</div>
+        <div id="totalTime" class="totalTime">Arabisht 5 min</div>
+      </div>
+    </div>
+    <div class="fixedNames">
+      <div id="chip0" class="nameChip active">🇸🇦 العربية – 5 min</div>
+      <div id="chip1" class="nameChip">🇩🇪 Deutsch – 10 min</div>
+      <div id="chip2" class="nameChip">🇦🇱 Shqip – 10 min</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="startAuto()">▶ Auto lexim</button>
+    <button class="orange" onclick="pauseAuto()">⏸ Pauzë</button>
+    <button class="blue" onclick="nextLine()">Rreshti tjetër</button>
+    <button class="gray" onclick="nextSection()">Next ▶</button>
+    <button class="red" onclick="restartAll()">↻ Fillim</button>
+  </div>
+
+  <div class="stage">
+    <div id="langTitle" class="langTitle"></div>
+    <div id="counter" class="counter"></div>
+    <div id="content" class="content"></div>
+    <div class="progress"><div id="bar" class="bar"></div></div>
+  </div>
+
+  <div class="footer">Në fund të shqipes hapet automatikisht: Kohet Tv.</div>
+</div>
+
+<script>
+const KOHE_TV_REFERENCE = "Kohet Tv";
+
+const hudbe =[
+{"title":"🇸🇦 العربية","className":"arabic","voiceLang":"ar-SA","lines":[
+"الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ، وَالصَّلَاةُ وَالسَّلَامُ عَلَى سَيِّدِنَا مُحَمَّدٍ ﷺ.",
+"أُوصِيكُمْ وَنَفْسِي بِتَقْوَى اللَّهِ، فَإِنَّ مِنْ أَعْظَمِ ثِمَارِ التَّقْوَى حُسْنَ الْخُلُقِ.",
+"مَوْضُوعُ خُطْبَتِنَا: إِنَّ اللَّهَ يُحِبُّ حُسْنَ الْخُلُقِ.",
+"قَالَ رَسُولُ اللَّهِ ﷺ: «مَا مِنْ شَيْءٍ أَثْقَلُ فِي الْمِيزَانِ مِنْ حُسْنِ الْخُلُقِ».",
+"وَسُئِلَ ﷺ عَنْ أَكْثَرِ مَا يُدْخِلُ النَّاسَ الْجَنَّةَ، فَقَالَ: «تَقْوَى اللَّهِ وَحُسْنُ الْخُلُقِ».",
+"فَحُسْنُ الْخُلُقِ لَيْسَ زِينَةً زَائِدَةً، بَلْ هُوَ عِبَادَةٌ وَدَلِيلُ إِيمَانٍ.",
+"وَمِنْ حُسْنِ الْخُلُقِ: صِدْقُ اللِّسَانِ، وَكَفُّ الأَذَى، وَالْعَفْوُ، وَالْحِلْمُ، وَالْكَرَمُ، وَالرِّفْقُ.",
+"وَقَالَ ﷺ لِأَشَجِّ عَبْدِ الْقَيْسِ: «إِنَّ فِيكَ خَصْلَتَيْنِ يُحِبُّهُمَا اللَّهُ: الْحِلْمُ وَالأَنَاةُ».",
+"فَبَعْضُ الْأَخْلَاقِ هِبَةٌ، وَبَعْضُهَا يُكْتَسَبُ بِالْمُجَاهَدَةِ وَالتَّدَرُّبِ.",
+"وَكَانَ أَبُو الدَّرْدَاءِ رَضِيَ اللَّهُ عَنْهُ يَدْعُو: اللَّهُمَّ كَمَا حَسَّنْتَ خَلْقِي فَحَسِّنْ خُلُقِي.",
+"الْمُؤْمِنُ يَكْظِمُ غَيْظَهُ، وَيَضْبِطُ لِسَانَهُ، وَيُحْسِنُ إِلَى النَّاسِ حَتَّى عِنْدَ الْخِلَافِ.",
+"وَالأَخْلَاقُ الْحَسَنَةُ تَنْشُرُ الرَّاحَةَ وَالْمَحَبَّةَ وَتُصْلِحُ الْأُسَرَ وَالْمُجْتَمَعَ.",
+"فَلْيَنْظُرْ كُلُّ وَاحِدٍ مِنَّا إِلَى خُلُقٍ يَحْتَاجُ إِلَى إِصْلَاحٍ، وَلْيَبْدَأْ بِهِ مِنَ الْيَوْمِ.",
+"اللَّهُمَّ حَسِّنْ أَخْلَاقَنَا كَمَا حَسَّنْتَ خَلْقَنَا، وَاجْعَلْنَا مِنْ أَحَبِّ عِبَادِكَ إِلَيْكَ.",
+"آمِينَ يَا رَبَّ الْعَالَمِينَ."
+],"durationSec":300},
+
+{"title":"🇩🇪 Deutsch","className":"","voiceLang":"de-DE","lines":[
+"FREITAGSPREDIGT: Allah liebt den guten Charakter.",
+"Alles Lob gebührt Allah. Frieden und Segen seien auf unserem Propheten Muhammad ﷺ.",
+"Liebe Brüder, guter Charakter ist im Islam keine Nebensache. Er gehört zum Glauben, zur Anbetung und zu den Eigenschaften, die Allah liebt.",
+"Der Gesandte Allahs ﷺ sagte sinngemäß: Nichts wird am Tag der Auferstehung schwerer auf der Waage liegen als guter Charakter.",
+"Und als er gefragt wurde, was die Menschen am häufigsten ins Paradies führt, antwortete er: Gottesfurcht und guter Charakter.",
+"Das zeigt uns: Ein Mensch kann viele freiwillige Taten verrichten, doch sein Umgang mit Menschen bleibt ein entscheidender Maßstab.",
+"Guter Charakter bedeutet, die Zunge zu hüten, andere nicht zu verletzen, ehrlich zu sein, Versprechen einzuhalten und Rechte anderer zu respektieren.",
+"Er bedeutet auch, Zorn zu beherrschen, zu vergeben, geduldig zu sein, großzügig zu handeln und den Menschen mit Milde zu begegnen.",
+"Im Buch wird betont, dass der gute Charakter das Leben der Menschen verändert: Er bringt Ruhe, Liebe, gegenseitige Hilfe und unterdrückt das Böse.",
+"Menschen lieben denjenigen, von dessen Worten und Taten sie Gutes erfahren. Deshalb ist guter Charakter zugleich Daʿwa ohne viele Worte.",
+"Der Prophet ﷺ sagte zu al-Aschadsch ʿAbd al-Qais: „Du besitzt zwei Eigenschaften, die Allah liebt: Nachsicht und Besonnenheit.“",
+"Als er fragte, ob diese Eigenschaften neu seien oder schon immer zu ihm gehörten, wurde ihm bestätigt, dass Allah ihn mit ihnen erschaffen hatte.",
+"Das lehrt uns zweierlei: Manche guten Eigenschaften sind von Natur aus vorhanden; andere können durch Übung und Selbstdisziplin erworben werden.",
+"Wer schnell zornig wird, kann lernen, sich zu beherrschen. Wer hart spricht, kann seine Sprache erziehen. Wer geizig ist, kann Großzügigkeit einüben.",
+"Das Ziel ist nicht, dass wir fehlerlos werden. Das Ziel ist, dass wir uns um Allahs willen immer wieder verbessern.",
+"Abū ad-Dardāʾ r.a. soll in der Nacht gebetet und Allah darum gebeten haben, seinen Charakter schön zu machen, so wie Allah seine äußere Gestalt schön gemacht hat.",
+"Diese Bitte zeigt, wie ernst die frühen Muslime den Charakter nahmen. Sie sahen ihn nicht als gesellschaftliche Höflichkeit, sondern als Weg zum Paradies.",
+"Im Material wird auch davor gewarnt, dass Zunge und Schamlosigkeit zu den Dingen gehören, die Menschen am stärksten ins Verderben führen.",
+"Darum müssen wir besonders auf Beleidigungen, Verleumdung, Spott, verletzende Worte und unkontrollierte Wut achten.",
+"Ein guter Charakter zeigt sich nicht nur gegenüber Menschen, die wir mögen. Er zeigt sich gerade dann, wenn wir provoziert werden, enttäuscht sind oder uns ungerecht behandelt fühlen.",
+"Wer nur freundlich ist, solange alles nach seinem Wunsch läuft, hat seinen Charakter noch nicht wirklich geprüft.",
+"Der Gläubige versucht auch im Streit gerecht zu bleiben. Er darf widersprechen, aber nicht beleidigen; er darf sein Recht verlangen, aber nicht ungerecht werden.",
+"Zu gutem Charakter gehören ebenfalls Barmherzigkeit, Hilfsbereitschaft und Großzügigkeit. Allah gibt uns, ohne von uns einen Gegenwert zu brauchen.",
+"Wenn wir Seine Vergebung wünschen, sollen auch wir vergeben. Wenn wir Seine Großzügigkeit wünschen, sollen wir den Menschen gegenüber großzügig sein.",
+"Wenn wir Allahs Barmherzigkeit wünschen, sollen unsere Familien, Nachbarn und Mitmenschen unsere Barmherzigkeit spüren.",
+"Der gute Charakter beginnt zu Hause: mit Ehepartner, Kindern und Eltern. Dort zeigt sich oft am ehrlichsten, wer wir wirklich sind.",
+"Es ist leicht, draußen höflich zu wirken und zu Hause hart zu sein. Islamische Moral verlangt, dass das Gute zuerst die Menschen erreicht, die uns am nächsten sind.",
+"Im Buch wird erklärt, dass guter Charakter Frieden schafft, Herzen verbindet und das Zusammenleben verbessert.",
+"Eine Gemeinschaft wird nicht nur durch Gebäude und Programme stark, sondern durch Menschen, die ehrlich, geduldig, hilfsbereit und versöhnlich sind.",
+"Darum soll jeder von uns heute eine Eigenschaft auswählen, die er verbessern muss.",
+"Vielleicht ist es der Zorn. Vielleicht die Zunge. Vielleicht Geiz, Härte, Hochmut oder die Unfähigkeit zu vergeben.",
+"Und dann bitten wir Allah um Hilfe und üben diese Veränderung Tag für Tag.",
+"Charakter verbessert sich nicht nur durch Wissen. Er verbessert sich durch Anwendung, Wiederholung, Reue und bewusste Selbstkontrolle.",
+"Frage dich heute: Fühlen sich Menschen nach einem Gespräch mit mir leichter oder schwerer? Bringe ich Ruhe oder Spannung? Versöhne ich oder spalte ich?",
+"Der schönste Charakter war der Charakter des Gesandten Allahs ﷺ. Je näher wir seiner Sunna kommen, desto schöner sollte auch unser Umgang mit Menschen werden.",
+"Lasst uns deshalb Allah nicht nur um mehr Versorgung und Gesundheit bitten, sondern auch um ein besseres Herz und einen besseren Charakter.",
+"O Allah, verschönere unseren Charakter, reinige unsere Herzen, bewahre unsere Zungen und mache uns zu Menschen, deren Nähe Gutes bringt.",
+"O Allah, schenke uns Geduld, Nachsicht, Besonnenheit, Großzügigkeit und Aufrichtigkeit.",
+"O Allah, mache uns zu denen, die Du wegen ihres Glaubens und ihres guten Charakters liebst.",
+"Āmīn, Herr der Welten."
+],"durationSec":600},
+
+{"title":"🇦🇱 Shqip","className":"","voiceLang":"sq-AL","lines":[
+"HUDBE E XHUMASË: Allahu e do edukatën e mirë.",
+"Elhamdulil-lahi Rabbil-alemin. Atë e falënderojmë, prej Tij ndihmë dhe falje kërkojmë.",
+"Salavatet dhe selamet qofshin mbi të Dërguarin tonë Muhamedin ﷺ, mbi familjen dhe shokët e tij.",
+"Të nderuar vëllezër, edukata dhe morali i mirë nuk janë diçka dytësore në Islam. Ato janë pjesë e imanit, e adhurimit dhe prej cilësive që Allahu i do.",
+"I Dërguari i Allahut ﷺ ka treguar se në Ditën e Gjykimit nuk ka gjë më të rëndë në peshore sesa morali i mirë.",
+"Po ashtu, kur u pyet se çfarë i fut njerëzit më së shumti në Xhenet, ai u përgjigj: devotshmëria ndaj Allahut dhe morali i mirë.",
+"Kjo na mëson se njeriu mund të ketë shumë vepra vullnetare, por mënyra se si sillet me njerëzit mbetet një matës shumë i rëndësishëm i fesë së tij.",
+"Morali i mirë do të thotë ta ruash gjuhën, të mos lëndosh, të jesh i sinqertë, ta mbash fjalën dhe t'i respektosh të drejtat e njerëzve.",
+"Do të thotë të përmbash zemërimin, të falësh, të jesh i durueshëm, bujar dhe i butë me njerëzit.",
+"Në materialin e librit theksohet se njerëzit me karakter të mirë sjellin rehati dhe gëzim kudo që ndodhen.",
+"Ata ndihmojnë të tjerët, shtypin të keqen dhe bëhen shkak që zemrat e dëshpëruara të gjejnë lehtësim.",
+"Njeriu me fjalë të mira bëhet i dashur. Prandaj morali i mirë është edhe një formë da'veti pa pasur nevojë për shumë fjalë.",
+"I Dërguari ﷺ i tha Eshaxh Abd el-Kajsit: “Ti ke dy cilësi që Allahu i do.”",
+"Ai e pyeti: “Cilat janë ato?” Pejgamberi ﷺ i tha: “Urtësia dhe maturia.”",
+"Kur pyeti nëse këto cilësi ishin të reja apo i kishte prej më herët, iu tha se Allahu e kishte krijuar me to.",
+"Ky tregim na mëson dy gjëra: disa cilësi të mira mund të jenë pjesë e natyrës së njeriut, ndërsa të tjera mund të fitohen me përpjekje.",
+"Njeriu që zemërohet shpejt mund ta stërvitë veten të përmbahet.",
+"Njeriu që flet ashpër mund ta edukojë gjuhën.",
+"Njeriu që është dorështrënguar mund ta mësojë veten të japë.",
+"Qëllimi nuk është të bëhemi pa gabime. Qëllimi është të luftojmë me veten dhe të përmirësohemi për hir të Allahut.",
+"Në material përmendet edhe Ebu Derdaja r.a., i cili lutej natën duke kërkuar prej Allahut që t'ia zbukuronte moralin, ashtu siç ia kishte zbukuruar pamjen.",
+"Kjo tregon sa seriozisht e shihnin të parët tanë edukatën. Për ta, morali i mirë nuk ishte vetëm sjellje shoqërore, por adhurim dhe rrugë drejt Xhenetit.",
+"Libri gjithashtu na kujton se gjuha dhe pjesët private janë ndër shkaqet e mëdha që mund ta çojnë njeriun drejt dënimit.",
+"Prandaj duhet të ruhemi nga përgojimi, shpifja, tallja, fjalët që plagosin dhe zemërimi i pakontrolluar.",
+"Morali i mirë nuk provohet vetëm me njerëzit që i duam.",
+"Ai provohet kur dikush na provokon, kur na kundërshton, kur na zhgënjen ose kur mendojmë se na është bërë padrejtësi.",
+"Nëse jemi të sjellshëm vetëm kur çdo gjë shkon sipas dëshirës sonë, karakteri ynë ende nuk është sprovuar.",
+"Besimtari përpiqet të mbetet i drejtë edhe gjatë mosmarrëveshjes.",
+"Mund të kundërshtojë, por nuk fyen. Mund ta kërkojë të drejtën e vet, por nuk bëhet zullumqar.",
+"Prej moralit të mirë janë edhe mëshira, ndihma dhe bujaria.",
+"Allahu na jep pa pasur nevojë për asgjë prej nesh. Prandaj, nëse dëshirojmë faljen e Tij, duhet edhe ne të falim.",
+"Nëse dëshirojmë bujarinë e Tij, duhet të jemi bujarë ndaj njerëzve.",
+"Nëse dëshirojmë mëshirën e Tij, familja jonë, fqinjët dhe njerëzit përreth nesh duhet ta ndiejnë mëshirën tonë.",
+"Morali i mirë fillon në shtëpi: me bashkëshortin, bashkëshorten, fëmijët dhe prindërit.",
+"Aty shpesh shihet më së qarti se çfarë karakteri kemi në të vërtetë.",
+"Është lehtë të jesh i sjellshëm jashtë shtëpisë, ndërsa brenda të jesh i ashpër. Islami kërkon që e mira të fillojë prej atyre që janë më afër nesh.",
+"Në libër shpjegohet se morali i mirë krijon qetësi, dashuri dhe bashkëpunim mes njerëzve.",
+"Një xhemat nuk bëhet i fortë vetëm me ndërtesë dhe programe, por me njerëz që janë të sinqertë, të durueshëm, ndihmues dhe pajtues.",
+"Prandaj secili prej nesh duhet të zgjedhë sot një cilësi që ka nevojë ta përmirësojë.",
+"Ndoshta është zemërimi. Ndoshta gjuha. Ndoshta koprracia, ashpërsia, mendjemadhësia ose vështirësia për të falur.",
+"Pastaj t'i kërkojmë Allahut ndihmë dhe ta ushtrojmë këtë ndryshim çdo ditë.",
+"Karakteri nuk përmirësohet vetëm duke lexuar për të. Ai përmirësohet duke e praktikuar, duke gabuar, duke u penduar dhe duke u përpjekur përsëri.",
+"Pyete veten: si ndihen njerëzit pasi flasin me mua? Më të qetë apo më të rënduar?",
+"A sjell qetësi apo tension? A pajtoj njerëz apo i ndaj?",
+"Karakteri më i bukur ishte karakteri i të Dërguarit të Allahut ﷺ.",
+"Sa më afër Sunetit të tij të jemi, aq më e bukur duhet të bëhet edhe sjellja jonë me njerëzit.",
+"Prandaj mos t'i lutemi Allahut vetëm për furnizim, shëndet dhe lehtësim.",
+"T'i lutemi edhe për një zemër më të pastër, gjuhë më të mirë dhe karakter më të bukur.",
+"O Allah, na e zbukuro moralin, na i pastro zemrat dhe na i ruaj gjuhët.",
+"O Allah, na jep durim, butësi, urtësi, maturi, bujari dhe sinqeritet.",
+"O Allah, na bëj prej atyre që Ti i do për shkak të imanit dhe moralit të tyre të mirë.",
+"Amin, ja Rabbel alemin."
+],"durationSec":600}
+];
+
+let langIndex=0,lineIndex=0,autoTimer=null,countdownTimer=null,remainingSec=0,lineSpeed=7000,started=false,isAuto=false,currentUtterance=null;
+
+const content=document.getElementById("content");
+const langTitle=document.getElementById("langTitle");
+const counter=document.getElementById("counter");
+const bar=document.getElementById("bar");
+const timerEl=document.getElementById("timer");
+const totalTimeEl=document.getElementById("totalTime");
+
+function fmt(sec){
+  sec=Math.max(0,Math.ceil(sec));
+  const m=String(Math.floor(sec/60)).padStart(2,"0");
+  const s=String(sec%60).padStart(2,"0");
+  return m+":"+s;
+}
+function totalLines(){return hudbe.reduce((a,l)=>a+l.lines.length,0)}
+function doneLines(){return hudbe.slice(0,langIndex).reduce((a,l)=>a+l.lines.length,0)+lineIndex+1}
+function updateChips(){
+  for(let i=0;i<hudbe.length;i++){
+    const c=document.getElementById("chip"+i);
+    if(c) c.classList.toggle("active",i===langIndex);
+  }
+}
+function resetLanguageTimer(){
+  remainingSec=hudbe[langIndex].durationSec;
+  lineSpeed=Math.max(2400, Math.floor((hudbe[langIndex].durationSec*1000)/Math.max(1,hudbe[langIndex].lines.length)));
+  updateTimer();
+}
+function updateTimer(){
+  timerEl.textContent=fmt(remainingSec);
+  const lang=hudbe[langIndex];
+  const minutes=Math.round(lang.durationSec/60);
+  totalTimeEl.textContent=lang.title.replace(/[🇸🇦🇩🇪🇦🇱]/g,"").trim()+" "+minutes+" min";
+}
+function render(){
+  const lang=hudbe[langIndex];
+  langTitle.textContent=lang.title;
+  counter.textContent="Gjuha "+(langIndex+1)+"/"+hudbe.length+" • Rreshti "+(lineIndex+1)+"/"+lang.lines.length;
+  content.className="content "+lang.className;
+  content.innerHTML="";
+  lang.lines.forEach((txt,i)=>{
+    const d=document.createElement("div");
+    d.className="line"+(i===lineIndex?" active":"");
+    d.textContent=txt;
+    content.appendChild(d);
+  });
+  const active=content.querySelector(".line.active");
+  if(active){
+    requestAnimationFrame(()=>{
+      const y=Math.max(
+        0,
+        active.offsetTop - content.offsetTop -
+        (content.clientHeight-active.offsetHeight)/2
+      );
+      content.scrollTo({top:y,behavior:"smooth"});
+    });
+  }
+  bar.style.width=(doneLines()/totalLines()*100)+"%";
+  updateChips();
+  updateTimer();
+}
+function startCountdown(){
+  if(countdownTimer) clearInterval(countdownTimer);
+  updateTimer();
+  countdownTimer=setInterval(()=>{
+    if(!isAuto) return;
+    remainingSec = Math.max(0, remainingSec - 1);
+    updateTimer();
+    if(remainingSec <= 0){
+      clearInterval(countdownTimer);
+      countdownTimer=null;
+      nextSection();
+    }
+  },1000);
+}
+function stopSpeech(){}
+function advanceAutoLine(){
+  if(!isAuto) return;
+  const lang=hudbe[langIndex];
+  if(lineIndex<lang.lines.length-1){
+    lineIndex++;
+    render();
+    scheduleAutoAdvance();
+  }else{
+    nextSection();
+  }
+}
+function scheduleAutoAdvance(){
+  if(autoTimer) clearTimeout(autoTimer);
+  autoTimer=setTimeout(()=>{ if(isAuto) advanceAutoLine(); }, lineSpeed);
+}
+function nextLine(){
+  const lang=hudbe[langIndex];
+  if(lineIndex<lang.lines.length-1){ lineIndex++; }
+  else{ nextSection(); return; }
+  render();
+  if(isAuto) scheduleAutoAdvance();
+}
+function nextSection(){
+  pauseOnlyIntervals();
+  if(langIndex<hudbe.length-1){
+    langIndex++; lineIndex=0; resetLanguageTimer(); render();
+    if(started) startAuto();
+  }else{
+    openKohetTv();
+  }
+}
+function startAuto(){
+  pauseOnlyIntervals();
+  started=true;
+  isAuto=true;
+  render();
+  scheduleAutoAdvance();
+  startCountdown();
+}
+function pauseOnlyIntervals(){
+  if(autoTimer) clearTimeout(autoTimer);
+  if(countdownTimer) clearInterval(countdownTimer);
+  autoTimer=null; countdownTimer=null;
+  isAuto=false;
+  stopSpeech();
+}
+function pauseAuto(){ pauseOnlyIntervals(); }
+function restartAll(){
+  pauseAuto(); started=false; langIndex=0; lineIndex=0; resetLanguageTimer(); render();
+}
+function openKohetTv(){
+  pauseAuto();
+  window.location.href="go:"+KOHE_TV_REFERENCE;
+  setTimeout(function(){ window.location.href="ac24://open2080485-0znj69/"+encodeURIComponent(KOHE_TV_REFERENCE); },700);
+}
+resetLanguageTimer();
+render();
+</script>
+
+<script id="AUTO_RETURN_KOHET_TV_11092026">
+(function(){
+  const END = new Date(2026,8,11,14,30,0);
+  function backToKohetTV(){
+    if(new Date() >= END){
+      window.location.href = "go:Kohet Tv";
+      setTimeout(function(){
+        window.location.href = "ac24://open2080485-0znj69/"+encodeURIComponent("Kohet Tv");
+      },700);
+    }
+  }
+  backToKohetTV();
+  setInterval(backToKohetTV,1000);
+})();
+</script>
+<script>
+function openKohetTv(){
+  pauseAuto();
+  window.location.href="go:Kohet Tv";
+
+  setTimeout(function(){
+    window.location.href=
+      "ac24://open2080485-0znj69/"+encodeURIComponent("Kohet Tv");
+  },700);
+}
+</script>
+
+</body>
+</html>
+</body>
+</html>
