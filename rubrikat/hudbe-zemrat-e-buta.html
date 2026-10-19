@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hudbja e Xhumasë - Allahu i do zemrat e buta</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif;background:linear-gradient(rgba(4,18,25,.82),rgba(4,18,25,.94)),url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop");background-size:cover;background-position:center;color:white}
+.app{height:100vh;display:flex;flex-direction:column;padding:2px;gap:2px}.topFixed{flex:0 0 auto;background:rgba(0,0,0,.78);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:7px 10px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.titleRow{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}h1{margin:0;color:#ffd56b;font-size:28px;line-height:1.15}.mainTitles{display:flex;flex-direction:column;gap:3px}.titleArabic{direction:rtl;text-align:right;font-family:"Amiri","Scheherazade New","Times New Roman",serif;font-size:27px;color:#ffe8a3}.titleGerman,.titleAlbanian{font-size:24px;color:#ffd56b;font-weight:900}.sub{margin-top:4px;color:#dbeafe;font-size:15px}.fixedNames{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px;justify-content:flex-start}.nameChip{padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);font-weight:bold;color:#e5e7eb}.nameChip.active{background:rgba(255,213,107,.22);color:#ffe8a3;border-color:rgba(255,213,107,.52)}.timerBox{min-width:155px;text-align:center;border-radius:14px;padding:8px 10px;background:rgba(255,213,107,.14);border:1px solid rgba(255,213,107,.38)}.timerLabel{font-size:12px;color:#ffe8a3;font-weight:bold}.timer{font-size:31px;color:#ffd56b;font-weight:900;letter-spacing:1px;line-height:1.05}.totalTime{font-size:12px;color:#cbd5e1;margin-top:2px}.controls{display:flex;gap:7px;justify-content:flex-start;align-items:center;flex-wrap:wrap;margin-top:6px}button{border:0;border-radius:12px;padding:10px 14px;font-weight:bold;background:#16a34a;color:white;cursor:pointer;font-size:15px}button.blue{background:#2563eb}button.orange{background:#b45309}button.gray{background:#334155}button.red{background:#991b1b}.stage{flex:1 1 auto;min-height:0;width:100%;background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:5px 8px;display:flex;flex-direction:column;overflow:hidden}.langTitle{text-align:center;color:#ffd56b;font-size:24px;font-weight:bold;margin-bottom:2px}.counter{text-align:center;color:#cbd5e1;font-size:13px;margin-bottom:2px}.content{flex:1;min-height:0;width:100%;overflow:hidden;font-size:34px;line-height:1.5;padding:5px 8px;background:rgba(0,0,0,.20);border-radius:14px}.content::-webkit-scrollbar{width:10px}.content::-webkit-scrollbar-thumb{background:#64748b;border-radius:20px}.line{display:none;padding:16px 20px;margin:0;border-radius:16px;word-break:normal;overflow-wrap:break-word}.line.active{display:flex!important;width:100%!important;min-height:52%!important;align-items:center!important;opacity:1!important;background:#6b5618!important;color:#fff4b5!important;border:2px solid #ffd56b!important;box-shadow:0 0 18px rgba(255,213,107,.35)!important;transform:none!important;font-weight:900!important}.arabic{direction:rtl;text-align:right;font-family:"Amiri","Scheherazade New","Times New Roman",serif;font-size:42px;line-height:1.7}.progress{height:10px;background:rgba(255,255,255,.18);border-radius:30px;overflow:hidden;margin-top:9px}.bar{height:100%;width:0%;background:#ffd56b}.footer{flex:0 0 auto;text-align:center;color:#cbd5e1;font-size:13px}@media(max-width:800px){.app{padding:5px;gap:5px}.topFixed{padding:7px 8px;border-radius:13px}.titleRow{grid-template-columns:1fr auto;gap:6px}h1{font-size:18px}.mainTitles{gap:2px}.titleArabic{font-size:17px;text-align:right}.titleGerman,.titleAlbanian{font-size:16px;line-height:1.12}.sub{font-size:11px}.nameChip{font-size:12px;padding:5px 7px}.timerBox{min-width:100px;padding:6px 7px}.timer{font-size:23px}.timerLabel,.totalTime{font-size:10px}button{font-size:13px;padding:8px 10px}.stage{padding:7px;border-radius:15px}.langTitle{font-size:22px}.counter{font-size:12px}.content{font-size:22px;line-height:1.58;padding:2px 5px 20px}.arabic{font-size:30px;line-height:1.85}.line{padding:8px 9px;margin:6px 0}.footer{display:none}}@media(max-height:690px){h1{font-size:16px}.titleArabic{font-size:15px}.titleGerman,.titleAlbanian{font-size:14px}.sub{display:none}.fixedNames{margin-top:5px}button{font-size:12px;padding:7px 8px}.langTitle{font-size:20px;margin-bottom:2px}.counter{font-size:11px;margin-bottom:3px}.content{font-size:21px}.arabic{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="topFixed"><div class="titleRow"><div><h1 class="mainTitles"><span class="titleArabic">خطبة الجمعة – إِنَّ اللَّهَ يُحِبُّ رِقَّةَ الْقُلُوبِ</span><span class="titleGerman">Hudbja e Xhumasë – Allah liebt weiche Herzen</span><span class="titleAlbanian">Hudbja e Xhumasë – Allahu i do zemrat e buta</span></h1><div class="sub">18.09.2026 • Islamischen Verein Frankenthal • Ligjërues: Ilaz ef. Salihi</div></div><div class="timerBox"><div class="timerLabel">TIMER</div><div id="timer" class="timer">05:00</div><div id="totalTime" class="totalTime">Arabisht 5 min</div></div></div><div class="fixedNames"><div id="chip0" class="nameChip active">🇸🇦 العربية – 5 min</div><div id="chip1" class="nameChip">🇩🇪 Deutsch – 15 min</div><div id="chip2" class="nameChip">🇦🇱 Shqip – 15 min</div></div><div class="controls"><button onclick="startAuto()">▶ Auto lexim</button><button class="orange" onclick="pauseAuto()">⏸ Pauzë</button><button class="blue" onclick="nextLine()">Rreshti tjetër</button><button class="gray" onclick="nextSection()">Next ▶</button><button class="red" onclick="restartAll()">↻ Fillim</button></div></div>
+
+<div class="stage"><div id="langTitle" class="langTitle"></div><div id="counter" class="counter"></div><div id="content" class="content"></div><div class="progress"><div id="bar" class="bar"></div></div></div><div class="footer">18.09.2026 • Në përfundim të orarit të Xhumasë kthehet te Kohët TV.</div></div>
+<script>
+const KOHE_TV_REFERENCE="Kohet Tv";
+const hudbe=[{"title":"🇸🇦 العربية","className":"arabic","voiceLang":"ar-SA","lines":["خُطْبَةُ الْجُمُعَةِ: إِنَّ اللَّهَ يُحِبُّ رِقَّةَ الْقُلُوبِ.","الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ.","نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ.","وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا.","مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ.","وَأَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ.","وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ ﷺ.","اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى نَبِيِّنَا مُحَمَّدٍ.","وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ.","أَمَّا بَعْدُ، فَيَا عِبَادَ اللَّهِ، أُوصِيكُمْ وَنَفْسِي بِتَقْوَى اللَّهِ.","حَدِيثُنَا الْيَوْمَ عَنْ رِقَّةِ الْقَلْبِ وَلِينِهِ.","فَالْقَلْبُ مَوْضِعُ الْإِيمَانِ وَالْخَشْيَةِ وَالرَّحْمَةِ.","وَالْقَلْبُ اللَّيِّنُ لَيْسَ قَلْبًا ضَعِيفًا.","بَلْ هُوَ قَلْبٌ يَثْبُتُ عَلَى الْحَقِّ وَيَرْحَمُ الْخَلْقَ.","قَالَ النَّبِيُّ ﷺ: «أَلَا وَإِنَّ فِي الْجَسَدِ مُضْغَةً».","«إِذَا صَلَحَتْ صَلَحَ الْجَسَدُ كُلُّهُ».","«وَإِذَا فَسَدَتْ فَسَدَ الْجَسَدُ كُلُّهُ».","«أَلَا وَهِيَ الْقَلْبُ». مُتَّفَقٌ عَلَيْهِ.","فَإِذَا صَلَحَ الْقَلْبُ صَلَحَتِ الْأَقْوَالُ وَالْأَعْمَالُ.","وَإِذَا قَسَا الْقَلْبُ ضَعُفَتِ الرَّحْمَةُ وَالْخُشُوعُ.","قَالَ اللَّهُ تَعَالَى: «اللَّهُ نَزَّلَ أَحْسَنَ الْحَدِيثِ».","«تَقْشَعِرُّ مِنْهُ جُلُودُ الَّذِينَ يَخْشَوْنَ رَبَّهُمْ».","«ثُمَّ تَلِينُ جُلُودُهُمْ وَقُلُوبُهُمْ إِلَى ذِكْرِ اللَّهِ».","فَالْقُرْآنُ يُحْيِي الْقُلُوبَ وَيُزَكِّيهَا.","وَالْمُؤْمِنُ يَسْأَلُ نَفْسَهُ: مَاذَا غَيَّرَ الْقُرْآنُ فِيَّ؟","وَقَالَ اللَّهُ تَعَالَى: «أَلَمْ يَأْنِ لِلَّذِينَ آمَنُوا».","«أَنْ تَخْشَعَ قُلُوبُهُمْ لِذِكْرِ اللَّهِ».","«وَمَا نَزَلَ مِنَ الْحَقِّ».","فَلَا نَسْمَحْ لِطُولِ الْأَمَدِ أَنْ يُقَسِّيَ قُلُوبَنَا.","وَمِنْ عَلَامَاتِ رِقَّةِ الْقَلْبِ الرَّحْمَةُ بِالنَّاسِ.","قَالَ النَّبِيُّ ﷺ عَنْ أَهْلِ الْيَمَنِ:","«هُمْ أَرَقُّ أَفْئِدَةً وَأَلْيَنُ قُلُوبًا».","«الْإِيمَانُ يَمَانٍ وَالْحِكْمَةُ يَمَانِيَةٌ». مُتَّفَقٌ عَلَيْهِ.","فَالْقُوَّةُ لَيْسَتْ فِي قَسْوَةِ الْقَلْبِ.","بَلِ الْقُوَّةُ أَنْ تَمْلِكَ نَفْسَكَ وَتَعْفُوَ مَعَ الْقُدْرَةِ.","وَأَنْ تَقُولَ الْحَقَّ بِحِكْمَةٍ وَرَحْمَةٍ.","قَالَ رَسُولُ اللَّهِ ﷺ: «الرَّاحِمُونَ يَرْحَمُهُمُ الرَّحْمَنُ».","«ارْحَمُوا مَنْ فِي الْأَرْضِ».","«يَرْحَمْكُمْ مَنْ فِي السَّمَاءِ».","فَارْحَمُوا أَوْلَادَكُمْ وَأَهْلَكُمْ.","وَارْحَمُوا الْكِبَارَ وَالْمَرْضَى وَالْفُقَرَاءَ وَالضُّعَفَاءَ.","وَلَا تَفْرَحُوا بِسُقُوطِ مَنْ أَخْطَأَ.","اِكْرَهُوا الْمَعْصِيَةَ وَتَمَنَّوْا الْهِدَايَةَ لِلْعَاصِي.","وَلَيِّنُوا قُلُوبَكُمْ بِتِلَاوَةِ الْقُرْآنِ وَتَدَبُّرِهِ.","وَلَيِّنُوهَا بِالذِّكْرِ وَالدُّعَاءِ وَالِاسْتِغْفَارِ.","وَلَيِّنُوهَا بِخِدْمَةِ الْمُحْتَاجِينَ وَرَحْمَةِ الضُّعَفَاءِ.","وَاحْفَظُوا أَلْسِنَتَكُمْ، فَإِنَّ الْكَلِمَةَ الْقَاسِيَةَ تَكْسِرُ الْقُلُوبَ.","عِبَادَ اللَّهِ، لَا نَرْضَ بِإِسْلَامٍ ظَاهِرُهُ حَسَنٌ وَالْقَلْبُ قَاسٍ.","بَلْ نَسْأَلُ اللَّهَ قَلْبًا خَاشِعًا وَرَحِيمًا وَمُنِيبًا.","اللَّهُمَّ ارْزُقْنَا قُلُوبًا حَيَّةً لَيِّنَةً خَاشِعَةً.","اللَّهُمَّ طَهِّرْ قُلُوبَنَا مِنَ الْقَسْوَةِ وَالْكِبْرِ وَالْحَسَدِ.","اللَّهُمَّ ارْزُقْنَا الرَّحْمَةَ وَالْعَدْلَ وَحُسْنَ الْخُلُقِ.","اللَّهُمَّ اغْفِرْ لَنَا وَلِوَالِدِينَا وَلِأَهْلِنَا وَلِلْمُؤْمِنِينَ.","وَصَلَّى اللَّهُ وَسَلَّمَ عَلَى نَبِيِّنَا مُحَمَّدٍ.","آمِينَ يَا رَبَّ الْعَالَمِينَ."],"durationSec":300},{"title":"🇩🇪 Deutsch","className":"","voiceLang":"de-DE","lines":["FREITAGSKHUTBA: Allah liebt weiche Herzen.","Alles Lob gebührt Allah, dem Herrn der Welten. Ihn loben wir, Ihn bitten wir um Hilfe und Vergebung. Bei Allah suchen wir Zuflucht vor dem Bösen in uns und vor unseren schlechten Taten.","Wir bezeugen, dass niemand mit Recht angebetet wird außer Allah, dem Einen ohne Teilhaber, und wir bezeugen, dass Muhammad ﷺ Sein Diener und Gesandter ist.","Allahs Segen und Frieden seien auf Muhammad ﷺ, auf seiner Familie, seinen Gefährten und allen, die seinem Weg bis zum Tag des Gerichts folgen.","Liebe Brüder, ich ermahne mich selbst und euch zur Gottesfurcht. Taqwā schützt das Herz und gibt dem Menschen in jeder Lage Orientierung.","Am vergangenen Freitag sprachen wir über gutes Benehmen und edlen Charakter. Heute knüpfen wir daran an und sprechen über die Quelle guten Charakters: das Herz.","Unser Thema lautet: Allah liebt weiche Herzen – Herzen, die von Seinem Wort berührt werden, sich vor der Wahrheit demütigen und Seinen Geschöpfen Barmherzigkeit zeigen.","Ein weiches Herz ist kein schwaches Herz. Es kann fest an der Wahrheit halten und zugleich sanft sprechen, gerecht entscheiden und barmherzig mit Menschen umgehen.","Der Prophet ﷺ lehrte uns: «أَلَا وَإِنَّ فِي الْجَسَدِ مُضْغَةً، إِذَا صَلَحَتْ صَلَحَ الْجَسَدُ كُلُّهُ ... أَلَا وَهِيَ الْقَلْبُ».","Sinngemäß: Im Körper befindet sich ein Stück Fleisch. Ist es gesund, ist der ganze Körper gesund; ist es verdorben, ist der ganze Körper verdorben. Es ist das Herz. al-Bukhārī und Muslim.","Darum reicht eine gute äußere Erscheinung nicht. Der Gläubige fragt sich: Was geschieht mit meinem Herzen? Bereut es nach einem Fehler? Wird es weich, wenn es den Qurʾān hört?","Allah sagt: «اللَّهُ نَزَّلَ أَحْسَنَ الْحَدِيثِ ... ثُمَّ تَلِينُ جُلُودُهُمْ وَقُلُوبُهُمْ إِلَى ذِكْرِ اللَّهِ».","Sinngemäß: Allah hat die schönste Botschaft herabgesandt; die Haut derjenigen, die ihren Herrn fürchten, erschauert, danach werden ihre Haut und ihre Herzen weich beim Gedenken Allahs. az-Zumar 39:23.","Der Qurʾān ist nicht nur für die Zunge bestimmt. Er soll das Herz erreichen, Furcht und Hoffnung wecken, das Verhalten korrigieren und den Diener Allah näherbringen.","Wenn wir Qurʾān lesen und dennoch hart zur Familie, ungerecht zum Schwachen und erbarmungslos gegenüber dem Fehlenden bleiben, müssen wir unser Herz überprüfen.","Allah sagt weiter: «أَلَمْ يَأْنِ لِلَّذِينَ آمَنُوا أَنْ تَخْشَعَ قُلُوبُهُمْ لِذِكْرِ اللَّهِ وَمَا نَزَلَ مِنَ الْحَقِّ».","Sinngemäß: Ist für die Gläubigen nicht die Zeit gekommen, dass ihre Herzen sich vor Allahs Gedenken und vor der herabgesandten Wahrheit demütigen? al-Hadīd 57:16.","ʿAbdullāh ibn Masʿūd berichtete, dass zwischen ihrem Eintritt in den Islam und dieser göttlichen Ermahnung nur ungefähr vier Jahre lagen. Dies wird in Sahih Muslim überliefert.","Wenn selbst die Gefährten so früh daran erinnert wurden, ihre Herzen nicht hart werden zu lassen, wie sehr müssen wir unsere Herzen nach Jahren der Gewöhnung und Ablenkung prüfen.","Auch das Herz braucht Nahrung. Wie der Körper ohne Nahrung schwach wird, wird das Herz ohne Qurʾān, Dhikr, Duʿāʾ, Istighfār und aufrichtige Reue schwach.","Ein lebendiges Herz hört einen Vers nicht so, als sei er nur für andere bestimmt. Es fragt: Was verlangt Allah durch diese Worte von mir?","Ein weiteres Zeichen eines weichen Herzens ist Barmherzigkeit gegenüber Menschen. Glaube zeigt sich nicht nur im Gebet, sondern auch im Umgang mit Allahs Geschöpfen.","Der Prophet ﷺ sagte über die Menschen aus dem Jemen: «أَتَاكُمْ أَهْلُ الْيَمَنِ، هُمْ أَرَقُّ أَفْئِدَةً وَأَلْيَنُ قُلُوبًا، الإِيمَانُ يَمَانٍ وَالْحِكْمَةُ يَمَانِيَةٌ».","Sinngemäß: Die Leute aus dem Jemen sind zu euch gekommen; sie haben empfindsamere und weichere Herzen. Der Glaube ist jemenitisch und die Weisheit ist jemenitisch. al-Bukhārī und Muslim.","Der Prophet ﷺ lobte die Weichheit des Herzens. Dauernde Härte ist deshalb weder ein Zeichen von Stärke noch automatisch ein Zeichen von Frömmigkeit.","Ein Gläubiger kann in seinen Grundsätzen fest und zugleich sanft zu seiner Familie sein. Er kann die Wahrheit sagen, ohne den anderen zu erniedrigen, und einen Fehler korrigieren, ohne den Menschen zu zerstören.","Gerechtigkeit und Barmherzigkeit widersprechen einander nicht. Gerechtigkeit gibt jedem sein Recht; ein weiches Herz hilft uns, dies ohne Grausamkeit und Hochmut zu tun.","Wir dürfen Gerechtigkeit nicht als Vorwand für Härte und Barmherzigkeit nicht als Vorwand für die Verleugnung von Rechten benutzen. Der Gläubige sucht beides.","Der Prophet ﷺ sagte: «الرَّاحِمُونَ يَرْحَمُهُمُ الرَّحْمَنُ، ارْحَمُوا مَنْ فِي الْأَرْضِ يَرْحَمْكُمْ مَنْ فِي السَّمَاءِ».","Sinngemäß: Den Barmherzigen erbarmt sich der Allerbarmer. Erbarmt euch derer auf der Erde, dann erbarmt sich eurer Der über den Himmeln. at-Tirmidhī und Abū Dāwūd.","Wenn wir Allahs Barmherzigkeit erhoffen, müssen wir schauen, wie viel Barmherzigkeit in unserem Verhalten gegenüber Kindern, Ehepartnern, Eltern, Alten, Kranken und Armen sichtbar ist.","Wie behandeln wir einen Menschen, der uns nichts zurückgeben kann? Gerade dort zeigt sich, ob unsere Güte für Allah geschieht oder nur aus persönlichem Interesse.","Wie verhalten wir uns gegenüber jemandem, der uns verletzt hat, wenn wir ihn demütigen könnten? Die Weichheit des Herzens wird besonders geprüft, wenn wir Macht zur Vergeltung besitzen.","Zu vergeben, obwohl man sich rächen könnte, ist keine Schwäche. Oft ist es Stärke der Seele, Kontrolle über das eigene Ego und Hoffnung auf Allahs Lohn.","Doch ein weiches Herz bedeutet nicht Prinzipienlosigkeit. Der Prophet ﷺ war der barmherzigste Mensch, aber er gab die Wahrheit nicht auf, um Menschen zu gefallen.","Sanftmut bedeutet, die Wahrheit mit Weisheit auszusprechen. Sie bedeutet, einen Bruder zu beraten, um ihn zu verbessern – nicht um ihn zu beschämen oder sich selbst über ihn zu erheben.","Ein Zeichen von Herzenshärte ist, wenn uns der Fehler eines anderen freut, sein Sturz uns Genugtuung gibt oder sein Schmerz uns völlig gleichgültig lässt.","Ein weiches Herz lehnt die Sünde ab, wünscht aber dem Sünder Rechtleitung; es widerspricht dem Fehler, freut sich jedoch nicht über die Zerstörung des Menschen.","Wie wird das Herz weich? Erstens durch den Qurʾān: nicht nur Seiten beenden, sondern innehalten, nachdenken und sich fragen, was wir verändern müssen.","Zweitens durch Dhikr. Ein Herz, das Allah vergisst, trocknet aus; ein Herz, das Ihn häufig erwähnt, wird lebendig und findet Ruhe.","Drittens durch Duʿāʾ, Istighfār und Reue. Wenn der Diener seine Schwäche und Bedürftigkeit vor Allah anerkennt, wird der Hochmut gebrochen und das Herz weich.","Viertens durch die Nähe zu Bedürftigen, Kranken, Armen, Waisen und alten Menschen. Ihr Leid erinnert uns daran, dass wir alle auf Allahs Barmherzigkeit angewiesen sind.","Fünftens durch die Kontrolle der Zunge. Viele Herzen werden nicht durch einen Schlag gebrochen, sondern durch ein hartes Wort, das lange in Erinnerung bleibt.","Ein weises Wort führt einen Menschen zum Guten, ohne sein Herz zu verschließen. Manchmal erreicht ein sanfter Rat, was zehn harte Sätze niemals erreichen.","Fragen wir uns: Wann hat mich zuletzt ein Qurʾānvers dazu gebracht, mein Verhalten zu ändern? Wann habe ich um Verzeihung gebeten, weil ich jemanden verletzt hatte?","Wann habe ich zuletzt jemandem vergeben, weil ich selbst Allahs Vergebung erhoffe? Wann habe ich geholfen, ohne Dank oder Anerkennung von Menschen zu erwarten?","Brüder, begnügen wir uns nicht mit einem Islam, der nur äußerlich sichtbar ist. Bitten wir Allah um ein Herz, das beim Vers erschauert, nach einem Fehler bereut und beim Leid eines Menschen Barmherzigkeit empfindet.","Allah liebt weiche, demütige und barmherzige Herzen. Schützen wir unsere Herzen vor Hass, Hochmut, Neid und Freude über das Unglück anderer.","O Allah, schenke uns lebendige, weiche, reine und demütige Herzen. Mache uns zu denen, die Dein Wort hören und dem Besten davon folgen.","O Allah, bewahre uns vor Herzenshärte, Hochmut, Neid und Ungerechtigkeit. Schenke uns Barmherzigkeit für unsere Familien, unsere Gemeinde und alle Deine Geschöpfe.","O Allah, mache uns gerecht ohne Grausamkeit und barmherzig, ohne die Wahrheit aufzugeben. Vergib uns, unseren Eltern, unseren Familien und allen Gläubigen. Āmīn."],"durationSec":900},{"title":"🇦🇱 Shqip","className":"","voiceLang":"sq-AL","lines":["HUDBJA E XHUMASË: Allahu i do zemrat e buta.","Elhamdulil-lahi Rabbil-alemin. Allahun e falënderojmë, prej Tij ndihmë dhe falje kërkojmë. Kërkojmë mbrojtjen e Allahut nga e keqja e vetvetes dhe nga veprat tona të këqija.","Dëshmojmë se nuk ka të adhuruar me të drejtë përveç Allahut, Një dhe pa ortak, dhe dëshmojmë se Muhamedi ﷺ është robi dhe i Dërguari i Tij.","Salavatet dhe selamet qofshin mbi Muhamedin ﷺ, mbi familjen e tij, shokët e tij dhe mbi të gjithë ata që e ndjekin rrugën e tij deri në Ditën e Gjykimit.","Të nderuar vëllezër, ju këshilloj veten dhe ju me devotshmëri ndaj Allahut, sepse devotshmëria e ruan zemrën dhe e drejton njeriun në çdo gjendje.","Xhumanë e kaluar folëm për edukatën dhe moralin e mirë. Sot e lidhim atë temë me burimin e moralit: me zemrën, sepse sjellja e mirë nuk qëndron gjatë nëse zemra është e ngurtë.","Tema jonë është: Allahu i do zemrat e buta – zemrat që preken nga Fjala e Tij, që përulen para së vërtetës dhe që kanë mëshirë për krijesat.","Zemra e butë nuk është zemër e dobët. Ajo mund të jetë e palëkundur në të vërtetën dhe njëkohësisht e butë në fjalë, e drejtë në vendim dhe e mëshirshme me njerëzit.","Pejgamberi ﷺ na mësoi se zemra është qendra e gjendjes së njeriut: «أَلَا وَإِنَّ فِي الْجَسَدِ مُضْغَةً، إِذَا صَلَحَتْ صَلَحَ الْجَسَدُ كُلُّهُ ... أَلَا وَهِيَ الْقَلْبُ».","Kuptimi: Në trup është një copë mishi; kur ajo është e mirë, i gjithë trupi është i mirë, e kur ajo prishet, prishet i gjithë trupi. Ajo është zemra. Buhariu dhe Muslimi.","Prandaj nuk mjafton që vetëm pamja e jashtme të jetë e mirë. Besimtari e pyet veten: Çfarë po ndodh me zemrën time? A pendohet kur gaboj? A zbutet kur dëgjon Kuranin?","Allahu i Madhëruar thotë: «اللَّهُ نَزَّلَ أَحْسَنَ الْحَدِيثِ ... ثُمَّ تَلِينُ جُلُودُهُمْ وَقُلُوبُهُمْ إِلَى ذِكْرِ اللَّهِ».","Kuptimi: Allahu ka shpallur fjalën më të bukur; prej saj rrëqethen lëkurat e atyre që i frikësohen Zotit të tyre, pastaj lëkurat dhe zemrat e tyre zbuten në përmendjen e Allahut. Ez-Zumer, 23.","Kurani nuk është vetëm për t'u shqiptuar me gjuhë. Ai duhet të arrijë në zemër, të zgjojë frikën dhe shpresën, të korrigjojë sjelljen dhe ta afrojë robin me Allahun.","Nëse lexojmë Kuran, por mbetemi të ashpër me familjen, të padrejtë me të dobëtin dhe të pamëshirshëm ndaj atij që gabon, duhet ta kontrollojmë zemrën tonë.","Allahu thotë: «أَلَمْ يَأْنِ لِلَّذِينَ آمَنُوا أَنْ تَخْشَعَ قُلُوبُهُمْ لِذِكْرِ اللَّهِ وَمَا نَزَلَ مِنَ الْحَقِّ».","Kuptimi: A nuk ka ardhur koha për besimtarët që zemrat e tyre të përulen para përmendjes së Allahut dhe para së vërtetës që ka zbritur? El-Hadid, 16.","Abdullah ibn Mesudi r.a. tregoi se ndërmjet pranimit të Islamit prej tyre dhe kësaj këshille hyjnore kishin kaluar vetëm rreth katër vjet. Kjo transmetohet në Sahih Muslim.","Nëse sahabët u kujtuan kaq herët që zemrat të mos ngurtësoheshin, sa shumë kemi ne nevojë ta kontrollojmë zemrën pas viteve të zakonit dhe shpërqendrimit.","Zemra ka ushqimin e saj. Sikurse trupi dobësohet pa ushqim, zemra dobësohet pa Kuran, pa dhikër, pa dua, pa istigfar dhe pa pendim të sinqertë.","Një zemër e gjallë nuk e dëgjon ajetin si diçka që i drejtohet vetëm dikujt tjetër. Ajo pyet: Çfarë kërkon Allahu prej meje me këtë fjalë?","Një tjetër shenjë e zemrës së butë është mëshira ndaj njerëzve. Besimi nuk shihet vetëm në namaz, por edhe në mënyrën si sillemi me krijesat e Allahut.","Pejgamberi ﷺ tha për banorët e Jemenit: «أَتَاكُمْ أَهْلُ الْيَمَنِ، هُمْ أَرَقُّ أَفْئِدَةً وَأَلْيَنُ قُلُوبًا، الإِيمَانُ يَمَانٍ وَالْحِكْمَةُ يَمَانِيَةٌ».","Kuptimi: Ju kanë ardhur njerëzit e Jemenit; ata kanë zemra më të ndjeshme dhe më të buta. Imani është jemenas dhe urtësia është jemenase. Buhariu dhe Muslimi.","Pejgamberi ﷺ e lavdëroi butësinë e zemrës. Kjo na mëson se ashpërsia e vazhdueshme nuk është shenjë force dhe as shenjë e devotshmërisë.","Besimtari mund të jetë i fortë në parime, por i butë me familjen. Mund ta thotë të vërtetën pa e poshtëruar tjetrin dhe ta korrigjojë gabimin pa e shkatërruar njeriun.","Drejtësia dhe mëshira nuk janë kundërshtare. Drejtësia ia jep secilit hakun e tij, ndërsa zemra e butë na ndihmon ta bëjmë këtë pa mizori dhe pa krenari.","Nuk duhet ta përdorim drejtësinë si arsyetim për ashpërsi, dhe as mëshirën si arsyetim për të mohuar të drejtën. Besimtari kërkon të jetë edhe i drejtë edhe i mëshirshëm.","Pejgamberi ﷺ ka thënë: «الرَّاحِمُونَ يَرْحَمُهُمُ الرَّحْمَنُ، ارْحَمُوا مَنْ فِي الْأَرْضِ يَرْحَمْكُمْ مَنْ فِي السَّمَاءِ».","Kuptimi: Të mëshirshmit i mëshiron i Gjithëmëshirshmi. Mëshironi ata që janë në tokë, që t'ju mëshirojë Ai që është mbi qiej. Tirmidhiu dhe Ebu Davudi.","Nëse kërkojmë mëshirën e Allahut, duhet të shohim sa mëshirë ka në sjelljen tonë: me fëmijët, bashkëshorten, prindërit, të moshuarit, të sëmurët dhe të varfrit.","Si sillemi me njeriun që nuk mund të na japë asgjë në këmbim? Pikërisht aty shfaqet nëse mirësia jonë është për Allahun apo vetëm për interes.","Si sillemi me dikë që na ka lënduar kur kemi mundësi ta poshtërojmë? Butësia e zemrës provohet sidomos kur njeriu ka fuqi për t'u hakmarrë.","Të falësh kur ke mundësi të hakmerresh nuk është dobësi. Shpesh është forcë e shpirtit, kontroll i nefsit dhe kërkim i shpërblimit tek Allahu.","Por zemra e butë nuk do të thotë zemër pa parime. Pejgamberi ﷺ ishte më i mëshirshmi, por nuk e braktiste të vërtetën për t'u pëlqyer njerëzve.","Butësia është ta thuash të vërtetën me urtësi. Është të këshillosh për ta përmirësuar vëllanë, jo për ta turpëruar dhe jo për ta ngritur veten mbi të.","Një shenjë e ngurtësisë është kur gabimi i tjetrit na gëzon, kur rrëzimi i tij na jep kënaqësi ose kur dhimbja e tij nuk na prek.","Ndërsa zemra e butë e kundërshton mëkatin, por dëshiron udhëzimin e mëkatarit; e refuzon gabimin, por nuk kënaqet me shkatërrimin e njeriut.","Si zbutet zemra? Së pari me Kuran: jo vetëm të mbarojmë faqe, por të ndalemi, të mendojmë dhe ta pyesim veten çfarë duhet të ndryshojmë.","Së dyti me dhikër. Zemra që e harron Allahun thahet, ndërsa zemra që e përmend Atë vazhdimisht ringjallet dhe gjen qetësi.","Së treti me dua, istigfar dhe pendim. Kur robi e pranon dobësinë dhe nevojën e tij para Allahut, mendjemadhësia thyhet dhe zemra zbutet.","Së katërti duke iu afruar njerëzve në nevojë: të sëmurëve, të varfërve, jetimëve dhe të moshuarve. Dhimbja e tyre na kujton sa të varur jemi të gjithë nga mëshira e Allahut.","Së pesti duke e ruajtur gjuhën. Shumë zemra nuk thyhen nga goditja e dorës, por nga një fjalë e ashpër që mbetet gjatë në kujtesë.","Fjala e urtë është ajo që e afron njeriun te e mira pa ia mbyllur zemrën. Ndonjëherë një këshillë e butë arrin aty ku dhjetë fjalë të ashpra nuk arrijnë.","Le ta pyesim veten: Kur ishte hera e fundit që një ajet më bëri ta ndryshoj një sjellje? Kur kërkova falje sepse e kuptova se e kisha lënduar dikë?","Kur ishte hera e fundit që fala dikë duke shpresuar faljen e Allahut? Kur e ndihmova dikë pa pritur falënderim dhe pa kërkuar që njerëzit ta dinë?","Vëllezër, mos u kënaqim me një Islam vetëm të dukshëm nga jashtë. Kërkojini Allahut zemër që dridhet nga ajeti, pendohet pas gabimit dhe mëshiron kur sheh dhimbjen.","Allahu i do zemrat e buta, të përulura dhe të mëshirshme. Le ta ruajmë zemrën nga urrejtja, mendjemadhësia, zilia dhe kënaqësia me fatkeqësinë e tjetrit.","O Allah, na jep zemra të gjalla, të buta, të pastra dhe të përulura para Teje. Na bëj prej atyre që e dëgjojnë Fjalën Tënde dhe e ndjekin më të mirën e saj.","O Allah, na ruaj nga ngurtësia e zemrës, nga mendjemadhësia, zilia dhe padrejtësia. Na jep mëshirë për familjet tona, për xhematin tonë dhe për të gjitha krijesat e Tua.","O Allah, na bëj të drejtë pa qenë të ashpër, të mëshirshëm pa e humbur të vërtetën, dhe na fal neve, prindërit tanë, familjet tona dhe gjithë besimtarët. Amin, ja Rabbel-alemin."],"durationSec":900}];
+
+let langIndex=0,lineIndex=0,autoTimer=null,countdownTimer=null,remainingSec=0,started=false,isAuto=false;
+const content=document.getElementById("content"),
+      langTitle=document.getElementById("langTitle"),
+      counter=document.getElementById("counter"),
+      bar=document.getElementById("bar"),
+      timerEl=document.getElementById("timer"),
+      totalTimeEl=document.getElementById("totalTime");
+
+const EVENT={y:2026,m:8,d:18,endH:14,endM:30};
+let hardStopDone=false,sessionStartedOnEventDay=false;
+
+function isEventDay(d){
+  return d.getFullYear()===EVENT.y&&d.getMonth()===EVENT.m&&d.getDate()===EVENT.d;
+}
+function fmt(sec){
+  sec=Math.max(0,Math.ceil(sec));
+  return String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0");
+}
+function totalLines(){return hudbe.reduce((a,l)=>a+l.lines.length,0)}
+function doneLines(){return hudbe.slice(0,langIndex).reduce((a,l)=>a+l.lines.length,0)+lineIndex+1}
+function updateChips(){
+  for(let i=0;i<hudbe.length;i++){
+    const c=document.getElementById("chip"+i);
+    if(c)c.classList.toggle("active",i===langIndex);
+  }
+}
+function resetLanguageTimer(){
+  remainingSec=hudbe[langIndex].durationSec;
+  updateTimer();
+}
+function updateTimer(){
+  timerEl.textContent=fmt(remainingSec);
+  const lang=hudbe[langIndex],minutes=Math.round(lang.durationSec/60);
+  totalTimeEl.textContent=lang.title.replace(/[🇸🇦🇩🇪🇦🇱]/g,"").trim()+" "+minutes+" min";
+}
+function render(){
+  const lang=hudbe[langIndex];
+  if(!lang||!lang.lines||!lang.lines.length)return;
+  if(lineIndex<0)lineIndex=0;
+  if(lineIndex>=lang.lines.length)lineIndex=lang.lines.length-1;
+
+  langTitle.textContent=lang.title;
+  counter.textContent="Gjuha "+(langIndex+1)+"/"+hudbe.length+" • Rreshti "+(lineIndex+1)+"/"+lang.lines.length;
+  content.className="content "+lang.className;
+  content.innerHTML="";
+
+  const d=document.createElement("div");
+  d.className="line active";
+  d.textContent=lang.lines[lineIndex];
+  content.appendChild(d);
+
+  bar.style.width=(doneLines()/totalLines()*100)+"%";
+  updateChips();
+  updateTimer();
+}
+function getCurrentLineDelay(){
+  const lang=hudbe[langIndex];
+  const left=Math.max(1,lang.lines.length-lineIndex);
+  const msLeft=Math.max(1000,remainingSec*1000);
+  return Math.max(1200,Math.floor(msLeft/left));
+}
+function scheduleAutoAdvance(){
+  if(autoTimer)clearTimeout(autoTimer);
+  autoTimer=setTimeout(()=>{if(isAuto)advanceAutoLine()},getCurrentLineDelay());
+}
+function startCountdown(){
+  if(countdownTimer)clearInterval(countdownTimer);
+  countdownTimer=setInterval(()=>{
+    if(!isAuto)return;
+    remainingSec=Math.max(0,remainingSec-1);
+    updateTimer();
+    if(remainingSec<=0){
+      clearInterval(countdownTimer);
+      countdownTimer=null;
+      nextSection();
+    }
+  },1000);
+}
+function advanceAutoLine(){
+  if(!isAuto)return;
+  const lang=hudbe[langIndex];
+  if(lineIndex<lang.lines.length-1){
+    lineIndex++;
+    render();
+    scheduleAutoAdvance();
+  }else nextSection();
+}
+function nextLine(){
+  const lang=hudbe[langIndex];
+  if(lineIndex<lang.lines.length-1){
+    lineIndex++;
+    render();
+    if(isAuto)scheduleAutoAdvance();
+  }else nextSection();
+}
+function pauseOnlyIntervals(){
+  if(autoTimer)clearTimeout(autoTimer);
+  if(countdownTimer)clearInterval(countdownTimer);
+  autoTimer=null;countdownTimer=null;isAuto=false;
+}
+function pauseAuto(){pauseOnlyIntervals()}
+function startAuto(){
+  pauseOnlyIntervals();
+  started=true;isAuto=true;
+  if(isEventDay(new Date()))sessionStartedOnEventDay=true;
+  render();
+  scheduleAutoAdvance();
+  startCountdown();
+}
+function nextSection(){
+  const wasStarted=started;
+  pauseOnlyIntervals();
+  if(langIndex<hudbe.length-1){
+    langIndex++;lineIndex=0;resetLanguageTimer();render();
+    if(wasStarted){started=true;startAuto();}
+  }else{
+    started=false;
+    if(sessionStartedOnEventDay&&isEventDay(new Date()))openKohetTv();
+    else render();
+  }
+}
+function restartAll(){
+  pauseOnlyIntervals();
+  started=false;langIndex=0;lineIndex=0;
+  resetLanguageTimer();render();
+}
+function openKohetTv(){
+  pauseOnlyIntervals();
+  window.location.href="go:"+KOHE_TV_REFERENCE;
+  setTimeout(()=>{window.location.href="ac24://open2080485-0znj69/"+encodeURIComponent(KOHE_TV_REFERENCE)},700);
+}
+function enforceHardStop(){
+  const now=new Date();
+  if(sessionStartedOnEventDay&&!hardStopDone&&isEventDay(now)&&now.getHours()===EVENT.endH&&now.getMinutes()===EVENT.endM){
+    hardStopDone=true;openKohetTv();
+  }
+}
+resetLanguageTimer();
+render();
+setInterval(enforceHardStop,500);
+
+</script>
+</body>
+</html>
