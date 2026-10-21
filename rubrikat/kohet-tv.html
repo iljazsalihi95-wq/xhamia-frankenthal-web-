@@ -388,7 +388,7 @@ body{
   <div id="countdown">⏳ Duke marrë kohët...</div>  
   <div class="weather" id="weatherNow">📍 Qyteti: Frankenthal • 🌡️ Temperatura: --°C</div>  
   <button class="ezan-btn" id="adhanBtn" onclick="enableAdhan()">🔊 Ezani ON</button>  
-  <button class="lang-btn" id="langBtn" onclick="toggleLang()">🇩🇪 Deutsch</button>  
+  <button class="lang-btn" id="langBtn" onclick="toggleLang()">🇩🇪 Deutsch</button><a id="nextHudbeLink" href="go:Hudbe23.10" style="display:inline-block;margin:3px;padding:5px 9px;border:1px solid #ffd36b;border-radius:8px;color:#ffd36b;font-size:12px;font-weight:bold;text-decoration:none">📖 Hudbe23.10 · E premte 14:00</a>  
 </div>
 
   </div>    <div class="prayer-grid" id="grid"></div>    <div class="premium-message" id="premiumMessage">  
@@ -1118,6 +1118,8 @@ function checkAutoHudbe(){
    fridayHudbeOpened=iso;const ref=autoHudbeReference(n);if(window.navigator.userAgent.includes("XhamiaNative/")||window.location.protocol==="file:"){window.location.href="go:"+ref}else{console.info("Hudbja e radhës: "+ref+" · go: hapet vetëm në AppCreator24")};  
  }  
 }  
+function updateHudbeLink(){const ref=autoHudbeReference(berlinNow()),a=document.getElementById("nextHudbeLink");if(!a)return;a.href="go:"+ref;a.textContent="📖 "+ref+" · E premte 14:00";if(!navigator.userAgent.includes("XhamiaNative/")&&location.protocol!=="file:"){a.style.display="none"}}
+updateHudbeLink();setInterval(updateHudbeLink,60000);
 function premiumScheduler(){  
  const n=berlinNow(),m=n.getMinutes(),kind=(m%20===0)?"news":(m%20===5?"finance":"");if(!kind)return;  
  const slot=`${berlinDateParts(n).iso}-${n.getHours()}-${m}-${kind}`;if(slot===premiumPopupLastSlot||anyPriorityPopup())return;premiumPopupLastSlot=slot;  
