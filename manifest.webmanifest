@@ -7,5 +7,13 @@
   "display": "standalone",
   "background_color": "#062e29",
   "theme_color": "#063b33",
-  "description": "Webfaqja dhe shërbimet e Xhamisë Frankenthal"
+  "description": "Portali dhe shërbimet e Xhamisë Frankenthal",
+  "icons": [
+    {
+      "src": "https://www.appcreator24.com/srv/imgs/seccs/37163384_ico.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
