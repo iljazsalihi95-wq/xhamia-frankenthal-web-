@@ -1050,7 +1050,7 @@ async function loadFinanceReal(){
 }
 
 async function fetchPremiumData(){  
- try{premiumCache.news=await getJSON(HUB.NEWS+"?mode=all&limit=100&_="+Date.now())}catch(e){}  
+ try{premiumCache.news=await getJSON(HUB.NEWS+"?mode=all&limit=100&_="+Date.now());premiumCache.newsChecked=Date.now();premiumCache.newsError=false;if(document.getElementById("newsPopup").classList.contains("show"))renderNewsPopup()}catch(e){premiumCache.newsError=true;console.error("Lajmet TV: burimi nuk u përditësua",e)}  
  const freshFinance=await loadFinanceReal();if(freshFinance)premiumCache.finance=freshFinance;  
  try{premiumCache.members=await getJSON(HUB.MEMBERS)}catch(e){}  
 }  
@@ -1067,7 +1067,10 @@ function renderNewsPopup(){
  const all=rowsOf(premiumCache.news);  
  const parseNewsTime=n=>{const ds=String(val(n,["Data","data","date"])||"").trim(),ts=String(val(n,["Ora","ora","time"])||"00:00").trim();let m=ds.match(/(\d{2})[.\/-](\d{2})[.\/-](\d{4})/);if(m)return new Date(`${m[3]}-${m[2]}-${m[1]}T${ts||"00:00"}`).getTime()||0;return Date.parse(ds+" "+ts)||0};  
  const rows=all.filter(n=>String(val(n,["Aktiv","aktiv"])||"PO").toLowerCase()!=="jo"&&/^https?:\/\//i.test(String(newsImage(n)||""))).sort((a,b)=>parseNewsTime(b)-parseNewsTime(a)).slice(0,5);  
- const grid=document.getElementById("newsGrid");grid.innerHTML="";  
+ const grid=document.getElementById("newsGrid");grid.innerHTML="";
+ const newest=rows.length?parseNewsTime(rows[0]):0;
+ const stale=!newest||Date.now()-newest>24*60*60*1000;
+ const stamp=document.getElementById("newsStamp");if(stamp)stamp.textContent=premiumCache.newsError?"⚠️ Burimi i lajmeve nuk u lidh":stale?"⚠️ Lajmet nuk janë përditësuar brenda 24 orëve":"LIVE · Kontrolluar "+new Date(premiumCache.newsChecked||Date.now()).toLocaleTimeString("sq-AL",{hour:"2-digit",minute:"2-digit"});  
  if(!rows.length){grid.innerHTML=`<article class="tvCard"><div class="newsPhotoFallback">📰</div><div class="newsTitle">Duke marrë lajmet më të reja LIVE me foto…</div></article>`}  
  rows.forEach(n=>{  
    const title=val(n,["Titulli SQ","titulli_sq","titulli","title","headline","lajmi","tekst","pershkrimi"]);  
@@ -1112,7 +1115,7 @@ let fridayHudbeOpened="";
 function checkAutoHudbe(){  
  const n=berlinNow(),iso=berlinDateParts(n).iso;  
  if(n.getDay()===5&&n.getHours()===14&&n.getMinutes()>=0&&n.getMinutes()<30&&fridayHudbeOpened!==iso){  
-   fridayHudbeOpened=iso;window.location.href="go:"+autoHudbeReference(new Date(n.getTime()-60*60*1000));  
+   fridayHudbeOpened=iso;const ref=autoHudbeReference(n);if(window.navigator.userAgent.includes("XhamiaNative/")||window.location.protocol==="file:"){window.location.href="go:"+ref}else{console.info("Hudbja e radhës: "+ref+" · go: hapet vetëm në AppCreator24")};  
  }  
 }  
 function premiumScheduler(){  
@@ -1120,7 +1123,7 @@ function premiumScheduler(){
  const slot=`${berlinDateParts(n).iso}-${n.getHours()}-${m}-${kind}`;if(slot===premiumPopupLastSlot||anyPriorityPopup())return;premiumPopupLastSlot=slot;  
  if(kind==="news"){renderNewsPopup();showPremiumPopup("newsPopup",4*60*1000)}else{renderFinancePopup();showPremiumPopup("financePopup",4*60*1000)}  
 }  
-setInterval(premiumScheduler,15000);setInterval(checkAutoHudbe,15000);setInterval(fetchPremiumData,10*60*1000);  
+setInterval(premiumScheduler,15000);setInterval(checkAutoHudbe,15000);setInterval(fetchPremiumData,60*60*1000);  
 fetchPremiumData();  
   
 /* DHIKRI: 3 karta + MP3 + auto kalim. Shfaqet vetëm në kohën e Sabahut/Akshamit. */  
